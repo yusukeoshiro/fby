@@ -1,0 +1,257 @@
+[
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 96,
+            "modifiedTime": 1519955519160,
+            "changeTime": 1519955519160,
+            "contentHash": "b28b7af69320201d1cf206ebf28373980add1451",
+            "isWorkspace": false,
+            "isArtifactRoot": true
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby",
+        {
+            "sourcePath": "/Users/yoshiro/dev/projects/fby",
+            "isDirectory": true,
+            "size": 288,
+            "modifiedTime": 1519955242842,
+            "changeTime": 1519955242842,
+            "contentHash": "536320e1ac7c038dd9815eed25ecda4d75573df1",
+            "isMetadataFile": false,
+            "state": "u",
+            "isWorkspace": true,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default/objects/Warehouse__c/Warehouse__c.object-meta.xml",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default/objects/Warehouse__c/Warehouse__c.object-meta.xml",
+            "isDirectory": false,
+            "isMetadataFile": true,
+            "size": 2034,
+            "modifiedTime": 1519955490547,
+            "changeTime": 1519955490547,
+            "contentHash": "1f93862d23a3513b60fea7d031dec839414aad08",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default/layouts/Warehouse__c-倉庫レイアウト.layout-meta.xml",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default/layouts/Warehouse__c-倉庫レイアウト.layout-meta.xml",
+            "isDirectory": false,
+            "isMetadataFile": true,
+            "size": 1947,
+            "modifiedTime": 1519955490552,
+            "changeTime": 1519955490552,
+            "contentHash": "11d783040f4136795b5cfb29705ebffa45e29dff",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default/profiles/Custom%3A Sales Profile.profile-meta.xml",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default/profiles/Custom%3A Sales Profile.profile-meta.xml",
+            "isDirectory": false,
+            "isMetadataFile": true,
+            "size": 4547,
+            "modifiedTime": 1519955490559,
+            "changeTime": 1519955490559,
+            "contentHash": "8ad1fe22518f5a23e3345fc415998025a26315ca",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default/profiles/Custom%3A Support Profile.profile-meta.xml",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default/profiles/Custom%3A Support Profile.profile-meta.xml",
+            "isDirectory": false,
+            "isMetadataFile": true,
+            "size": 4885,
+            "modifiedTime": 1519955490563,
+            "changeTime": 1519955490563,
+            "contentHash": "5762e202e51c0697a945c66f6d2627f748c79e23",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default/profiles/Custom%3A Marketing Profile.profile-meta.xml",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default/profiles/Custom%3A Marketing Profile.profile-meta.xml",
+            "isDirectory": false,
+            "isMetadataFile": true,
+            "size": 4547,
+            "modifiedTime": 1519955490568,
+            "changeTime": 1519955490568,
+            "contentHash": "8ad1fe22518f5a23e3345fc415998025a26315ca",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default/profiles/Admin.profile-meta.xml",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default/profiles/Admin.profile-meta.xml",
+            "isDirectory": false,
+            "isMetadataFile": true,
+            "size": 17937,
+            "modifiedTime": 1519955490579,
+            "changeTime": 1519955490579,
+            "contentHash": "c32e9327d712e1e6f0ee9bdbe91a419233d149f9",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default/objects/Warehouse__c",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default/objects/Warehouse__c",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 96,
+            "modifiedTime": 1519955490547,
+            "changeTime": 1519955490547,
+            "contentHash": "6df11e27e615f32ceb64adb29bdd03c605e88659",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default/objects",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default/objects",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 96,
+            "modifiedTime": 1519955490544,
+            "changeTime": 1519955490544,
+            "contentHash": "c5f14893892032379f4702fa6026fdcdec857064",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 192,
+            "modifiedTime": 1519955511157,
+            "changeTime": 1519955511157,
+            "contentHash": "2ed1966858a69d044a020a30defd95645b188ea7",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 96,
+            "modifiedTime": 1519955490544,
+            "changeTime": 1519955490544,
+            "contentHash": "7505d64a54e061b7acd54ccd58b49dc43500b635",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default/layouts",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default/layouts",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 96,
+            "modifiedTime": 1519955490552,
+            "changeTime": 1519955490552,
+            "contentHash": "ab0380710ff8705248250eb767ecf070ea116f24",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default/profiles",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default/profiles",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 192,
+            "modifiedTime": 1519955490578,
+            "changeTime": 1519955490578,
+            "contentHash": "9c367b0e719eb8c48c5b0d9cbfb5f580a4bd6717",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default/classes",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default/classes",
+            "isDirectory": true,
+            "isMetadataFile": false,
+            "size": 128,
+            "modifiedTime": 1519955428825,
+            "changeTime": 1519955511157,
+            "contentHash": "1387212d946b8dbeaa67d0edf5d37c299bfd18d6",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default/classes/myclass.cls",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default/classes/myclass.cls",
+            "isDirectory": false,
+            "isMetadataFile": false,
+            "size": 144,
+            "modifiedTime": 1519955428825,
+            "changeTime": 1519955428825,
+            "contentHash": "95cff9243e02483f302d7175fd685cc3f8160e46",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ],
+    [
+        "/Users/yoshiro/dev/projects/fby/force-app/main/default/classes/myclass.cls-meta.xml",
+        {
+            "state": "u",
+            "sourcePath": "/Users/yoshiro/dev/projects/fby/force-app/main/default/classes/myclass.cls-meta.xml",
+            "isDirectory": false,
+            "isMetadataFile": true,
+            "size": 174,
+            "modifiedTime": 1519955428824,
+            "changeTime": 1519955428824,
+            "contentHash": "5690448073e1f4fad2748afd55cc064a162b59a5",
+            "isWorkspace": false,
+            "isArtifactRoot": false
+        }
+    ]
+]
