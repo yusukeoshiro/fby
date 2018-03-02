@@ -5,6 +5,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Warehouse__c.address__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <layoutAssignments>
         <layout>Warehouse__c-倉庫レイアウト</layout>
     </layoutAssignments>
