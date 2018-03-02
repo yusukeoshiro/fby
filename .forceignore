@@ -4,3 +4,4 @@
 
 profiles/*.xml
 package.xml
+*.sh
