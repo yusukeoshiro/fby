@@ -49,13 +49,13 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
-    <enableSearch>true</enableSearch>
+    <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <label>バーコード</label>
+    <label>バーコード関連付</label>
     <nameField>
-        <displayFormat>FBY-{00000000}</displayFormat>
-        <label>コード</label>
+        <displayFormat>BA-{000000000}</displayFormat>
+        <label>#</label>
         <type>AutoNumber</type>
     </nameField>
     <searchLayouts/>
