@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/css/onsenui.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/css/onsen-css-components.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/js/onsenui.min.js"></script>
@@ -27,12 +28,12 @@
 
         <ons-navigator var="navi" page="page1.html"></ons-navigator>
 
+
         <template id="page1.html">
             <ons-page>
                 <ons-toolbar class="toolbar--transparent">
                     <div class="center">入庫業務</div>
                 </ons-toolbar>
-
 
                 <!-- VIRTUAL KEYBOARD -->
                 <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
@@ -257,6 +258,38 @@
             </ons-page>
         </template>
 
+
+        <template id="page3.html">
+            <ons-page>
+                <ons-toolbar class="toolbar--transparent">
+                    <div class="center">入庫業務</div>
+                </ons-toolbar>
+
+                <div style="margin-top: 100px;text-align:center;color:#b5cc18">
+                    <p>
+                        <span style="font-size: 32px;">
+                            Thank you!
+                        </span>
+                    </p>
+
+                    <p>
+                        <span style="font-size: 32px;">
+                            入庫が完了しました!
+                        </span>
+                    </p>
+
+                    <span style="font-size: 128px;"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
+
+                    <p>
+                        もとの画面に戻ってください。
+                    </p>
+                </div>
+
+
+
+            </ons-page>
+        </template>
+
     </div>
     <script>
 
@@ -343,7 +376,7 @@
                 //var json = JSON.stringify( {payload:$scope.inventoryMoveLines} );
                 var json = JSON.stringify( $scope.inventoryMoveLines );
                 InboundController.saveInboundInventoryMove( json, function( value, event ){
-                    console.log( value );
+                    $scope.navi.pushPage('page3.html');
                     $scope.$apply();
                 });
 
