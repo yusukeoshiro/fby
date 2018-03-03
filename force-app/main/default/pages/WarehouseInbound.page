@@ -1,16 +1,377 @@
-<apex:page standardStylesheets="false" showHeader="false" applyHtmlTag="false" applyBodyTag="false">
-    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css" />
-    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css" />
-    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" controller="InboundController" lightningStylesheets="true">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/css/onsenui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/css/onsen-css-components.min.css" />
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/js/onsenui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/js/angular-onsenui.min.js"></script>
+
+
+    <style>
+        body{
+            font-family: "メイリオ", sans-serif;
+        }
+        .barcode-read{
+            font-size: 32px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div ng-app="my-app" ng-controller="AppController as app" ng-init="init();">
 
 
 
-    <div class="container">
-        <p>バーコードをスキャンするか、マニュアルでバーコードを読み込んで下さい。</p>
+        <ons-navigator var="navi" page="page1.html"></ons-navigator>
+
+        <template id="page1.html">
+            <ons-page>
+                <ons-toolbar class="toolbar--transparent">
+                    <div class="center">入庫業務</div>
+                </ons-toolbar>
+
+
+                <!-- VIRTUAL KEYBOARD -->
+                <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
+                    <input id="scan_pad" type="text" ng-model="ui.scannerValue"  dl-enter-key="enterPressed();"/>
+                </div>
+
+                <div style="text-align:center;">
+                    <span class="barcode-read" >{{ ui.scannerValue || "待機中" }}</span>
+                </div>
+
+
+                <ul class="list" style="margin-top: 20px;">
+                    <li class="list-item list-item--tappable list-item--chevron" ng-repeat="inventoryMoveLine in inventoryMoveLines" ng-click="showInventoryMoveLine(inventoryMoveLine, $index);">
+                        <div class="list-item__left">
+                            <img class="list-item__thumbnail" ng-src="{{inventoryMoveLine.janProduct.imageUrl}}" alt="{{inventoryMoveLine.janProduct.name}}" />
+                        </div>
+                        <div class="list-item__center">
+                            <div class="list-item__title">{{inventoryMoveLine.janProduct.name || inventoryMoveLine.record.food_name__c}}</div>
+                            <div class="list-item__subtitle">
+                                JANコード: {{inventoryMoveLine.janProduct.janCode || inventoryMoveLine.record.jan_code__c}} メーカー: {{inventoryMoveLine.janProduct.maker || inventoryMoveLine.record.maker__c}} <br/>
+                                バーコード: {{inventoryMoveLine.barcodes.length || 0}}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+
+
+
+
+
+
+                <ons-bottom-toolbar>
+                    <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveInventoryMove();">
+                        確定
+                    </button>
+                </ons-bottom-toolbar>
+                <ons-fab position="top right" onclick="document.getElementById('scan_pad').focus();">
+                    scan
+                </ons-fab>
+                <ons-fab position="bottom right" ng-click="newInventoryMoveLine();">
+                    <ons-icon icon="md-plus"></ons-icon>
+                </ons-fab>
+
+            </ons-page>
+        </template>
+
+        <template id="page2.html">
+            <ons-page>
+
+                <ons-toolbar class="toolbar--transparent">
+                  <div class="center">{{inventoryMoveLine.record.food_name__c}}</div>
+                </ons-toolbar>
+
+                <ons-fab position="top right" onclick="document.getElementById('scan_pad_2').focus();">
+                    scan
+                </ons-fab>
+
+                <!-- VIRTUAL KEYBOARD -->
+                <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
+                    <input id="scan_pad_2" type="text" ng-model="ui.scannerValue2"  dl-enter-key="barcodeEntered();"/>
+                </div>
+
+
+
+                <ons-list class="list">
+                    <ons-list-item>
+                        <div class="list-item__title"><small>賞味期限</small></div>
+                        <div class="list-item__subtitle">
+                            <span style="margin-right: 10px;">
+                                <select class="select-input">
+                                    <option>2018</option>
+                                    <option>2019</option>
+                                    <option>2020</option>
+                                </select>
+
+                            </span>
+
+                            <span style="margin-right: 10px;">
+                                <select class="select-input">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                    <option>11</option>
+                                    <option>12</option>
+                                </select>
+
+                            </span>
+
+                            <span style="margin-right: 10px;">
+                                <select class="select-input">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                    <option>11</option>
+                                    <option>12</option>
+                                    <option>13</option>
+                                    <option>14</option>
+                                    <option>15</option>
+                                    <option>16</option>
+                                    <option>17</option>
+                                    <option>18</option>
+                                    <option>19</option>
+                                    <option>20</option>
+                                    <option>21</option>
+                                    <option>22</option>
+                                    <option>23</option>
+                                    <option>24</option>
+                                    <option>25</option>
+                                    <option>26</option>
+                                    <option>27</option>
+                                    <option>28</option>
+                                    <option>29</option>
+                                    <option>30</option>
+                                    <option>31</option>
+                                </select>
+
+                            </span>
+
+                        </div>
+
+
+                    </ons-list-item>
+                    <ons-list-item>
+                        <div class="list-item__title"><small>食品分類</small></div>
+                        <div class="list-item__subtitle">
+                        <select class="select-input">
+                            <option>調味料</option>
+                            <option>食用油</option>
+                            <option>スプレッド類・乳製品</option>
+                            <option>調理品</option>
+                            <option>スープ</option>
+                            <option>缶詰</option>
+                            <option>粉類</option>
+                            <option>ホームメイキング材料</option>
+                            <option>麺類</option>
+                            <option>パン・シリアル類</option>
+                            <option>穀物</option>
+                            <option>加工肉類</option>
+                            <option>農産乾物</option>
+                            <option>漬物・佃煮</option>
+                            <option>加工水産</option>
+                            <option>農産</option>
+                            <option>菓子</option>
+                            <option>嗜好飲料</option>
+                            <option>飲料</option>
+                            <option>ベビーフード</option>
+                            <option>その他</option>
+                        </select>
+                        </div>
+                    </ons-list-item>
+
+                    <ons-list-item>
+                        <div class="list-item__title"><small>商品名</small></div>
+                        <div class="list-item__subtitle">
+                            <input type="text" class="text-input" placeholder="text" ng-model="inventoryMoveLine.record.food_name__c"/>
+                        </div>
+                    </ons-list-item>
+
+                    <ons-list-item>
+
+                        <div class="list-item__title"><small>入数</small></div>
+                        <div class="list-item__subtitle">
+                            <input type="number" class="text-input" placeholder="text" ng-model="inventoryMoveLine.record.quantity_per_unit__c"/>
+                        </div>
+                    </ons-list-item>
+
+                    <ons-list-item>
+                        <div class="list-item__title"><small>JANコード</small></div>
+                        <div class="list-item__subtitle">
+                            <input type="text" class="text-input" placeholder="text" ng-model="inventoryMoveLine.record.jan_code__c"/>
+                        </div>
+
+                    </ons-list-item>
+                    <ons-list-item>
+                        <div class="list-item__title"><small>メーカー</small></div>
+                        <div class="list-item__subtitle">
+                            <input type="text" class="text-input" placeholder="text" ng-model="inventoryMoveLine.record.maker__c"/>
+                        </div>
+                    </ons-list-item>
+                </ons-list>
+
+                <div style="text-align:center;">
+                    <span class="barcode-read" >{{ ui.scannerValue2 || "待機中" }}</span>
+                </div>
+
+
+                <ul class="list list--inset">
+                    <li class="list-item list--inset__item" ng-repeat="barcode in inventoryMoveLine.barcodes">
+                        <div class="list-item__center">{{barcode.Name}} / {{barcode.Id}}</div>
+                    </li>
+                </ul>
+
+                <ons-bottom-toolbar>
+                    <ons-row>
+                        <ons-col>
+                            <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="deleteInventoryMoveLine();navi.popPage();">
+                                削除
+                            </button>
+                        </ons-col>
+                        <ons-col>
+                            <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="myTest();navi.popPage();">
+                                保存
+                            </button>
+                        </ons-col>
+                    </ons-row>
+                </ons-bottom-toolbar>
+            </ons-page>
+        </template>
 
     </div>
+    <script>
 
-    <ons-button onclick="alert('Hello World!')">Click Me</ons-button>
+
+
+        var module = angular.module('my-app', ['onsen']);
+        module.controller('AppController', function($scope, $http,  $interval, $timeout) {
+            $scope.scannerValue = "";
+            $scope.ui = {};
+            $scope.inventoryMoveLines = [];
+            $scope.inventoryMoveLine = {};
+            $scope.inventoryMoveLineIndex;
+            $scope.onFocus = false;
+            $scope.currentPage = {};
+
+            $scope.init = function(){
+
+                console.log("initialized...");
+                //InboundController.mytestMethod(function(){});
+        	}
+
+            $scope.enterPressed = function(){
+
+                $timeout(function(){
+                    $scope.addInventoryMoveLine($scope.ui.scannerValue);
+                    $scope.ui.scannerValue = "";
+                }, 500)
+            }
+
+            $scope.barcodeEntered = function(){
+                $timeout(function(){
+                    $scope.addBarcode($scope.ui.scannerValue2);
+                    $scope.ui.scannerValue2 = "";
+                }, 500)
+            }
+
+            $scope.addInventoryMoveLine = function(janCode){
+                janCode = janCode || "";
+                InboundController.getJanCode( janCode, function( value, event ){
+                    console.log( value );
+                    $scope.inventoryMoveLines.push( value );
+                    $scope.$apply();
+                });
+            }
+
+            $scope.addBarcode = function(barcode){
+                InboundController.findBarcode( barcode, function( value, event ){
+                    console.log( value );
+                    if($scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes == null){
+                        $scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes = [value]
+                    }
+                    else{
+                        if($scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes.length > 0){
+                            $scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes.push( value );
+                        }
+                        else{
+                            $scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes = [value]
+                        }
+                    }
+                    $scope.$apply();
+                });
+            }
+
+            $scope.showInventoryMoveLine = function( ivl, index ){
+                $scope.inventoryMoveLineIndex = index;
+                $scope.inventoryMoveLine = ivl;
+                $scope.navi.pushPage("page2.html");
+            }
+
+            $scope.deleteInventoryMoveLine = function(){
+                if( $scope.inventoryMoveLineIndex >= 0 ){
+                    $scope.inventoryMoveLines.splice($scope.inventoryMoveLineIndex, 1);
+                }
+            }
+
+            $scope.newInventoryMoveLine = function(){
+                $scope.inventoryMoveLine = {};
+                $scope.inventoryMoveLines.push($scope.inventoryMoveLine);
+                $scope.inventoryMoveLineIndex = $scope.inventoryMoveLines.length - 1;
+                $scope.navi.pushPage('page2.html');
+            }
+
+            $scope.saveInventoryMove = function(){
+                //var json = JSON.stringify( {payload:$scope.inventoryMoveLines} );
+                var json = JSON.stringify( $scope.inventoryMoveLines );
+                InboundController.saveInboundInventoryMove( json, function( value, event ){
+                    console.log( value );
+                    $scope.$apply();
+                });
+
+            }
+
+        }).directive("dlEnterKey",function(){
+            return function(scope, element, attrs) {
+
+                element.bind("keydown keypress", function(event) {
+                    var keyCode = event.which || event.keyCode;
+
+                    // If enter key is pressed
+                    if (keyCode === 13) {
+                        scope.$apply(function() {
+                                // Evaluate the expression
+                            scope.$eval(attrs.dlEnterKey);
+                        });
+
+                        event.preventDefault();
+                    }
+                });
+            };
+        });
+
+
+
+    </script>
+</body>
 
 
 </apex:page>
