@@ -23,6 +23,10 @@
                 <behavior>Edit</behavior>
                 <field>donated_from_person__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RecordTypeId</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -40,10 +44,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>RecordTypeId</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -80,12 +80,12 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>barcode__c</fields>
-        <fields>JAN_code__c</fields>
+        <fields>jan_code__c</fields>
         <fields>food_type__c</fields>
-        <fields>syoumi_kigen__c</fields>
-        <fields>syokuhin_count__c</fields>
-        <fields>X1_kg__c</fields>
-        <fields>X1_kcal__c</fields>
+        <fields>expiration_date__c</fields>
+        <fields>quantity__c</fields>
+        <fields>weight_in_gram_per_unit__c</fields>
+        <fields>calory_in_kcal_per_unit__c</fields>
         <fields>LAST_UPDATE</fields>
         <relatedList>InventoryMoveLine__c.inventory_move__c</relatedList>
         <sortField>LAST_UPDATE</sortField>
@@ -96,4 +96,10 @@
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
+    <summaryLayout>
+        <masterLabel>00hp0000000PRKP</masterLabel>
+        <sizeX>4</sizeX>
+        <sizeY>0</sizeY>
+        <summaryLayoutStyle>Default</summaryLayoutStyle>
+    </summaryLayout>
 </Layout>
