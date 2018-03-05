@@ -3,22 +3,14 @@
     <applicationVisibilities>
         <application>inventory_manager</application>
         <default>false</default>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <classAccesses>
         <apexClass>BarcodeBulkCreateController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>InboundController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>InventoryManager</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>InventoryMoveLineWrapper</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -35,19 +27,19 @@
     </classAccesses>
     <custom>false</custom>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>BarcodeAssignment__c.barcode__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>BarcodeAssignment__c.inventory_move_line__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Barcode__c.barcode_image__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -155,9 +147,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>InventoryMoveLine__c.food_name__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -165,14 +157,14 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>InventoryMoveLine__c.jan_code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>InventoryMoveLine__c.maker__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -180,9 +172,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>InventoryMoveLine__c.quantity_per_unit__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -241,25 +233,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>InventoryMoveLine__c-在庫移動明細レイアウト</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
-        <recordType>InventoryMove__c.disposal</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
-        <recordType>InventoryMove__c.inbound</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
-        <recordType>InventoryMove__c.outbound</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
-        <recordType>InventoryMove__c.transfer</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Warehouse__c-倉庫レイアウト</layout>
@@ -329,10 +302,6 @@
     </objectPermissions>
     <pageAccesses>
         <apexPage>BarcodeBulkCreate</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>WarehouseInbound</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
