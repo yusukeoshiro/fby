@@ -11,7 +11,7 @@ public class InventoryMoveLineWrapper {
         this.record = new InventoryMoveLine__c();
         this.record.jan_code__c = janProduct.janCode;
         this.record.food_name__c = janProduct.name;
-        System.debug( this.record );
+        this.record.price__c = janProduct.price;        
         this.janProduct = janProduct;
     }
 }

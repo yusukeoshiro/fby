@@ -140,6 +140,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>InventoryMoveLine__c.price__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>InventoryMoveLine__c.quantity__c</field>
         <readable>true</readable>
@@ -273,7 +278,7 @@
     </recordTypeVisibilities>
     <tabSettings>
         <tab>Barcode__c</tab>
-        <visibility>Available</visibility>
+        <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
         <tab>CurrentInventory__c</tab>

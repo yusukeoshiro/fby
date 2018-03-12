@@ -203,7 +203,7 @@
                     <ons-list-item>
                         <div class="list-item__title"><small>商品名</small></div>
                         <div class="list-item__subtitle">
-                            <input type="text" class="text-input" placeholder="text" ng-model="inventoryMoveLine.record.food_name__c"/>
+                            <input type="text" class="text-input" placeholder="商品名" ng-model="inventoryMoveLine.record.food_name__c"/>
                         </div>
                     </ons-list-item>
 
@@ -211,21 +211,28 @@
 
                         <div class="list-item__title"><small>入数</small></div>
                         <div class="list-item__subtitle">
-                            <input type="number" class="text-input" placeholder="text" ng-model="inventoryMoveLine.record.quantity_per_unit__c"/>
+                            <input type="number" class="text-input" placeholder="1" ng-model="inventoryMoveLine.record.quantity_per_unit__c"/>
                         </div>
                     </ons-list-item>
 
                     <ons-list-item>
                         <div class="list-item__title"><small>JANコード</small></div>
                         <div class="list-item__subtitle">
-                            <input type="text" class="text-input" placeholder="text" ng-model="inventoryMoveLine.record.jan_code__c"/>
+                            <input type="text" class="text-input" placeholder="123456789" ng-model="inventoryMoveLine.record.jan_code__c"/>
                         </div>
 
                     </ons-list-item>
                     <ons-list-item>
                         <div class="list-item__title"><small>メーカー</small></div>
                         <div class="list-item__subtitle">
-                            <input type="text" class="text-input" placeholder="text" ng-model="inventoryMoveLine.record.maker__c"/>
+                            <input type="text" class="text-input" placeholder="メーカー" ng-model="inventoryMoveLine.record.maker__c"/>
+                        </div>
+                    </ons-list-item>
+
+                    <ons-list-item>
+                        <div class="list-item__title"><small>参考価格</small></div>
+                        <div class="list-item__subtitle">
+                            <input type="text" class="text-input" placeholder="100" ng-model="inventoryMoveLine.record.price__c"/>
                         </div>
                     </ons-list-item>
                 </ons-list>
