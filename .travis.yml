@@ -12,12 +12,11 @@ before_install:
 - wget -qO- $URL | tar xJf -
 - "./sfdx/install"
 - export PATH=./sfdx/$(pwd):$PATH
+script:
 - sfdx update
 - sfdx --version
 - sfdx plugins --core
-- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key
-  --username $USERNAME --setdefaultdevhubusername
-script:
+- sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername
 - sfdx force:org:list
 - sfdx force:org:create -s -f config/project-scratch-def.json
 - sfdx force:source:push
