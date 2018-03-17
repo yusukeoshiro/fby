@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>calorie__c</fullName>
+    <fullName>completion_time__c</fullName>
     <externalId>false</externalId>
-    <label>カロリー[kcal]</label>
-    <precision>18</precision>
+    <label>完了時刻</label>
     <required>false</required>
-    <scale>2</scale>
     <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
-    <unique>false</unique>
+    <type>DateTime</type>
 </CustomField>

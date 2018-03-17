@@ -172,38 +172,32 @@
 
                     </ons-list-item>
                     <ons-list-item>
-                        <div class="list-item__title"><small>食品分類</small></div>
+                        <div class="list-item__title"><small>食品分類 (L1)</small></div>
                         <div class="list-item__subtitle">
-                        <select class="select-input">
-                            <option>調味料</option>
-                            <option>食用油</option>
-                            <option>スプレッド類・乳製品</option>
-                            <option>調理品</option>
-                            <option>スープ</option>
-                            <option>缶詰</option>
-                            <option>粉類</option>
-                            <option>ホームメイキング材料</option>
-                            <option>麺類</option>
-                            <option>パン・シリアル類</option>
-                            <option>穀物</option>
-                            <option>加工肉類</option>
-                            <option>農産乾物</option>
-                            <option>漬物・佃煮</option>
-                            <option>加工水産</option>
-                            <option>農産</option>
-                            <option>菓子</option>
-                            <option>嗜好飲料</option>
-                            <option>飲料</option>
-                            <option>ベビーフード</option>
-                            <option>その他</option>
+                        <select class="select-input" ng-model="inventoryMoveLine.record.food_type_l1__c">
+                            <option ng-repeat="l1 in foodTypeL1" value="{{l1.Id}}">
+                                {{l1.Name}}
+                            </option>
                         </select>
                         </div>
                     </ons-list-item>
 
                     <ons-list-item>
+                        <div class="list-item__title"><small>食品分類 (L2)</small></div>
+                        <div class="list-item__subtitle">
+                        <select class="select-input" ng-model="inventoryMoveLine.record.food_type_l2__c">
+                            <option ng-repeat="l2 in loadFoodTypeL2( inventoryMoveLine.record.food_type_l1__c )" value="{{l2.Id}}">
+                                {{l2.Name}}
+                            </option>
+                        </select>
+                        </div>
+                    </ons-list-item>
+
+
+                    <ons-list-item>
                         <div class="list-item__title"><small>商品名</small></div>
                         <div class="list-item__subtitle">
-                            <input type="text" class="text-input" placeholder="text" ng-model="inventoryMoveLine.record.food_name__c"/>
+                            <input type="text" class="text-input" placeholder="商品名" ng-model="inventoryMoveLine.record.food_name__c"/>
                         </div>
                     </ons-list-item>
 
@@ -211,21 +205,28 @@
 
                         <div class="list-item__title"><small>入数</small></div>
                         <div class="list-item__subtitle">
-                            <input type="number" class="text-input" placeholder="text" ng-model="inventoryMoveLine.record.quantity_per_unit__c"/>
+                            <input type="number" class="text-input" placeholder="1" ng-model="inventoryMoveLine.record.quantity_per_unit__c"/>
                         </div>
                     </ons-list-item>
 
                     <ons-list-item>
                         <div class="list-item__title"><small>JANコード</small></div>
                         <div class="list-item__subtitle">
-                            <input type="text" class="text-input" placeholder="text" ng-model="inventoryMoveLine.record.jan_code__c"/>
+                            <input type="text" class="text-input" placeholder="123456789" ng-model="inventoryMoveLine.record.jan_code__c"/>
                         </div>
 
                     </ons-list-item>
                     <ons-list-item>
                         <div class="list-item__title"><small>メーカー</small></div>
                         <div class="list-item__subtitle">
-                            <input type="text" class="text-input" placeholder="text" ng-model="inventoryMoveLine.record.maker__c"/>
+                            <input type="text" class="text-input" placeholder="メーカー" ng-model="inventoryMoveLine.record.maker__c"/>
+                        </div>
+                    </ons-list-item>
+
+                    <ons-list-item>
+                        <div class="list-item__title"><small>参考価格</small></div>
+                        <div class="list-item__subtitle">
+                            <input type="text" class="text-input" placeholder="100" ng-model="inventoryMoveLine.record.price__c"/>
                         </div>
                     </ons-list-item>
                 </ons-list>
@@ -304,8 +305,12 @@
             $scope.inventoryMoveLineIndex;
             $scope.onFocus = false;
             $scope.currentPage = {};
+            $scope.foodTypeL1 = [];
+            $scope.foodTypeL2 = {};
 
             $scope.init = function(){
+                $scope.loadFoodTypeL1();
+
 
                 console.log("initialized...");
                 //InboundController.mytestMethod(function(){});
@@ -318,6 +323,29 @@
                     $scope.ui.scannerValue = "";
                 }, 500)
             }
+
+            $scope.loadFoodTypeL1 = function(){
+                InboundController.getFoodTypeL1( function( value, event ){
+                    $scope.foodTypeL1 = value;
+                    $scope.$apply();
+                });
+            }
+
+            $scope.loadFoodTypeL2 = function( l1Id ){
+                if( $scope.foodTypeL2[ l1Id ] !== undefined ){
+                    return $scope.foodTypeL2[ l1Id ];
+                }
+                else{
+                    InboundController.getFoodTypeL2( l1Id, function( value, event ){
+                        $scope.foodTypeL2[ l1Id ] = value;
+                        $scope.$apply();
+                        return value;
+                    });
+
+                }
+
+            }
+
 
             $scope.barcodeEntered = function(){
                 $timeout(function(){

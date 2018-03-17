@@ -1,7 +1,14 @@
 public class InventoryMoveLineWrapper {
-    public InventoryMoveLine__c record {get;set;}
+    private InventoryMoveLine__c record {get;set;}
     public JanProduct janProduct {get;set;}
     public List<Barcode__c> barcodes {get;set;}
+
+
+
+    public InventoryMoveLine__c getRecord(){
+        return this.record;
+    }
+
 
     public InventoryMoveLineWrapper( InventoryMoveLine__c iml ) {
         this.record = iml;
@@ -11,7 +18,7 @@ public class InventoryMoveLineWrapper {
         this.record = new InventoryMoveLine__c();
         this.record.jan_code__c = janProduct.janCode;
         this.record.food_name__c = janProduct.name;
-        System.debug( this.record );
+        this.record.price__c = janProduct.price;
         this.janProduct = janProduct;
     }
 }
