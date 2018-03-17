@@ -1,0 +1,96 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" controller="BarcodeBulkCreateController" lightningStylesheets="true">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.js"></script>
+
+
+
+	<div id="app">
+		<div class="ui container" style="margin-top: 20px;">
+
+
+			<div class="ui segment">
+
+				<div class="ui inverted dimmer" id="dimmer">
+					<div class="ui loader"></div>
+				</div>
+
+				<div id="apex-success-message" class="ui green message hidden">
+					<i class="close icon"></i>
+					<div class="header">
+						成功
+					</div>
+				</div>
+
+				<div id="apex-error-message" class="ui red message hidden">
+					<i class="close icon"></i>
+					<div class="header">
+						失敗
+					</div>
+					<p></p>
+				</div>
+
+
+				<div class="ui form">
+					<div class="field">
+						<label>発行するバーコードの数 (10,000以下で入力)</label>
+						<input type="text" name="quantity" placeholder="12" id="barcode_quantity" />
+					</div>
+					<button class="ui button"  id="btn-create">作成</button>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+
+	<script>
+
+
+		//console.log(  );
+		//Visualforce.remoting.oauthAccessToken;
+		$(function(){
+			$("#btn-create").on("click", function(){
+				var quantity = $("#barcode_quantity").val();
+				if( isNumeric(quantity) ){
+					console.log("creating barcodes...");
+					$('#dimmer').dimmer('show');
+
+					BarcodeBulkCreateController.bulkCreateBarcode(quantity, function(value, event){
+						$('#dimmer').dimmer('hide');
+						if( event.statusCode == 200 ){
+							$("#apex-success-message").removeClass("hidden");
+							$("#apex-error-message").addClass("hidden");
+						}
+						else{
+							// error
+							$("#apex-success-message").addClass("hidden");
+							$("#apex-error-message").removeClass("hidden");
+							$("#apex-error-message p").html( event.message );
+						}
+					});
+
+				}
+				else{
+					alert( "数字を入力してください" );
+				}
+			});
+
+			$('.message .close').on('click', function() {
+				$(this)
+					.closest('.message')
+					.transition('fade')
+				;
+			});
+
+
+		});
+		function isNumeric(n) {
+			return !isNaN(parseFloat(n)) && isFinite(n);
+		}
+
+	</script>
+
+
+</apex:page>

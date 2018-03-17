@@ -1,1 +1,4 @@
 .sfdx
+mdapi/
+.DS_Store
+server.key
