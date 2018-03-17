@@ -20,54 +20,30 @@ global with sharing class InboundController {
     @RemoteAction
     global static Object saveInboundInventoryMove( String jsonInput ){
 
+        InventoryMoveWrapper imw = InventoryManager.createInventoryMoveWrapper( InventoryMoveWrapper.INBOUND );
+
+        // TODO fix this to be dynamic
+        imw.getRecord().transfer_to_warehouse__c = [SELECT Id FROM Warehouse__c LIMIT 1].Id;
+
         List<InventoryMoveLineWrapper> lines = (List<InventoryMoveLineWrapper>) JSON.deserialize(jsonInput, List<InventoryMoveLineWrapper>.class);
-
-        //List<InventoryMoveLineWrapper> m = (List<InventoryMoveLineWrapper>) JSON.deserializeUntyped(jsonInput, List<InventoryMoveLineWrapper>);
-        //List<InventoryMoveLineWrapper> m = (List<InventoryMoveLineWrapper>) JSON.deserializeUntyped(jsonInput);
-        System.debug(lines);
-
-
-        //List<Object> lines = (List<Object>) m.get('payload');
-
-
-        Savepoint sp = Database.setSavepoint();
-        try{
-            InventoryMoveWrapper imw = InventoryManager.createInventoryMoveWrapper( InventoryMoveWrapper.INBOUND );
-            UPSERT imw.getRecord();
-
-
-            List<InventoryMoveLine__c> imls = new List<InventoryMoveLine__c>();
-            List<BarcodeAssignment__c> bas = new List<BarcodeAssignment__c>();
-
-            for( InventoryMoveLineWrapper line:lines ){
-                line.record.inventory_move__c = imw.getRecord().Id;
-                imls.add( line.record );
-            }
-            UPSERT imls;
-
-            for( InventoryMoveLineWrapper line:lines ){
-                System.debug('+++++++');
-                System.debug( line.record.Id );
-                for( Barcode__c barcode:line.barcodes ){
-                    System.debug( barcode );
-                    BarcodeAssignment__c ba = new BarcodeAssignment__c();
-                    ba.inventory_move_line__c = line.record.Id;
-                    ba.barcode__c = barcode.Id;
-                    bas.add(ba);
-                }
-            }
-
-            UPSERT bas;
-
-            //Database.rollback(sp);
-        }
-        catch( Exception e ){
-            System.debug('error!!');
-            System.debug(e.getMessage());
-
-            Database.rollback(sp);
-        }
+        imw.setLines( lines );
+        imw.confirmInventoryMove();
 
         return null;
     }
+
+    @RemoteAction
+    global static List<FoodTypeL1__c> getFoodTypeL1(){
+        return [SELECT Id, Name FROM FoodTypeL1__c];
+    }
+
+
+    @RemoteAction
+    global static List<FoodTypeL2__c> getFoodTypeL2( String foodTypeL1Id ){
+        return [SELECT Id, Name FROM FoodTypeL2__c WHERE food_type_l1__c = :foodTypeL1Id];
+    }
+
+
+
+
 }

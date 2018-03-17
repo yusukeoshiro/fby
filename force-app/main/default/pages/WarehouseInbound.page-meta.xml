@@ -4,9 +4,4 @@
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>WarehouseInbound</label>
-    <packageVersions>
-        <majorNumber>1</majorNumber>
-        <minorNumber>16</minorNumber>
-        <namespace>sf_chttr_apps</namespace>
-    </packageVersions>
 </ApexPage>
