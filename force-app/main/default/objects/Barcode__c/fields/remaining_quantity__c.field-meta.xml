@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>original_quantity__c</fullName>
+    <fullName>remaining_quantity__c</fullName>
     <externalId>false</externalId>
-    <label>入数</label>
+    <formula>original_quantity__c -  shipped_quantity__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>残数</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Number</type>
     <unique>false</unique>

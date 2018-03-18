@@ -48,48 +48,46 @@ public with sharing class InventoryMoveWrapper {
         try{
 
         // STEP 2 Lock the related CurrentInventory, CurrentInventoryLine and related Barcode records
+
             // get CurrentInventory lines
             Set<String> uniqueKeys = new Set<String>();
             Map<String, CurrentInventory__c> mapCurrentInventory = new Map<String, CurrentInventory__c>();
 
+            Map<Id, Barcode__c> m = null;
+
+            // create blank map
             for( InventoryMoveLineWrapper line:this.getLines() ){
+                String uniqueKey = getUniqueKey(String.valueOf( this.getRecord().transfer_to_warehouse__c ), line);
+                uniqueKeys.add( uniqueKey );
 
-                String uniqueKey =
-                    String.ValueOf(this.getRecord().transfer_to_warehouse__c).left(15) + ':' +
-                    String.ValueOf(line.getRecord().food_type_l1__c)         .left(15) + ':' +
-                    String.ValueOf(line.getRecord().food_type_l2__c)         .left(15) + ':' +
-                    line.getRecord().jan_code__c;
-                uniqueKeys.add(uniqueKey);
+                CurrentInventory__c ci = new CurrentInventory__c();
+                ci.product_name__c = line.getRecord().food_name__c;
+                ci.warehouse__c    = this.getRecord().transfer_to_warehouse__c;
+                ci.food_type_l1__c = line.getRecord().food_type_l1__c;
+                ci.food_type_l2__c = line.getRecord().food_type_l2__c;
+                ci.jan_code__c     = line.getRecord().jan_code__c;
+                ci.physical_quantity__c = 0;
+                mapCurrentInventory.put( uniqueKey, ci );
             }
-            System.debug( uniqueKeys );
 
-
-            for( CurrentInventory__c ci:[SELECT Id, physical_quantity__c, unique_key__c FROM CurrentInventory__c WHERE unique_key__c IN :uniqueKeys ] ){
+            // overwrite the map with whats retrieved from the DB
+            List<CurrentInventory__c> lockedCurrentInventoryRecords = [SELECT Id, physical_quantity__c, unique_key__c FROM CurrentInventory__c WHERE unique_key__c IN :uniqueKeys FOR UPDATE]; // LOCK THE RECORDS!!
+            for( CurrentInventory__c ci:lockedCurrentInventoryRecords){
                 mapCurrentInventory.put( ci.unique_key__c, ci );
             }
-            for( String uniqueKey:uniqueKeys ){
-                if( !mapCurrentInventory.containsKey( uniqueKey ) ){
-                    CurrentInventory__c ci = new CurrentInventory__c();
-                    List<String> ids = uniqueKey.split(':');
-                    // ci.product_name__c = TODO put in the product name
-                    ci.warehouse__c    = ids[0];
-                    ci.food_type_l1__c = ids[1];
-                    ci.food_type_l2__c = ids[2];
-                    ci.jan_code__c     = ids[3];
-                    ci.physical_quantity__c = 0;
-                    mapCurrentInventory.put( uniqueKey, ci );
-                }
-            }
 
 
 
+        // STEP 3 Update the locked records (inventory) and new InventoryMove records
 
-        // STEP 3 Update the locked records
+        // SAVE InventoryMove
         this.getRecord().completion_time__c = Datetime.now();
         UPSERT this.getRecord();
 
+
+        // SAVE InventoryMoveLines
         List<InventoryMoveLine__c> imls = new List<InventoryMoveLine__c>();
-        List<BarcodeAssignment__c> bas = new List<BarcodeAssignment__c>();
+        List<Barcode__c> barcodes = new List<Barcode__c>();
 
         for( InventoryMoveLineWrapper line:this.getLines() ){
             line.getRecord().inventory_move__c = this.getRecord().Id;
@@ -97,33 +95,45 @@ public with sharing class InventoryMoveWrapper {
         }
         UPSERT imls;
 
+
+
+
+        // SAVE CurrentInventory
+        UPSERT mapCurrentInventory.values();
+
+
+        // SAVE BarcodeAssignments
         for( InventoryMoveLineWrapper line:this.getLines() ){
 
-            String uniqueKey =
-                String.ValueOf(this.getRecord().transfer_to_warehouse__c).left(15) + ':' +
-                String.ValueOf(line.getRecord().food_type_l1__c)         .left(15) + ':' +
-                String.ValueOf(line.getRecord().food_type_l2__c)         .left(15) + ':' +
-                line.getRecord().jan_code__c;
-
+            String uniqueKey = getUniqueKey( String.ValueOf(this.getRecord().transfer_to_warehouse__c), line );
             for( Barcode__c barcode:line.barcodes ){
-                BarcodeAssignment__c ba = new BarcodeAssignment__c();
-                ba.inventory_move_line__c = line.getRecord().Id;
-                ba.barcode__c = barcode.Id;
-                bas.add(ba);
+                barcode.donated_date__c = Date.today();
+                // barcode.donated_company__c =  TODO add this
+                // barcode.donated_person__c =   TODO add this
+                barcode.current_inventory__c = mapCurrentInventory.get( uniqueKey ).Id;
+                barcode.shipped_quantity__c = 0;
+                barcode.expiration_date__c = line.getRecord().expiration_date__c;
+                barcode.original_quantity__c = line.getRecord().quantity_per_unit__c;
 
-                mapCurrentInventory.get( uniqueKey ).physical_quantity__c += line.getRecord().quantity_per_unit__c;
-
+                barcodes.add(barcode);
+                mapCurrentInventory.get( uniqueKey ).physical_quantity__c += line.getRecord().quantity_per_unit__c; // update inventory quantity
             }
         }
-        UPSERT bas;
+        UPSERT barcodes;
 
+
+
+
+        // SAVE CurrentInventory -- UPDATE Quantity
         UPSERT mapCurrentInventory.values();
+
 
         // STEP 4 Commit
 
         }
         catch( Exception e ){
             Database.rollback(sp);
+            System.debug( e.getStackTraceString() );
             throw new AppException( e.getMessage() );
         }
 
@@ -139,6 +149,19 @@ public with sharing class InventoryMoveWrapper {
 
     }
 
+
+
+
+
+    // constructs unique key from InventoryMoveLineWrapper and warehouseId
+    private static String getUniqueKey( String warehoudId, InventoryMoveLineWrapper imlw ){
+        String uniqueKey =
+            String.ValueOf(warehoudId).left(15) + ':' +
+            String.ValueOf(imlw.getRecord().food_type_l1__c).left(15) + ':' +
+            String.ValueOf(imlw.getRecord().food_type_l2__c).left(15) + ':' +
+            imlw.getRecord().jan_code__c;
+        return uniqueKey;
+    }
 
 
     private static String getRecordTypeId( Integer moveType ){

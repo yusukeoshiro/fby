@@ -45,23 +45,13 @@
     <custom>false</custom>
     <fieldPermissions>
         <editable>false</editable>
-        <field>BarcodeAssignment__c.barcode__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BarcodeAssignment__c.inventory_move_line__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Barcode__c.barcode_image__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Barcode__c.current_inventory_line__c</field>
-        <readable>false</readable>
+        <editable>true</editable>
+        <field>Barcode__c.current_inventory__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -79,24 +69,24 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>CurrentInventoryLine__c.expiration_date__c</field>
-        <readable>false</readable>
+        <editable>true</editable>
+        <field>Barcode__c.expiration_date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Barcode__c.original_quantity__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>CurrentInventoryLine__c.original_quantity__c</field>
-        <readable>false</readable>
+        <field>Barcode__c.remaining_quantity__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>CurrentInventoryLine__c.remaining_quantity__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>CurrentInventoryLine__c.shipped_quantity__c</field>
-        <readable>false</readable>
+        <editable>true</editable>
+        <field>Barcode__c.shipped_quantity__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -239,13 +229,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>BarcodeAssignment__c-バーコード関連付 Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Barcode__c-FBYコードレイアウト</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CurrentInventoryLine__c-現在庫明細レイアウト</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CurrentInventory__c-現在庫レイアウト</layout>
@@ -290,25 +274,7 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
-        <object>BarcodeAssignment__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
         <object>Barcode__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>CurrentInventoryLine__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

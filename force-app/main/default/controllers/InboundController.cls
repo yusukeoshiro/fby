@@ -6,7 +6,11 @@ global with sharing class InboundController {
     @RemoteAction
     global static Object getJanCode( String janCode ){
         JanProduct jp = JanCodeHelper.getJanProduct( janCode );
-        InventoryMoveLineWrapper imw = new InventoryMoveLineWrapper( jp );
+
+
+        // TODO fix this to be dynamic
+        String warehouseId = [SELECT Id FROM Warehouse__c LIMIT 1].Id;
+        InventoryMoveLineWrapper imw = new InventoryMoveLineWrapper( warehouseId, jp );
         //imw.record.JAN_code__c = 'aaa';
         return imw;
     }
