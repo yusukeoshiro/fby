@@ -12,40 +12,43 @@ public class InventoryMoveLineWrapper {
 
     public InventoryMoveLineWrapper( InventoryMoveLine__c iml ) {
         this.record = iml;
+        this.record.quantity_per_unit__c = 1;
         this.barcodes = new List<Barcode__c>();
     }
     public InventoryMoveLineWrapper( String warehouseId, JanProduct janProduct ) {
         this.record = new InventoryMoveLine__c();
-        this.record.jan_code__c = janProduct.janCode;
-        this.record.food_name__c = janProduct.name;
-        this.record.price__c = janProduct.price;
+        this.record.quantity_per_unit__c = 1;
 
-        // see if this jan code already exists
-        CurrentInventory__c ci = [
-            SELECT Id, jan_code__c, food_type_l1__c, food_type_l2__c,product_name__c
-            FROM CurrentInventory__c
-            WHERE
-                jan_code__c =: janProduct.janCode AND warehouse__c =: warehouseId
-            ORDER BY LasTModifiedDate DESC LIMIT 1
-        ];
+        if( janProduct != null ){
+            this.record.jan_code__c = janProduct.janCode;
+            this.record.food_name__c = janProduct.name;
+            this.record.price__c = janProduct.price;
 
-        if( ci == null ){
-            ci = [
+            // see if this jan code already exists
+            List<CurrentInventory__c> cis = [
                 SELECT Id, jan_code__c, food_type_l1__c, food_type_l2__c,product_name__c
                 FROM CurrentInventory__c
                 WHERE
-                    jan_code__c =: janProduct.janCode
+                    jan_code__c =: janProduct.janCode AND warehouse__c =: warehouseId
                 ORDER BY LasTModifiedDate DESC LIMIT 1
             ];
+
+            if( cis.size() == 0 ){
+                cis = [
+                    SELECT Id, jan_code__c, food_type_l1__c, food_type_l2__c,product_name__c
+                    FROM CurrentInventory__c
+                    WHERE
+                        jan_code__c =: janProduct.janCode
+                    ORDER BY LasTModifiedDate DESC LIMIT 1
+                ];
+            }
+
+            if( cis.size() > 0 ){
+                this.record.food_type_l1__c = cis[0].food_type_l1__c;
+                this.record.food_type_l2__c = cis[0].food_type_l2__c;
+            }
+
         }
-
-        if( ci != null ){
-            this.record.food_type_l1__c = ci.food_type_l1__c;
-            this.record.food_type_l2__c = ci.food_type_l2__c;
-        }
-
-
-
 
 
         this.janProduct = janProduct;

@@ -102,7 +102,7 @@ public with sharing class InventoryMoveWrapper {
         UPSERT mapCurrentInventory.values();
 
 
-        // SAVE BarcodeAssignments
+        // SAVE Barcode
         for( InventoryMoveLineWrapper line:this.getLines() ){
 
             String uniqueKey = getUniqueKey( String.ValueOf(this.getRecord().transfer_to_warehouse__c), line );

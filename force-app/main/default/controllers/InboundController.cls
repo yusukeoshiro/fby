@@ -17,8 +17,14 @@ global with sharing class InboundController {
 
     @RemoteAction
     global static Object findBarcode( String barcode ){
-        Barcode__c b = [SELECT Id, Name FROM Barcode__c WHERE Name =: barcode LIMIT 1];
-        return b;
+        List<Barcode__c> barcodes = [SELECT Id, Name FROM Barcode__c WHERE Name =: barcode LIMIT 1];
+        if( barcodes.size() > 0 ){
+            return barcodes[0];
+        }
+        else{
+            return null;
+        }
+
     }
 
     @RemoteAction
