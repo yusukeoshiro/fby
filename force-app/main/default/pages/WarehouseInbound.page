@@ -104,6 +104,14 @@
                         <span class="barcode-read" >{{ ui.scannerValue2 || "待機中" }}</span>
                     </div>
 
+                    <div ng-show="( inventoryMoveLine.barcodes.length == 0 ) || ( inventoryMoveLine.barcodes === undefined )">
+                        <span style="color:red;">
+                            <i class="fa fa-times"></i> 入庫させるバーコードを入力してください。
+                        </span>
+                    </div>
+
+
+
 
                     <div ng-show="inventoryMoveLine.barcodes.length > 0">
                         <ul class="list list--inset">
@@ -124,72 +132,31 @@
                         <div class="list-item__title"><small>賞味期限</small></div>
                         <div class="list-item__subtitle">
                             <span style="margin-right: 10px;">
-                                <select class="select-input">
-                                    <option>2018</option>
-                                    <option>2019</option>
-                                    <option>2020</option>
+                                <select class="select-input" ng-model="inventoryMoveLine.selectedYear" ng-change="validateDate( inventoryMoveLine )">
+                                    <option ng-repeat="year in calendar.years">{{year}}</option>
+                                </select>
+                            </span>
+
+                            <span style="margin-right: 10px;">
+                                <select class="select-input" ng-model="inventoryMoveLine.selectedMonth" ng-change="validateDate( inventoryMoveLine )">
+                                    <option ng-repeat="month in calendar.months">{{month}}</option>
                                 </select>
 
                             </span>
 
                             <span style="margin-right: 10px;">
-                                <select class="select-input">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                    <option>11</option>
-                                    <option>12</option>
+                                <select class="select-input" ng-model="inventoryMoveLine.selectedDay" ng-change="validateDate( inventoryMoveLine )">
+                                    <option ng-repeat="day in calendar.days">{{day}}</option>
                                 </select>
-
                             </span>
 
-                            <span style="margin-right: 10px;">
-                                <select class="select-input">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                    <option>11</option>
-                                    <option>12</option>
-                                    <option>13</option>
-                                    <option>14</option>
-                                    <option>15</option>
-                                    <option>16</option>
-                                    <option>17</option>
-                                    <option>18</option>
-                                    <option>19</option>
-                                    <option>20</option>
-                                    <option>21</option>
-                                    <option>22</option>
-                                    <option>23</option>
-                                    <option>24</option>
-                                    <option>25</option>
-                                    <option>26</option>
-                                    <option>27</option>
-                                    <option>28</option>
-                                    <option>29</option>
-                                    <option>30</option>
-                                    <option>31</option>
-                                </select>
-
+                            <span ng-show="inventoryMoveLine.record.expiration_date__c==null" style="color:red;">
+                                <i class="fa fa-times"></i>
                             </span>
-
+                            <span ng-show="inventoryMoveLine.record.expiration_date__c!=null" style="color:green;">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </span>
                         </div>
-
-
                     </ons-list-item>
                     <ons-list-item>
                         <div class="list-item__title"><small>食品分類 (L1)</small></div>
@@ -199,6 +166,15 @@
                                 {{l1.Name}}
                             </option>
                         </select>
+
+                        <span ng-show="(inventoryMoveLine.record.food_type_l1__c === undefined) || (inventoryMoveLine.record.food_type_l1__c == null)" style="color:red;">
+                            <i class="fa fa-times"></i>
+                        </span>
+                        <span ng-show="!((inventoryMoveLine.record.food_type_l1__c === undefined) || (inventoryMoveLine.record.food_type_l1__c == null))" style="color:green;">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                        </span>
+
+
                         </div>
                     </ons-list-item>
 
@@ -210,6 +186,17 @@
                                 {{l2.Name}}
                             </option>
                         </select>
+
+                        <span ng-show="(inventoryMoveLine.record.food_type_l2__c === undefined) || (inventoryMoveLine.record.food_type_l2__c == null)" style="color:red;">
+                            <i class="fa fa-times"></i>
+                        </span>
+                        <span ng-show="!((inventoryMoveLine.record.food_type_l2__c === undefined) || (inventoryMoveLine.record.food_type_l2__c == null))" style="color:green;">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                        </span>
+
+
+
+
                         </div>
                     </ons-list-item>
 
@@ -226,6 +213,13 @@
                         <div class="list-item__title"><small>入数 (バーコードあたり何個入っていますか?)</small></div>
                         <div class="list-item__subtitle">
                             <input type="text" class="text-input" ng-model="inventoryMoveLine.record.quantity_per_unit__c"/>
+                            <span ng-show="!(inventoryMoveLine.record.quantity_per_unit__c>0)" style="color:red;">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span ng-show="inventoryMoveLine.record.quantity_per_unit__c>0" style="color:green;">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </span>
+
                         </div>
                         <ons-row>
                             <ons-col width="40px" style="text-align: center; line-height: 31px;">
@@ -330,13 +324,22 @@
             $scope.currentPage = {};
             $scope.foodTypeL1 = [];
             $scope.foodTypeL2 = {};
+            $scope.calendar = {
+                years: [],
+                months: [1,2,3,4,5,6,7,8,9,10,11,12],
+                days: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
+            }
+
 
             $scope.init = function(){
                 $scope.loadFoodTypeL1();
 
+                var thisYear = (new Date()).getFullYear();
+                for( var i = 0; i < 30; i++ ){
+                    $scope.calendar.years.push( thisYear + i );
+                }
 
                 console.log("initialized...");
-                //InboundController.mytestMethod(function(){});
         	}
 
 
@@ -346,7 +349,7 @@
                     return true;
                 }
                 else{
-                    if( (inventoryMoveLine.barcodes.length > 0) && inventoryMoveLine.record.food_type_l1__c &&  inventoryMoveLine.record.food_type_l2__c && (parseInt( inventoryMoveLine.record.quantity_per_unit__c ) > 0) ){
+                    if( ( inventoryMoveLine.record.expiration_date__c != null ) && (inventoryMoveLine.barcodes.length > 0) && inventoryMoveLine.record.food_type_l1__c &&  inventoryMoveLine.record.food_type_l2__c && (parseInt( inventoryMoveLine.record.quantity_per_unit__c ) > 0) ){
                         return false;
                     }
                     else{
@@ -355,6 +358,27 @@
                 }
             }
 
+
+            $scope.validateDate = function( inventoryMoveLine ){
+                if( (inventoryMoveLine.selectedYear !== undefined) && (inventoryMoveLine.selectedMonth !== undefined) && (inventoryMoveLine.selectedDay !== undefined)  ){
+                    inventoryMoveLine.record.expiration_date__c = new Date(
+                        parseInt( inventoryMoveLine.selectedYear) ,
+                        parseInt( inventoryMoveLine.selectedMonth ) - 1,
+                        parseInt( inventoryMoveLine.selectedDay )
+                    );
+                    if( inventoryMoveLine.record.expiration_date__c.getDate() != parseInt( inventoryMoveLine.selectedDay ) ){
+                        inventoryMoveLine.record.expiration_date__c = null;
+                    }
+                    inventoryMoveLine.record.expiration_date__c = $scope.formatDate( inventoryMoveLine.record.expiration_date__c );
+                }
+                else{
+                    inventoryMoveLine.record.expiration_date__c = null;
+                }
+            }
+
+            $scope.expirationInputComplete = function(inventoryMoveLine){
+                return (inventoryMoveLine.selectedYear !== undefined) && (inventoryMoveLine.selectedMonth !== undefined) && (inventoryMoveLine.selectedDay !== undefined);
+            }
 
 
             $scope.enterPressed = function(){
@@ -367,8 +391,13 @@
 
             $scope.loadFoodTypeL1 = function(){
                 InboundController.getFoodTypeL1( function( value, event ){
-                    $scope.foodTypeL1 = value;
-                    $scope.$apply();
+                    if( event.statusCode == 200 ){
+                        $scope.foodTypeL1 = value;
+                        $scope.$apply();
+                    }
+                    else{
+                        alert( event.message );
+                    }
                 });
             }
 
@@ -377,14 +406,19 @@
                     return $scope.foodTypeL2[ l1Id ];
                 }
                 else{
-                    InboundController.getFoodTypeL2( l1Id, function( value, event ){
-                        $scope.foodTypeL2[ l1Id ] = value;
-                        $scope.$apply();
-                        return value;
-                    });
-
+                    if( l1Id !== undefined && l1Id != null ){
+                        InboundController.getFoodTypeL2( l1Id, function( value, event ){
+                            if( event.statusCode == 200 ){
+                                $scope.foodTypeL2[ l1Id ] = value;
+                                $scope.$apply();
+                                return value;
+                            }
+                            else{
+                                alert( event.message );
+                            }
+                        });
+                    }
                 }
-
             }
 
 
@@ -398,8 +432,13 @@
             $scope.addInventoryMoveLine = function(janCode){
                 janCode = janCode || "";
                 InboundController.getJanCode( janCode, function( value, event ){
-                    $scope.inventoryMoveLines.push( value );
-                    $scope.$apply();
+                    if( event.statusCode == 200 ){
+                        $scope.inventoryMoveLines.push( value );
+                        $scope.$apply();
+                    }
+                    else{
+                        alert( event.message );
+                    }
                 });
             }
 
@@ -458,14 +497,31 @@
             }
 
             $scope.saveInventoryMove = function(){
-                //var json = JSON.stringify( {payload:$scope.inventoryMoveLines} );
                 var json = JSON.stringify( $scope.inventoryMoveLines );
                 InboundController.saveInboundInventoryMove( json, function( value, event ){
-                    $scope.navi.pushPage('page3.html');
-                    $scope.$apply();
+                    if( event.statusCode == 200 ){
+                        $scope.navi.pushPage('page3.html');
+                        $scope.$apply();
+                    }
+                    else{
+                        alert( event.message );
+                    }
                 });
-
             }
+
+            $scope.formatDate  = function(date) {
+                var d = new Date(date),
+                    month = '' + (d.getMonth() + 1),
+                    day = '' + d.getDate(),
+                    year = d.getFullYear();
+
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+
+                return [year, month, day].join('-');
+            }
+
+
 
         }).directive("dlEnterKey",function(){
             return function(scope, element, attrs) {
