@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>quantity_check</fullName>
+    <active>true</active>
+    <errorConditionFormula>remaining_quantity__c &lt; 0</errorConditionFormula>
+    <errorMessage>invalid quantity</errorMessage>
+</ValidationRule>

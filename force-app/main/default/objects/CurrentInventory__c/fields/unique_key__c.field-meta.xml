@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>unique_key__c</fullName>
     <externalId>false</externalId>
-    <formula>warehouse__r.Id &amp;":"&amp;  food_type_l1__r.Id &amp;":"&amp;  food_type_l2__r.Id &amp;":"&amp;  JAN_code__c</formula>
+    <formula>warehouse__r.Id &amp;":"&amp;  food_type_lOne__r.Id &amp;":"&amp;  food_type_lTwo__r.Id &amp;":"&amp;  JAN_code__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>unique_key</label>
     <required>false</required>

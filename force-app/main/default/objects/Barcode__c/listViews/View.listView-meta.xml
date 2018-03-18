@@ -3,6 +3,7 @@
     <fullName>View</fullName>
     <columns>NAME</columns>
     <columns>barcode_image__c</columns>
+    <columns>current_inventory__c</columns>
     <filterScope>Everything</filterScope>
     <label>すべて</label>
 </ListView>

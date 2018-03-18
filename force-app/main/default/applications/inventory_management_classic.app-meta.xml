@@ -9,4 +9,6 @@
     <tabs>InventoryMove__c</tabs>
     <tabs>Warehouse__c</tabs>
     <tabs>inventory_manager</tabs>
+    <tabs>FoodTypeLOne__c</tabs>
+    <tabs>FoodTypeLTwo__c</tabs>
 </CustomApplication>

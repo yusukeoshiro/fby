@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>donated_to_person__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>寄贈先個人</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>在庫移動 (寄贈先個人)</relationshipLabel>
+    <relationshipName>inventory_moves_donated_to</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

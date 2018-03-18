@@ -45,12 +45,7 @@
     <custom>false</custom>
     <fieldPermissions>
         <editable>false</editable>
-        <field>BarcodeAssignment__c.barcode__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BarcodeAssignment__c.inventory_move_line__c</field>
+        <field>BarcodeAssignment__c.inventory_move_line_inbound__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -59,9 +54,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Barcode__c.current_inventory_line__c</field>
-        <readable>false</readable>
+        <editable>true</editable>
+        <field>Barcode__c.current_inventory__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -79,24 +74,24 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>CurrentInventoryLine__c.expiration_date__c</field>
-        <readable>false</readable>
+        <editable>true</editable>
+        <field>Barcode__c.expiration_date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Barcode__c.original_quantity__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>CurrentInventoryLine__c.original_quantity__c</field>
-        <readable>false</readable>
+        <field>Barcode__c.remaining_quantity__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>CurrentInventoryLine__c.remaining_quantity__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>CurrentInventoryLine__c.shipped_quantity__c</field>
-        <readable>false</readable>
+        <editable>true</editable>
+        <field>Barcode__c.shipped_quantity__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -140,7 +135,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>FoodTypeL1__c.l2_count__c</field>
+        <field>FoodTypeLOne__c.l2_count__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -165,12 +160,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InventoryMoveLine__c.food_type_l1__c</field>
+        <field>InventoryMoveLine__c.food_type_lOne__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InventoryMoveLine__c.food_type_l2__c</field>
+        <field>InventoryMoveLine__c.food_type_lTwo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -219,6 +214,16 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>InventoryMove__c.donated_to_company__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>InventoryMove__c.donated_to_person__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>InventoryMove__c.move_status__c</field>
         <readable>false</readable>
@@ -239,47 +244,41 @@
         <readable>false</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>BarcodeAssignment__c-バーコード関連付 Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Barcode__c-FBYコードレイアウト</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CurrentInventoryLine__c-現在庫明細レイアウト</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>CurrentInventory__c-現在庫レイアウト</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>FoodTypeL1__c-食品分類 %28L1%29 Layout</layout>
+        <layout>FoodTypeLOne__c-食品分類 %28L1%29 Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>FoodTypeL2__c-食品分類 %28L2%29 Layout</layout>
+        <layout>FoodTypeLTwo__c-食品分類 %28L2%29 Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Global-Global Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>InventoryMoveLineOutbound__c-InventoryMoveLineOutbound_Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>InventoryMoveLine__c-在庫移動明細レイアウト</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
+        <layout>InventoryMove__c-InboundLayout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
+        <layout>InventoryMove__c-InboundLayout</layout>
         <recordType>InventoryMove__c.disposal</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
+        <layout>InventoryMove__c-InboundLayout</layout>
         <recordType>InventoryMove__c.inbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
-        <recordType>InventoryMove__c.outbound</recordType>
+        <layout>InventoryMove__c-InboundLayout</layout>
+        <recordType>InventoryMove__c.transfer</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
-        <recordType>InventoryMove__c.transfer</recordType>
+        <layout>InventoryMove__c-OutboundLayout</layout>
+        <recordType>InventoryMove__c.outbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Warehouse__c-倉庫レイアウト</layout>
@@ -308,15 +307,6 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
-        <object>CurrentInventoryLine__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
         <object>CurrentInventory__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -326,7 +316,7 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
-        <object>FoodTypeL1__c</object>
+        <object>FoodTypeLOne__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -335,7 +325,16 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
-        <object>FoodTypeL2__c</object>
+        <object>FoodTypeLTwo__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>InventoryMoveLineOutbound__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
