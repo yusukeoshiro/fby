@@ -18,7 +18,7 @@ script:
 - sfdx plugins --core
 - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername
 - sfdx force:org:list
-- sfdx force:org:create -s -f config/project-scratch-def.json
-- sfdx force:source:push
+- sfdx force:org:create -s -f config/project-scratch-def.json -a tmp
+- sfdx force:source:push -u tmp
 - #&& sfdx force:apex:test:run -u ciorg -c -r human
-- sfdx force:org:delete -p
+- sfdx force:org:delete -u tmp -p
