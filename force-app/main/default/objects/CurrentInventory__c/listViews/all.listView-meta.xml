@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>all</fullName>
+    <columns>NAME</columns>
+    <columns>warehouse__c</columns>
+    <columns>product_name__c</columns>
+    <columns>food_type_lOne__c</columns>
+    <columns>food_type_lTwo__c</columns>
+    <columns>JAN_code__c</columns>
+    <columns>physical_quantity__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>全体</label>
+</ListView>
