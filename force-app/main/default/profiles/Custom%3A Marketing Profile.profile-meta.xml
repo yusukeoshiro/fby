@@ -45,6 +45,11 @@
     <custom>true</custom>
     <fieldPermissions>
         <editable>false</editable>
+        <field>BarcodeAssignment__c.inventory_move_line_inbound__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Barcode__c.barcode_image__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -130,6 +135,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>FoodTypeLOne__c.l2_count__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>InventoryMoveLine__c.barcode__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -204,6 +214,16 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>InventoryMove__c.donated_to_company__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>InventoryMove__c.donated_to_person__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>InventoryMove__c.move_status__c</field>
         <readable>false</readable>
@@ -224,35 +244,47 @@
         <readable>false</readable>
     </fieldPermissions>
     <layoutAssignments>
+        <layout>BarcodeAssignment__c-バーコード関連 Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Barcode__c-FBYコードレイアウト</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CurrentInventory__c-現在庫レイアウト</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>FoodTypeLOne__c-食品分類 %28L1%29 Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>FoodTypeLTwo__c-食品分類 %28L2%29 Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Global-Global Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>InventoryMoveLineOutbound__c-InventoryMoveLineOutbound_Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>InventoryMoveLine__c-在庫移動明細レイアウト</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
+        <layout>InventoryMove__c-InboundLayout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
+        <layout>InventoryMove__c-InboundLayout</layout>
         <recordType>InventoryMove__c.disposal</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
+        <layout>InventoryMove__c-InboundLayout</layout>
         <recordType>InventoryMove__c.inbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
-        <recordType>InventoryMove__c.outbound</recordType>
+        <layout>InventoryMove__c-InboundLayout</layout>
+        <recordType>InventoryMove__c.transfer</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-在庫移動レイアウト</layout>
-        <recordType>InventoryMove__c.transfer</recordType>
+        <layout>InventoryMove__c-OutboundLayout</layout>
+        <recordType>InventoryMove__c.outbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Warehouse__c-倉庫レイアウト</layout>

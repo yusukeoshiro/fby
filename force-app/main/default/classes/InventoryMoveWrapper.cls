@@ -7,7 +7,8 @@
 public with sharing class InventoryMoveWrapper {
 
     private InventoryMove__c record {get;set;}
-    private List<InventoryMoveLineWrapper> lines{get;set;}
+    private List<InventoryMoveLineWrapper>         lines{get;set;}
+    private List<InventoryMoveLineOutboundWrapper> outboundLines{get;set;}
     private Integer moveType {get;set;}
 
 
@@ -22,6 +23,8 @@ public with sharing class InventoryMoveWrapper {
         this.record = record;
         this.record.recordTypeId = getRecordTypeId(moveType);
         this.moveType = moveType;
+        this.lines = new List<InventoryMoveLineWrapper>();
+        this.outboundLines = new List<InventoryMoveLineOutboundWrapper>();
     }
 
     public InventoryMove__c getRecord(){
@@ -36,6 +39,10 @@ public with sharing class InventoryMoveWrapper {
         return this.lines;
     }
 
+
+    public void addInventoryMoveLineOutboundWrapper( InventoryMoveLineOutboundWrapper a ){
+        this.outboundLines.add( a );
+    }
 
 
     /**
@@ -130,8 +137,6 @@ public with sharing class InventoryMoveWrapper {
 
             // SAVE CurrentInventory -- UPDATE Quantity
             UPSERT mapCurrentInventory.values();
-
-
             // STEP 4 Commit
 
             }
@@ -144,6 +149,67 @@ public with sharing class InventoryMoveWrapper {
 
         }
         else if(this.moveType == OUTBOUND){
+            // STEP 1 Begin transaction
+            Savepoint sp = Database.setSavepoint();
+
+            try{
+
+                // STEP 2 Lock the related CurrentInventory, CurrentInventoryLine and related Barcode records
+                    Map<String, CurrentInventory__c> mapInventories = new Map<String, CurrentInventory__c>();
+                    Map<String, String> mapBarcodeId2CurrentInventoryId = new Map<String, String>();
+                    Map<String, Barcode__c> mapBarcodes = new Map<String, Barcode__c>();
+                    Set<String> inventoryIds = new Set<String>();
+                    Set<String> barcodeIds = new Set<String>();
+                    List<InventoryMoveLineOutbound__c> lines = new List<InventoryMoveLineOutbound__c>();
+
+                    for(InventoryMoveLineOutboundWrapper line:this.outboundLines){
+                        barcodeIds.add( line.getRecord().barcode__c );
+                    }
+                    for(Barcode__c b:[SELECT Id, current_inventory__c, shipped_quantity__c FROM Barcode__c WHERE Id IN :barcodeIds] ){
+                        inventoryIds.add( b.current_inventory__c );
+                        mapBarcodeId2CurrentInventoryId.put( b.Id, b.current_inventory__c );
+                        mapBarcodes.put( b.Id, b );
+                    }
+
+                    List<CurrentInventory__c> lockedCurrentInventoryRecords = [SELECT Id, jan_code__c, warehouse__c, physical_quantity__c FROM CurrentInventory__c WHERE Id IN :inventoryIds FOR UPDATE]; // LOCK THE RECORDS!!
+
+                    for( CurrentInventory__c ci:lockedCurrentInventoryRecords ){
+                        mapInventories.put( ci.id, ci );
+                    }
+
+                    System.debug( mapInventories );
+
+                // STEP 3 Update the locked records (inventory) and new InventoryMove records
+                    this.getRecord().completion_time__c = Datetime.now();
+                    this.getRecord().move_status__c = 'complete';
+                    UPSERT this.getRecord();
+
+                    for(InventoryMoveLineOutboundWrapper line:this.outboundLines){
+                        String currentInventoryId = mapBarcodeId2CurrentInventoryId.get( line.getRecord().barcode__c );
+                        mapInventories.get( currentInventoryId ).physical_quantity__c -= line.getRecord().outbound_quantity__c;
+                        mapBarcodes.get( line.getRecord().barcode__c ).shipped_quantity__c += line.getRecord().outbound_quantity__c;
+                        line.getRecord().inventory_move__c = this.getRecord().Id;
+                        lines.add( line.getRecord() );
+                    }
+
+                    UPSERT lines;
+
+                    UPSERT mapBarcodes.values();
+
+                    UPSERT mapInventories.values();
+
+                // STEP 4 Commit
+
+
+
+            }
+            catch( Exception e ){
+                Database.rollback(sp);
+                System.debug( e.getStackTraceString() );
+                throw new AppException( e.getMessage() );
+            }
+
+
 
         }
 
