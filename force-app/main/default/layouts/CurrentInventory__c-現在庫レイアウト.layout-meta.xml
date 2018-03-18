@@ -36,11 +36,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>food_type_l1__c</field>
+                <field>food_type_lOne__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>food_type_l2__c</field>
+                <field>food_type_lTwo__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

@@ -3,7 +3,7 @@
     <fullName>l2_count__c</fullName>
     <externalId>false</externalId>
     <label>L2 登録数</label>
-    <summaryForeignKey>FoodTypeL2__c.food_type_l1__c</summaryForeignKey>
+    <summaryForeignKey>FoodTypeLTwo__c.food_type_lOne__c</summaryForeignKey>
     <summaryOperation>count</summaryOperation>
     <trackTrending>false</trackTrending>
     <type>Summary</type>

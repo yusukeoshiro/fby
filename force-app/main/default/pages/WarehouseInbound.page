@@ -161,16 +161,16 @@
                     <ons-list-item>
                         <div class="list-item__title"><small>食品分類 (L1)</small></div>
                         <div class="list-item__subtitle">
-                        <select class="select-input" ng-model="inventoryMoveLine.record.food_type_l1__c" required="true">
+                        <select class="select-input" ng-model="inventoryMoveLine.record.food_type_lOne__c" required="true">
                             <option ng-repeat="l1 in foodTypeL1" value="{{l1.Id}}">
                                 {{l1.Name}}
                             </option>
                         </select>
 
-                        <span ng-show="(inventoryMoveLine.record.food_type_l1__c === undefined) || (inventoryMoveLine.record.food_type_l1__c == null)" style="color:red;">
+                        <span ng-show="(inventoryMoveLine.record.food_type_lOne__c === undefined) || (inventoryMoveLine.record.food_type_lOne__c == null)" style="color:red;">
                             <i class="fa fa-times"></i>
                         </span>
-                        <span ng-show="!((inventoryMoveLine.record.food_type_l1__c === undefined) || (inventoryMoveLine.record.food_type_l1__c == null))" style="color:green;">
+                        <span ng-show="!((inventoryMoveLine.record.food_type_lOne__c === undefined) || (inventoryMoveLine.record.food_type_lOne__c == null))" style="color:green;">
                             <i class="fa fa-check" aria-hidden="true"></i>
                         </span>
 
@@ -181,16 +181,16 @@
                     <ons-list-item>
                         <div class="list-item__title"><small>食品分類 (L2)</small></div>
                         <div class="list-item__subtitle">
-                        <select class="select-input" ng-model="inventoryMoveLine.record.food_type_l2__c" required="true">
-                            <option ng-repeat="l2 in loadFoodTypeL2( inventoryMoveLine.record.food_type_l1__c )" value="{{l2.Id}}">
+                        <select class="select-input" ng-model="inventoryMoveLine.record.food_type_lTwo__c" required="true">
+                            <option ng-repeat="l2 in loadFoodTypeL2( inventoryMoveLine.record.food_type_lOne__c )" value="{{l2.Id}}">
                                 {{l2.Name}}
                             </option>
                         </select>
 
-                        <span ng-show="(inventoryMoveLine.record.food_type_l2__c === undefined) || (inventoryMoveLine.record.food_type_l2__c == null)" style="color:red;">
+                        <span ng-show="(inventoryMoveLine.record.food_type_lTwo__c === undefined) || (inventoryMoveLine.record.food_type_lTwo__c == null)" style="color:red;">
                             <i class="fa fa-times"></i>
                         </span>
-                        <span ng-show="!((inventoryMoveLine.record.food_type_l2__c === undefined) || (inventoryMoveLine.record.food_type_l2__c == null))" style="color:green;">
+                        <span ng-show="!((inventoryMoveLine.record.food_type_lTwo__c === undefined) || (inventoryMoveLine.record.food_type_lTwo__c == null))" style="color:green;">
                             <i class="fa fa-check" aria-hidden="true"></i>
                         </span>
 
@@ -349,7 +349,7 @@
                     return true;
                 }
                 else{
-                    if( ( inventoryMoveLine.record.expiration_date__c != null ) && (inventoryMoveLine.barcodes.length > 0) && inventoryMoveLine.record.food_type_l1__c &&  inventoryMoveLine.record.food_type_l2__c && (parseInt( inventoryMoveLine.record.quantity_per_unit__c ) > 0) ){
+                    if( ( inventoryMoveLine.record.expiration_date__c != null ) && (inventoryMoveLine.barcodes.length > 0) && inventoryMoveLine.record.food_type_lOne__c &&  inventoryMoveLine.record.food_type_lTwo__c && (parseInt( inventoryMoveLine.record.quantity_per_unit__c ) > 0) ){
                         return false;
                     }
                     else{
@@ -390,7 +390,7 @@
             }
 
             $scope.loadFoodTypeL1 = function(){
-                InboundController.getFoodTypeL1( function( value, event ){
+                InboundController.getFoodTypeLOne( function( value, event ){
                     if( event.statusCode == 200 ){
                         $scope.foodTypeL1 = value;
                         $scope.$apply();
@@ -407,7 +407,7 @@
                 }
                 else{
                     if( l1Id !== undefined && l1Id != null ){
-                        InboundController.getFoodTypeL2( l1Id, function( value, event ){
+                        InboundController.getFoodTypeLTwo( l1Id, function( value, event ){
                             if( event.statusCode == 200 ){
                                 $scope.foodTypeL2[ l1Id ] = value;
                                 $scope.$apply();

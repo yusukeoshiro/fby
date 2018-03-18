@@ -1,0 +1,144 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef1"
+            },
+            "Name": "穀物"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef2"
+            },
+            "Name": "ベビーフード"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef3"
+            },
+            "Name": "パン・シリアル類"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef4"
+            },
+            "Name": "農産"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef5"
+            },
+            "Name": "食用油"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef6"
+            },
+            "Name": "麺類"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef7"
+            },
+            "Name": "その他"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef8"
+            },
+            "Name": "スープ"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef9"
+            },
+            "Name": "スプレッド類・乳製品"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef10"
+            },
+            "Name": "調理品"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef11"
+            },
+            "Name": "缶詰"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef12"
+            },
+            "Name": "粉類"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef13"
+            },
+            "Name": "漬物・佃煮"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef14"
+            },
+            "Name": "菓子"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef15"
+            },
+            "Name": "嗜好飲料"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef16"
+            },
+            "Name": "飲料"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef17"
+            },
+            "Name": "ホームメイキング材料"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef18"
+            },
+            "Name": "加工水産"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef19"
+            },
+            "Name": "加工肉類"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLOne__c",
+                "referenceId": "FoodTypeLOne__cRef20"
+            },
+            "Name": "農産乾物"
+        }
+    ]
+}

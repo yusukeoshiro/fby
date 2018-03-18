@@ -81,7 +81,6 @@
         <fields>NAME</fields>
         <fields>barcode__c</fields>
         <fields>jan_code__c</fields>
-        <fields>food_type__c</fields>
         <fields>expiration_date__c</fields>
         <fields>quantity__c</fields>
         <fields>weight_in_gram_per_unit__c</fields>

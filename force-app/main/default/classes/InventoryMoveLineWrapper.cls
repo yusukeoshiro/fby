@@ -9,7 +9,6 @@ public class InventoryMoveLineWrapper {
         return this.record;
     }
 
-
     public InventoryMoveLineWrapper( InventoryMoveLine__c iml ) {
         this.record = iml;
         this.record.quantity_per_unit__c = 1;
@@ -26,7 +25,7 @@ public class InventoryMoveLineWrapper {
 
             // see if this jan code already exists
             List<CurrentInventory__c> cis = [
-                SELECT Id, jan_code__c, food_type_l1__c, food_type_l2__c,product_name__c
+                SELECT Id, jan_code__c, food_type_lOne__c, food_type_lTwo__c,product_name__c
                 FROM CurrentInventory__c
                 WHERE
                     jan_code__c =: janProduct.janCode AND warehouse__c =: warehouseId
@@ -35,7 +34,7 @@ public class InventoryMoveLineWrapper {
 
             if( cis.size() == 0 ){
                 cis = [
-                    SELECT Id, jan_code__c, food_type_l1__c, food_type_l2__c,product_name__c
+                    SELECT Id, jan_code__c, food_type_lOne__c, food_type_lTwo__c,product_name__c
                     FROM CurrentInventory__c
                     WHERE
                         jan_code__c =: janProduct.janCode
@@ -44,8 +43,8 @@ public class InventoryMoveLineWrapper {
             }
 
             if( cis.size() > 0 ){
-                this.record.food_type_l1__c = cis[0].food_type_l1__c;
-                this.record.food_type_l2__c = cis[0].food_type_l2__c;
+                this.record.food_type_lOne__c = cis[0].food_type_lOne__c;
+                this.record.food_type_lTwo__c = cis[0].food_type_lTwo__c;
             }
 
         }

@@ -130,7 +130,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>FoodTypeL1__c.l2_count__c</field>
+        <field>FoodTypeLOne__c.l2_count__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -155,12 +155,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InventoryMoveLine__c.food_type_l1__c</field>
+        <field>InventoryMoveLine__c.food_type_lOne__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InventoryMoveLine__c.food_type_l2__c</field>
+        <field>InventoryMoveLine__c.food_type_lTwo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -235,10 +235,7 @@
         <layout>CurrentInventory__c-現在庫レイアウト</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>FoodTypeL1__c-食品分類 %28L1%29 Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>FoodTypeL2__c-食品分類 %28L2%29 Layout</layout>
+        <layout>FoodTypeLOne__c-食品分類 %28L1%29 Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Global-Global Layout</layout>
@@ -292,7 +289,7 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
-        <object>FoodTypeL1__c</object>
+        <object>FoodTypeLOne__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -301,7 +298,7 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
-        <object>FoodTypeL2__c</object>
+        <object>FoodTypeLTwo__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

@@ -130,11 +130,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>FoodTypeL1__c.l2_count__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>InventoryMoveLine__c.barcode__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -155,12 +150,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InventoryMoveLine__c.food_type_l1__c</field>
+        <field>InventoryMoveLine__c.food_type_lOne__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InventoryMoveLine__c.food_type_l2__c</field>
+        <field>InventoryMoveLine__c.food_type_lTwo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -233,12 +228,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>CurrentInventory__c-現在庫レイアウト</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>FoodTypeL1__c-食品分類 %28L1%29 Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>FoodTypeL2__c-食品分類 %28L2%29 Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Global-Global Layout</layout>

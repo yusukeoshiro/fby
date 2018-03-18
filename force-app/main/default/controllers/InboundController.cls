@@ -43,17 +43,13 @@ global with sharing class InboundController {
     }
 
     @RemoteAction
-    global static List<FoodTypeL1__c> getFoodTypeL1(){
-        return [SELECT Id, Name FROM FoodTypeL1__c];
+    global static List<FoodTypeLOne__c> getFoodTypeLOne(){
+        return [SELECT Id, Name FROM FoodTypeLOne__c];
     }
-
 
     @RemoteAction
-    global static List<FoodTypeL2__c> getFoodTypeL2( String foodTypeL1Id ){
-        return [SELECT Id, Name FROM FoodTypeL2__c WHERE food_type_l1__c = :foodTypeL1Id];
+    global static List<FoodTypeLTwo__c> getFoodTypeLTwo( String foodTypeLOneId ){
+        return [SELECT Id, Name FROM FoodTypeLTwo__c WHERE food_type_lOne__c = :foodTypeLOneId];
     }
-
-
-
 
 }

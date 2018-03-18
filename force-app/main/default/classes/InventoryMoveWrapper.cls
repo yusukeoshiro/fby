@@ -41,7 +41,6 @@ public with sharing class InventoryMoveWrapper {
         InventoryMoveを保存して必要なトランザクションを実行します。
     */
     public void confirmInventoryMove(){
-
         // STEP 1 Begin transaction
         Savepoint sp = Database.setSavepoint();
 
@@ -63,8 +62,8 @@ public with sharing class InventoryMoveWrapper {
                 CurrentInventory__c ci = new CurrentInventory__c();
                 ci.product_name__c = line.getRecord().food_name__c;
                 ci.warehouse__c    = this.getRecord().transfer_to_warehouse__c;
-                ci.food_type_l1__c = line.getRecord().food_type_l1__c;
-                ci.food_type_l2__c = line.getRecord().food_type_l2__c;
+                ci.food_type_lOne__c = line.getRecord().food_type_lOne__c;
+                ci.food_type_lTwo__c = line.getRecord().food_type_lTwo__c;
                 ci.jan_code__c     = line.getRecord().jan_code__c;
                 ci.physical_quantity__c = 0;
                 mapCurrentInventory.put( uniqueKey, ci );
@@ -138,7 +137,6 @@ public with sharing class InventoryMoveWrapper {
         }
 
 
-
     }
 
     public void cancelInventoryMove(){
@@ -157,8 +155,8 @@ public with sharing class InventoryMoveWrapper {
     private static String getUniqueKey( String warehoudId, InventoryMoveLineWrapper imlw ){
         String uniqueKey =
             String.ValueOf(warehoudId).left(15) + ':' +
-            String.ValueOf(imlw.getRecord().food_type_l1__c).left(15) + ':' +
-            String.ValueOf(imlw.getRecord().food_type_l2__c).left(15) + ':' +
+            String.ValueOf(imlw.getRecord().food_type_lOne__c).left(15) + ':' +
+            String.ValueOf(imlw.getRecord().food_type_lTwo__c).left(15) + ':' +
             imlw.getRecord().jan_code__c;
         return uniqueKey;
     }
