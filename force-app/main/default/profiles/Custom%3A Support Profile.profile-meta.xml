@@ -244,12 +244,6 @@
         <readable>false</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>BarcodeAssignment__c-バーコード関連 Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Barcode__c-FBYコードレイアウト</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>CurrentInventory__c-現在庫レイアウト</layout>
     </layoutAssignments>
     <layoutAssignments>
