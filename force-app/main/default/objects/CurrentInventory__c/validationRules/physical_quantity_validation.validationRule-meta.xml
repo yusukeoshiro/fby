@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>physical_quantity_validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>physical_quantity__c &lt; 0</errorConditionFormula>
+    <errorDisplayField>physical_quantity__c</errorDisplayField>
+    <errorMessage>現在庫の物理的数量は0以上である必要があります。</errorMessage>
+</ValidationRule>
