@@ -1,0 +1,180 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef1"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef1"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef2"
+            },
+            "Name": "コメ・精米",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef1"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef3"
+            },
+            "Name": "コメ・玄米",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef1"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef4"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef2"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef5"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef3"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef6"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef4"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef7"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef5"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef8"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef6"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef9"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef7"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef10"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef8"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef11"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef9"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef12"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef10"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef13"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef11"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef14"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef12"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef15"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef13"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef16"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef14"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef17"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef15"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef18"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef16"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef19"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef17"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef20"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef18"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef21"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef19"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef22"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef20"
+        }
+    ]
+}

@@ -54,14 +54,6 @@
                 <behavior>Edit</behavior>
                 <field>quantity_per_unit__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>food_type_l1__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>food_type_l2__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
@@ -98,11 +90,6 @@
     <miniLayout>
         <fields>inventory_move__c</fields>
     </miniLayout>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>barcode__c</fields>
-        <relatedList>BarcodeAssignment__c.inventory_move_line__c</relatedList>
-    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

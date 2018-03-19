@@ -36,11 +36,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>food_type_l1__c</field>
+                <field>food_type_lOne__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>food_type_l2__c</field>
+                <field>food_type_lTwo__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -128,11 +128,9 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>original_quantity__c</fields>
-        <fields>expiration_date__c</fields>
-        <fields>shipped_quantity__c</fields>
         <fields>remaining_quantity__c</fields>
-        <fields>LAST_UPDATE</fields>
-        <relatedList>CurrentInventoryLine__c.current_inventory__c</relatedList>
+        <fields>expiration_date__c</fields>
+        <relatedList>Barcode__c.current_inventory__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

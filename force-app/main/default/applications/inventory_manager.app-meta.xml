@@ -16,6 +16,8 @@
     <tabs>CurrentInventory__c</tabs>
     <tabs>Warehouse__c</tabs>
     <tabs>Barcode__c</tabs>
+    <tabs>FoodTypeLOne__c</tabs>
+    <tabs>FoodTypeLTwo__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>UtilityBar</utilityBar>
 </CustomApplication>

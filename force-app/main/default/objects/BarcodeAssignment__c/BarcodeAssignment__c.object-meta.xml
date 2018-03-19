@@ -52,10 +52,10 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <label>バーコード関連付</label>
+    <label>バーコード関連</label>
     <nameField>
-        <displayFormat>BA-{000000000}</displayFormat>
-        <label>#</label>
+        <displayFormat>BA-{00000000}</displayFormat>
+        <label>バーコード関連 Name</label>
         <type>AutoNumber</type>
     </nameField>
     <searchLayouts/>
