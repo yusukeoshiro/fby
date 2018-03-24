@@ -4,10 +4,35 @@ public class InventoryMoveLineWrapper {
     public List<Barcode__c> barcodes {get;set;}
 
 
-
     public InventoryMoveLine__c getRecord(){
         return this.record;
     }
+
+
+    public String getInventoryUniqueKey( InventoryMoveWrapper im ){
+        if( im == null ){
+            throw new AppException('InventoryMoveWrapper passed was invalid');
+        }
+        if( im.getRecord().transfer_to_warehouse__c == null ){
+            throw new AppException('InventoryMoveWrapper passed has invalid transfer_to_warehouse__c');
+        }
+        if( this.getRecord().food_type_lOne__c == null ){
+            throw new AppException('food_type_lOne__c has invalid value');
+        }
+        if( this.getRecord().food_type_lTwo__c == null ){
+            throw new AppException('food_type_lTwo__c has invalid value');
+        }
+
+        String uniqueKey =
+            String.ValueOf(im.getRecord().transfer_to_warehouse__c).left(15) + ':' +
+            String.ValueOf(this.getRecord().food_type_lOne__c).left(15) + ':' +
+            String.ValueOf(this.getRecord().food_type_lTwo__c).left(15) + ':' +
+            this.getRecord().jan_code__c;
+
+        return uniqueKey;
+    }
+
+
 
     public InventoryMoveLineWrapper( InventoryMoveLine__c iml ) {
         this.record = iml;
