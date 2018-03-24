@@ -184,8 +184,7 @@ public with sharing class InventoryMoveWrapper {
 
                 // STEP 2 Lock the related CurrentInventory, CurrentInventoryLine and related Barcode records
                     Map<String, CurrentInventory__c> mapInventories;
-                    Map<String, Barcode__c>          mapBarcodes;
-                    mapBarcodes = new Map<String, Barcode__c>([SELECT Id, current_inventory__c, shipped_quantity__c FROM Barcode__c WHERE Id IN :this.getOutboundBarcodeIds()]);
+                    Map<String, Barcode__c> mapBarcodes = new Map<String, Barcode__c>([SELECT Id, current_inventory__c, shipped_quantity__c FROM Barcode__c WHERE Id IN :this.getOutboundBarcodeIds()]);
 
                     Set<String> inventoryIds = new Set<String>();
                     for(Barcode__c b:mapBarcodes.values()){ inventoryIds.add( b.current_inventory__c );}
@@ -231,8 +230,82 @@ public with sharing class InventoryMoveWrapper {
 
 
 
+                Map<String, CurrentInventory__c> mapOutboundInventories;
+                Map<String, CurrentInventory__c> mapInboundInventories;
+                Map<String, String> out2inKey = new Map<String, String>();
+
+                Map<String, Barcode__c> mapBarcodes = new Map<String, Barcode__c>([SELECT Id, current_inventory__c, current_inventory__r.unique_key__c, current_inventory__r.warehouse__c, shipped_quantity__c, remaining_quantity__c FROM Barcode__c WHERE Id IN :this.getOutboundBarcodeIds()]);
+
+                Set<String> inventoryIds = new Set<String>();
+                for(Barcode__c b:mapBarcodes.values()){
+                    inventoryIds.add( b.current_inventory__c );
+                    if( b.current_inventory__r.warehouse__c != this.record.transfer_from_warehouse__c ){
+                        throw new AppException('this barcode is not from the specified warehouse');
+                    }
+                    else{
+                        System.debug( b.current_inventory__r.warehouse__c );
+                        System.debug( this.record.transfer_from_warehouse__c );
+                    }
+                }
+                mapOutboundInventories = new Map<String, CurrentInventory__c>([SELECT Id, jan_code__c, warehouse__c, physical_quantity__c, unique_key__c, product_name__c,food_type_lOne__c,food_type_lTwo__c FROM CurrentInventory__c WHERE Id IN :inventoryIds FOR UPDATE]);
 
 
+                for( CurrentInventory__c ci:mapOutboundInventories.values() ){
+                    out2inKey.put( ci.unique_key__c, ci.unique_key__c.replace( ((String) ci.warehouse__c).left(15), ((String) this.record.transfer_to_warehouse__c).left(15) ) );
+                }
+                mapInboundInventories = getUniqueKeyInventoryMap( out2inKey.values() );
+
+
+
+                for(InventoryMoveLineOutboundWrapper line:this.outboundLines){
+                    Barcode__c b = mapBarcodes.get( line.getRecord().barcode__c );
+                    CurrentInventory__c outbound = mapOutboundInventories.get( b.current_inventory__c );
+                    if( !mapInboundInventories.containsKey( out2inKey.get( outbound.unique_key__c ) ) ){
+                        mapInboundInventories.put( out2inKey.get( outbound.unique_key__c ), new CurrentInventory__c(
+                            warehouse__c = this.getRecord().transfer_to_warehouse__c,
+                            product_name__c = outbound.product_name__c,
+                            food_type_lOne__c = outbound.food_type_lOne__c,
+                            food_type_lTwo__c = outbound.food_type_lTwo__c,
+                            jan_code__c = outbound.jan_code__c,
+                            physical_quantity__c = 0
+                        ));
+                    }
+                }
+                UPSERT mapInboundInventories.values();
+
+
+
+                for(InventoryMoveLineOutboundWrapper line:this.outboundLines){
+
+                    Barcode__c b = mapBarcodes.get( line.getRecord().barcode__c );
+                    CurrentInventory__c outbound = mapOutboundInventories.get( b.current_inventory__c );
+                    CurrentInventory__c inbound  = mapInboundInventories.get( out2inKey.get( outbound.unique_key__c ) );
+
+
+
+
+                    outbound.physical_quantity__c -= b.remaining_quantity__c;
+                    inbound.physical_quantity__c  += b.remaining_quantity__c;
+                    b.current_inventory__c = inbound.Id;
+
+                    System.debug( '&&&&&&&&&&&' );
+                    System.debug( outbound );
+                    System.debug( inbound );
+                    System.debug( b );
+
+
+                }
+
+                this.confirm();
+                for(InventoryMoveLineOutboundWrapper line:this.outboundLines){
+                    line.getRecord().inventory_move__c = this.getRecord().Id;
+                }
+                UPSERT this.getOutboundLineRecords();
+
+                UPSERT mapBarcodes.values();
+
+                UPSERT mapOutboundInventories.values();
+                UPSERT mapInboundInventories.values();
 
 
 
@@ -259,6 +332,21 @@ public with sharing class InventoryMoveWrapper {
             FOR UPDATE
         ]; // LOCK THE RECORDS!!
 
+        for( CurrentInventory__c ci:lockedCurrentInventoryRecords){
+            mapCurrentInventory.put( ci.unique_key__c, ci );
+        }
+        return mapCurrentInventory;
+    }
+
+    private Map<String, CurrentInventory__c> getUniqueKeyInventoryMap( List<String> uniqueKeys ){
+        Map<String, CurrentInventory__c> mapCurrentInventory = new Map<String, CurrentInventory__c>();
+        List<CurrentInventory__c> lockedCurrentInventoryRecords = [
+            SELECT Id, physical_quantity__c, unique_key__c
+            FROM CurrentInventory__c
+            WHERE
+                unique_key__c IN :uniqueKeys
+            FOR UPDATE
+        ]; // LOCK THE RECORDS!!
 
         for( CurrentInventory__c ci:lockedCurrentInventoryRecords){
             mapCurrentInventory.put( ci.unique_key__c, ci );
