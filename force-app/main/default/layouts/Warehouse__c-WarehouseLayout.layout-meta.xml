@@ -54,6 +54,17 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>product_name__c</fields>
+        <fields>food_type_lOne__c</fields>
+        <fields>food_type_lTwo__c</fields>
+        <fields>JAN_code__c</fields>
+        <fields>physical_quantity__c</fields>
+        <relatedList>CurrentInventory__c.warehouse__c</relatedList>
+        <sortField>physical_quantity__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>InventoryMove__c.transfer_from_warehouse__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -66,7 +77,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hN0000000dc0r</masterLabel>
+        <masterLabel>00hp0000000PZNS</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

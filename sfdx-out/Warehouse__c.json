@@ -6,6 +6,13 @@
                 "referenceId": "Warehouse__cRef1"
             },
             "Name": "倉庫A"
+        },
+        {
+            "attributes": {
+                "type": "Warehouse__c",
+                "referenceId": "Warehouse__cRef2"
+            },
+            "Name": "倉庫B"
         }
     ]
 }

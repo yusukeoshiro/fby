@@ -27,6 +27,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>InventoryMoveLineOutboundWrapper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>InventoryMoveLineWrapper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -244,7 +248,10 @@
         <readable>false</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>CurrentInventory__c-現在庫レイアウト</layout>
+        <layout>BarcodeAssignment__c-BarcodeAssignment_Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Barcode__c-Barcode_layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>FoodTypeLOne__c-食品分類 %28L1%29 Layout</layout>
@@ -259,29 +266,22 @@
         <layout>InventoryMoveLineOutbound__c-InventoryMoveLineOutbound_Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMoveLine__c-在庫移動明細レイアウト</layout>
+        <layout>InventoryMoveLine__c-InventoryMoveLine-Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>InventoryMove__c-InboundLayout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>InventoryMove__c-InboundLayout</layout>
-        <recordType>InventoryMove__c.disposal</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>InventoryMove__c-InboundLayout</layout>
         <recordType>InventoryMove__c.inbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-InboundLayout</layout>
-        <recordType>InventoryMove__c.transfer</recordType>
+        <layout>InventoryMove__c-OutboundLayout</layout>
+        <recordType>InventoryMove__c.disposal</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>InventoryMove__c-OutboundLayout</layout>
         <recordType>InventoryMove__c.outbound</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Warehouse__c-倉庫レイアウト</layout>
     </layoutAssignments>
     <pageAccesses>
         <apexPage>BarcodeBulkCreate</apexPage>
