@@ -9,6 +9,11 @@
         <visible>true</visible>
     </applicationVisibilities>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>BarcodeAssignment__c.inventory_move_line_inbound__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Barcode__c.barcode_image__c</field>
         <readable>true</readable>
