@@ -1,0 +1,291 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" controller="OutboundController" lightningStylesheets="true">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/css/onsenui.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/css/onsen-css-components.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/js/onsenui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/js/angular-onsenui.min.js"></script>
+
+
+    <style>
+        body{
+            font-family: "メイリオ", sans-serif;
+        }
+        .barcode-read{
+            font-size: 32px;
+        }
+
+        .list-item__title {
+          color: #1E88E5;
+          margin-bottom: 1px;
+          padding-left: 0px;
+          font-size: large;
+          font-weight: 500;
+          height: 30px;
+        }
+
+        .expired {
+          color: red;
+          font-weight: 500;
+        }
+
+        .list-item::before {
+          display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div ng-app="my-app" ng-controller="AppController as app" ng-init="init();">
+
+
+
+        <ons-navigator var="navi" page="page1.html"></ons-navigator>
+
+
+        <template id="page1.html">
+            <ons-page>
+                <ons-toolbar class="toolbar--transparent">
+                    <div class="center">出庫</div>
+                </ons-toolbar>
+                <!-- ラベル -->
+                <div style="text-align:center;">
+                <span class="toolbar--transparent" ><br/>バーコードスキャナーで在庫コードを
+                <br/>スキャンして在庫を紐付けて下さい。</span>
+                                </div>
+
+                <!-- VIRTUAL KEYBOARD -->
+                <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
+                    <input id="scan_pad" type="text" ng-model="ui.scannerValue2"  dl-enter-key="barcodeEntered();"/>
+                </div>
+
+                <div style="text-align:center;">
+                    <span class="barcode-read" >{{ ui.scannerValue2 || "待機中" }}</span>
+                </div>
+
+                <!--出庫の画面 FBYリスト表示 -->
+                <ul class="list" style="margin-top: 20px;">
+                    <li class="list-item list-item--tappable list-item--chevron" ng-repeat="barcodeMoveLine in barcodeMoveLines">
+                          <div class="list-item__center">
+                            <div class="boss" style="display: flex; width: 100%; padding-bottom: 10px;">
+                                <div class="list-item__title list-item" style="flex: 9;">{{barcodeMoveLine.Name}}  @{{barcodeMoveLine.current_inventory__r.warehouse__r.Name}}</div>
+                                <button class="fa fa-times" style="flex: 1" aria-hidden="true" ng-click="deleteBarcodeMoveLine($index);"></button>
+                            </div>
+                            <div class="list-item__subtitle">
+                                <div class="test">
+                                  現在庫名: {{barcodeMoveLine.current_inventory__r.product_name__c}}
+                                </div>
+                                <div class="holder" style="display: flex;">
+                                  <div class="child" style="flex:3;">残数: {{barcodeMoveLine.remaining_quantity__c}} [個]</div>
+                                  <div class="child" style="flex:4;">賞味期限: <span class="{{ barcodeMoveLine.expiration_class }}">{{barcodeMoveLine.expiration_date__c}}</span></div>
+                                  <div class="child" style="flex:1.5;">出荷数: </div>
+                                  <input ng-model="input_value" type="number" min="1" max="{{barcodeMoveLine.remaining_quantity__c}}" ng-blur="checkInput($event, $index)" style="flex:1; border: 1px solid #9E9E9E; width: 100%; font-size: large; text-align: center;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+
+
+
+                <ons-bottom-toolbar>
+                    <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveBarcodeMove();">
+                        確定
+                    </button>
+                </ons-bottom-toolbar>
+                <ons-fab position="top right" onclick="document.getElementById('scan_pad').focus();">
+                    scan
+                </ons-fab>
+            </ons-page>
+        </template>
+
+        <template id="page2.html">
+            <ons-page>
+                <ons-toolbar class="toolbar--transparent">
+                    <div class="center">出庫</div>
+                </ons-toolbar>
+
+                <div style="margin-top: 100px;text-align:center;color:#b5cc18">
+                    <p>
+                        <span style="font-size: 32px;">
+                            Thank you!
+                        </span>
+                    </p>
+
+                    <p>
+                        <span style="font-size: 32px;">
+                            出庫が完了しました!
+                        </span>
+                    </p>
+
+                    <span style="font-size: 128px;"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
+
+                    <p>
+                        もとの画面に戻ってください。
+                    </p>
+                </div>
+
+
+
+            </ons-page>
+        </template>
+
+    </div>
+
+    <script>
+
+
+        var module = angular.module('my-app', ['onsen']);
+        module.controller('AppController', function($scope, $http,  $interval, $timeout) {
+            $scope.scannerValue = "";
+            $scope.ui = {};
+            $scope.barcodeMoveLines = [];
+            $scope.barcodeMoveLine = {};
+            $scope.barcodeMoveLineIndex;
+            $scope.onFocus = false;
+            $scope.currentPage = {};
+
+            $scope.init = function(){
+                console.log("initialized...");
+        	  }
+
+            $scope.isSaveDisabled = function(barcodeMoveLine){
+
+                if( barcodeMoveLine.barcodes === undefined ){
+                    return true;
+                }
+                else{
+                    if( inventoryMoveLine.barcodes.length > 0 ){
+                        return false;
+                    }
+                    else{
+                        return true;
+                    }
+                }
+            }
+
+// FBY コードに関する話
+            $scope.barcodeEntered = function(){
+                $timeout(function(){
+                    $scope.addBarcodeMoveLine($scope.ui.scannerValue2);
+                    $scope.ui.scannerValue = "";
+                }, 500)
+            }
+
+// 数値制限の方法を検討
+// 出荷数を取得しなければならない ★★★★★
+
+            $scope.checkInput = function(event, index){
+                var record = $scope.barcodeMoveLines[ index ];
+                var value = Number(event.target.value);
+                var min = Number(event.target.min);
+                var max = Number(event.target.max);
+                if(value >= min && value <= max){
+                  console.log("範囲内です。");
+                  record.shipped_quantity__c = value;
+                }else{
+                  alert("残数の範囲を超えています。適正数(" + min + "〜" + max + ")の範囲で入力してください。");
+                  event.target.value=null;
+                  return event;
+                }
+            }
+
+            $scope.addBarcodeMoveLine = function(barcode){
+                OutboundController.findBarcode( barcode, function( value, event ){
+                  if( event.statusCode == 200 ){
+                      value.expiration_class = "";
+
+                      //日付処理
+                      var convertDate = function(date){
+                        var dateObj = new Date(date);
+                        var today = new Date();
+                        today.setHours(0,0,0,0);
+                        if(date < today.getTime()) {
+                          value.expiration_class = "expired";
+                        }
+                        return dateObj.getFullYear() + "-" + (dateObj.getMonth()+1) + "-" + dateObj.getDate();
+                      }
+                      value.expiration_date__c = convertDate(parseFloat(value.expiration_date__c));
+                      $scope.barcodeMoveLines.push(value);
+                      $scope.$apply();
+                  }
+                  else{
+                      alert( event.message );
+                  }
+                });
+            }
+
+            $scope.showBarcodeMoveLine = function( ivl, index ){
+                $scope.barcodeMoveLineIndex = index;
+                $scope.barcodeMoveLine = ivl;
+                $scope.navi.pushPage("page1.html");
+            }
+
+            $scope.deleteBarcodeMoveLine = function(index){
+                $scope.barcodeMoveLines.splice(index, 1);
+            }
+
+            $scope.newBarcodeMoveLine = function(){
+                $scope.barcodeMoveLine = {};
+                $scope.barcodeMoveLines.push($scope.barcodeMoveLine);
+                $scope.barcodeMoveLineIndex = $scope.barcodeMoveLines.length - 1;
+                $scope.navi.pushPage('page1.html');
+            }
+
+            $scope.saveBarcodeMove = function(){
+                var data = [];
+                for(var i=0; i < $scope.barcodeMoveLines.length; i++) {
+                  (function(moveline){
+                    data.push({
+                      Id: moveline.Id,
+// ★★★★★★★★ Barcode__c に無いリレーション先の項目をセットしなければならない。。。
+                      warehouseId: moveline.current_inventory__r.warehouse__r.Id,
+                      shipped_quantity__c: moveline.shipped_quantity__c
+                    })
+                  })($scope.barcodeMoveLines[i])
+                }
+
+                console.log(data, $scope.barcodeMoveLines)
+
+                OutboundController.saveOutboundBarcodeMove( JSON.stringify(data), function( value, event ){
+                    if( event.statusCode == 200 ){
+                        console.log(value)
+                        //$scope.navi.pushPage('page2.html');
+                        $scope.$apply();
+                    }
+                    else{
+                        alert( event.message );
+                    }
+                });
+            }
+
+        }).directive("dlEnterKey",function(){
+            return function(scope, element, attrs) {
+
+                element.bind("keydown keypress", function(event) {
+                    var keyCode = event.which || event.keyCode;
+
+                    // If enter key is pressed
+                    if (keyCode === 13) {
+                        scope.$apply(function() {
+                                // Evaluate the expression
+                            scope.$eval(attrs.dlEnterKey);
+                        });
+
+                        event.preventDefault();
+                    }
+                });
+            };
+        });
+
+
+
+    </script>
+</body>
+
+
+</apex:page>

@@ -3,12 +3,12 @@
     <applicationVisibilities>
         <application>inventory_management_classic</application>
         <default>false</default>
-        <visible>false</visible>
+        <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>inventory_manager</application>
         <default>false</default>
-        <visible>false</visible>
+        <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
         <apexClass>AppException</apexClass>
@@ -46,6 +46,10 @@
         <apexClass>JanProduct</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>OutboundController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>false</custom>
     <fieldPermissions>
         <editable>false</editable>
@@ -55,7 +59,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Barcode__c.barcode_image__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -63,19 +67,19 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Barcode__c.donated_company__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Barcode__c.donated_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Barcode__c.donated_person__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -103,34 +107,34 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>CurrentInventory__c.allocatable_quantity__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>CurrentInventory__c.allocated_quantity__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>CurrentInventory__c.physical_quantity__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>CurrentInventory__c.product_name__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>CurrentInventory__c.syoumi_kg__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>CurrentInventory__c.syoumi_num__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -254,6 +258,9 @@
         <layout>Barcode__c-Barcode_layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>CurrentInventory__c-CurrentInventoryLayout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>FoodTypeLOne__c-食品分類 %28L1%29 Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -276,12 +283,19 @@
         <recordType>InventoryMove__c.inbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>InventoryMove__c-InboundLayout</layout>
+        <recordType>InventoryMove__c.transfer</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>InventoryMove__c-OutboundLayout</layout>
         <recordType>InventoryMove__c.disposal</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>InventoryMove__c-OutboundLayout</layout>
         <recordType>InventoryMove__c.outbound</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Warehouse__c-WarehouseLayout</layout>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -370,6 +384,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>WarehouseInbound</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>WarehouseOutbound</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
