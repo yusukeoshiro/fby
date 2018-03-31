@@ -20,6 +20,9 @@
 					<div class="header">
 						成功
 					</div>
+					<div class="body">
+						<span id="fromBarcode"></span> から <span id="toBarcode"></span> のバーコードを作成しました。
+					</div>
 				</div>
 
 				<div id="apex-error-message" class="ui red message hidden">
@@ -60,6 +63,13 @@
 					BarcodeBulkCreateController.bulkCreateBarcode(quantity, function(value, event){
 						$('#dimmer').dimmer('hide');
 						if( event.statusCode == 200 ){
+							console.log(  );
+							let barcodes = event.result.split(":");
+
+							$("#fromBarcode").html( barcodes[0] );
+							$("#toBarcode").html( barcodes[1] );
+
+
 							$("#apex-success-message").removeClass("hidden");
 							$("#apex-error-message").addClass("hidden");
 						}
