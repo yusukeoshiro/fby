@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>barcode_image__c</fullName>
     <externalId>false</externalId>
-    <formula>IMAGE("https://barcode.tec-it.com/barcode.ashx?data="+Name+"&amp;code=Code128",Name )</formula>
+    <formula>IMAGE("https://barcodely.herokuapp.com/?code="&amp;Name,Name )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>バーコード</label>
     <required>false</required>
