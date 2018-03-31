@@ -8,6 +8,9 @@
             <quickActionName>BarcodeBulkCreate</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
+            <quickActionName>barcodePrint</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
             <quickActionName>FeedItem.ContentPost</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
