@@ -34,6 +34,11 @@
         .list-item::before {
           display: none;
         }
+
+        .ons-carousel-item {
+          display: table;
+          text-align: center;
+        }
     </style>
 
 </head>
@@ -90,6 +95,14 @@
                 </ul>
 
 
+                <ons-carousel swipeable auto-scroll var="carousel">
+                  <ons-carousel-item class='red'>
+                    <div class="item-label">Red</div>
+                  </ons-carousel-item>
+                  <ons-carousel-item class='yellow'>
+                    <div class="item-label">Yellow</div>
+                  </ons-carousel-item>
+                </ons-carousel>
 
 
                 <ons-bottom-toolbar>
