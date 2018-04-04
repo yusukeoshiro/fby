@@ -14,8 +14,11 @@ global with sharing class BarcodeBulkCreateController {
         }
 
         INSERT barcodes;
+        System.debug( barcodes );
+        Barcode__c fromBarcode = [SELECT Name FROM Barcode__c WHERE Id=:barcodes[0].Id];
+        Barcode__c toBarcode   = [SELECT Name FROM Barcode__c WHERE Id=:barcodes[barcodes.size()-1].Id];
 
-        return '成功しました。';
+        return fromBarcode.Name + ':' + toBarcode.Name;
 
     }
 }

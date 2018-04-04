@@ -1,0 +1,74 @@
+<apex:page standardStylesheets="false" showHeader="false" applyHtmlTag="false" applyBodyTag="false" controller="BarcodePrintController">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+    <div class="container">
+
+        <h4>バーコード印刷</h4>
+        <p>
+            開始と終了バーコードを入力してください。
+        </p>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="開始番号" id="fromName" />
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="終了番号" id="toName" />
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" id="print-btn">作成準備</button>
+
+    </div>
+
+    <div class="container" style="margin-top: 40px; display:none;" id="link">
+        <form target="_blank" action="https://barcodely.herokuapp.com/pdf?page_padding=8.8mm+8.4mm&barcodes_per_page=44&cell_width=48.3mm&cell_height=22.4mm&cell_margin=4mm+2mm" method="post">
+            <div style="display:none;">
+                <textarea name="barcodes" id="barcodes" cols="30" rows="10"></textarea>
+            </div>
+            <button class="btn btn-danger" type="submit">作成</button>
+        </form>
+
+    </div>
+
+
+
+
+
+    <script>
+        $(function(){
+            $("#print-btn").on("click", function(){
+                let fromName = $("#fromName").val();
+                let toName   = $("#toName").val();
+
+
+                BarcodePrintController.getCodes( fromName, toName , function( value, event ){
+                    if( event.statusCode == 200 ){
+                        $("#link").show();
+                        let result = event.result;
+                        $("#barcodes").val( result );
+                    }
+                    else{
+                        alert( event.message );
+                    }
+                });
+
+
+
+            });
+
+
+
+        });
+
+    </script>
+
+
+
+</apex:page>
