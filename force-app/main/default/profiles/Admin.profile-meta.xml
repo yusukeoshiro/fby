@@ -3,7 +3,7 @@
     <applicationVisibilities>
         <application>inventory_management_classic</application>
         <default>false</default>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>inventory_manager</application>
@@ -16,6 +16,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>BarcodeBulkCreateController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>BarcodePrintController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -59,27 +63,27 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Barcode__c.barcode_image__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Barcode__c.current_inventory__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Barcode__c.donated_company__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Barcode__c.donated_date__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Barcode__c.donated_person__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -87,9 +91,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Barcode__c.original_quantity__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -97,29 +101,29 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Barcode__c.shipped_quantity__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>CurrentInventory__c.JAN_code__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>CurrentInventory__c.allocatable_quantity__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>CurrentInventory__c.allocated_quantity__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>CurrentInventory__c.physical_quantity__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -127,24 +131,24 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>CurrentInventory__c.syoumi_kg__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>CurrentInventory__c.syoumi_num__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>CurrentInventory__c.unique_key__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>FoodTypeLOne__c.l2_count__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -167,14 +171,14 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>InventoryMoveLine__c.food_type_lOne__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>InventoryMoveLine__c.food_type_lTwo__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -207,9 +211,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>InventoryMove__c.completion_time__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -222,14 +226,14 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>InventoryMove__c.donated_to_company__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>InventoryMove__c.donated_to_person__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -280,19 +284,19 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>InventoryMove__c-InboundLayout</layout>
+        <recordType>InventoryMove__c.disposal</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>InventoryMove__c-InboundLayout</layout>
         <recordType>InventoryMove__c.inbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>InventoryMove__c-InboundLayout</layout>
-        <recordType>InventoryMove__c.transfer</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>InventoryMove__c-OutboundLayout</layout>
-        <recordType>InventoryMove__c.disposal</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>InventoryMove__c-OutboundLayout</layout>
         <recordType>InventoryMove__c.outbound</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>InventoryMove__c-InboundLayout</layout>
+        <recordType>InventoryMove__c.transfer</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Warehouse__c-WarehouseLayout</layout>
@@ -380,6 +384,10 @@
     </objectPermissions>
     <pageAccesses>
         <apexPage>BarcodeBulkCreate</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>BarcodePrint</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

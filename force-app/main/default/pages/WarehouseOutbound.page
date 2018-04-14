@@ -80,22 +80,23 @@
                                 <button class="fa fa-times" style="flex: 1" aria-hidden="true" ng-click="deleteBarcodeMoveLine($index);"></button>
                             </div>
                             <div class="list-item__subtitle">
-                                <div class="test">
-                                  現在庫名: {{barcodeMoveLine.current_inventory__r.product_name__c}}
+                                <div class="test" style="padding-bottom: 10px;">
+                                    現在庫名: {{barcodeMoveLine.current_inventory__r.product_name__c}}
                                 </div>
                                 <div class="holder" style="display: flex;">
-                                  <div class="child" style="flex:3;">残数: {{barcodeMoveLine.remaining_quantity__c}} [個]</div>
-                                  <div class="child" style="flex:4;">賞味期限: <span class="{{ barcodeMoveLine.expiration_class }}">{{barcodeMoveLine.expiration_date__c}}</span></div>
-                                  <div class="child" style="flex:1.5;">出荷数: </div>
-                                  <input ng-model="input_value" type="number" min="1" max="{{barcodeMoveLine.remaining_quantity__c}}" ng-blur="checkInput($event, $index)" style="flex:1; border: 1px solid #9E9E9E; width: 100%; font-size: large; text-align: center;"/>
+                                    <div class="list-item-title" style="flex:3;">残数: {{barcodeMoveLine.remaining_quantity__c}} [個]</div>
+                                    <div class="list-item-title" style="flex:4;">賞味期限: <span class="{{ barcodeMoveLine.expiration_class }}">{{barcodeMoveLine.expiration_date__c}}</span></div>
+                                </div>
+                                <div class="list-item-title" style="text-align:left; padding-top: 10px">出荷数:
+                                    <ons-range min="1" step="1" max="{{ barcodeMoveLine.remaining_quantity__c }}" ng-model="barcodeMoveLine.outboundQuantity" ng-change="checkInput({{barcodeMoveLine.outboundQuantity}}, $index)"></ons-range>
+                                    <output >{{ barcodeMoveLine.outboundQuantity }}</output>
                                 </div>
                             </div>
                         </div>
                     </li>
                 </ul>
 
-
-                <ons-carousel swipeable auto-scroll var="carousel">
+<!--                <ons-carousel swipeable auto-scroll var="carousel">
                   <ons-carousel-item class='red'>
                     <div class="item-label">Red</div>
                   </ons-carousel-item>
@@ -103,8 +104,7 @@
                     <div class="item-label">Yellow</div>
                   </ons-carousel-item>
                 </ons-carousel>
-
-
+-->
                 <ons-bottom-toolbar>
                     <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveBarcodeMove();">
                         確定
@@ -167,7 +167,7 @@
         	  }
 
             $scope.isSaveDisabled = function(barcodeMoveLine){
-
+                barcodeMoveLine.shipped_quantity__c = 1;
                 if( barcodeMoveLine.barcodes === undefined ){
                     return true;
                 }
@@ -192,43 +192,35 @@
 // 数値制限の方法を検討
 // 出荷数を取得しなければならない ★★★★★
 
-            $scope.checkInput = function(event, index){
-                var record = $scope.barcodeMoveLines[ index ];
-                var value = Number(event.target.value);
-                var min = Number(event.target.min);
-                var max = Number(event.target.max);
-                if(value >= min && value <= max){
-                  console.log("範囲内です。");
-                  record.shipped_quantity__c = value;
-                }else{
-                  alert("残数の範囲を超えています。適正数(" + min + "〜" + max + ")の範囲で入力してください。");
-                  event.target.value=null;
-                  return event;
-                }
+            $scope.checkInput = function(shipped_quantity, index){
+console.log("checkInput = ", shipped_quantity,index);
+              var record = $scope.barcodeMoveLines[ index ];
+              record.shipped_quantity__c = shipped_quantity;
             }
 
             $scope.addBarcodeMoveLine = function(barcode){
                 OutboundController.findBarcode( barcode, function( value, event ){
-                  if( event.statusCode == 200 ){
-                      value.expiration_class = "";
+                    if( event.statusCode == 200 ){
+                        value.expiration_class = "";
 
-                      //日付処理
-                      var convertDate = function(date){
-                        var dateObj = new Date(date);
-                        var today = new Date();
-                        today.setHours(0,0,0,0);
-                        if(date < today.getTime()) {
-                          value.expiration_class = "expired";
+                        //日付処理
+                        var convertDate = function(date){
+                            var dateObj = new Date(date);
+                            var today = new Date();
+                            today.setHours(0,0,0,0);
+                            if(date < today.getTime()) {
+                                value.expiration_class = "expired";
+                            }
+                            return dateObj.getFullYear() + "-" + (dateObj.getMonth()+1) + "-" + dateObj.getDate();
                         }
-                        return dateObj.getFullYear() + "-" + (dateObj.getMonth()+1) + "-" + dateObj.getDate();
-                      }
-                      value.expiration_date__c = convertDate(parseFloat(value.expiration_date__c));
-                      $scope.barcodeMoveLines.push(value);
-                      $scope.$apply();
-                  }
-                  else{
-                      alert( event.message );
-                  }
+                        value.expiration_date__c = convertDate(parseFloat(value.expiration_date__c));
+                        value.outboundQuantity = 1;
+                        $scope.barcodeMoveLines.push(value);
+                        $scope.$apply();
+                    }
+                    else{
+                        alert( event.message );
+                    }
                 });
             }
 
@@ -253,6 +245,7 @@
                 var data = [];
                 for(var i=0; i < $scope.barcodeMoveLines.length; i++) {
                   (function(moveline){
+                    console.log("test="+$scope.barcodeMoveLines.length);
                     data.push({
                       Id: moveline.Id,
 // ★★★★★★★★ Barcode__c に無いリレーション先の項目をセットしなければならない。。。
@@ -262,11 +255,11 @@
                   })($scope.barcodeMoveLines[i])
                 }
 
-                console.log(data, $scope.barcodeMoveLines)
+                console.log("test2=",data, $scope.barcodeMoveLines);
 
                 OutboundController.saveOutboundBarcodeMove( JSON.stringify(data), function( value, event ){
                     if( event.statusCode == 200 ){
-                        console.log(value)
+                        console.log("success = ", value);
                         //$scope.navi.pushPage('page2.html');
                         $scope.$apply();
                     }
