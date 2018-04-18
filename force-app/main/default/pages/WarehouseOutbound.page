@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/js/onsenui.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/js/angular-onsenui.min.js"></script>
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-touch/1.5.0/angular-touch.min.js"></script>
 
     <style>
         body{
@@ -39,6 +39,33 @@
           display: table;
           text-align: center;
         }
+
+        .list-item {
+          transition: all 0.4s ease-in-out;
+          left: 0%;
+        }
+        .list-item.onDelete {
+          left: -20%;
+        }
+
+        .list-item-deletepanel {
+          position: absolute;
+          right: -100px;
+          height: 100%;
+          width: 100px;
+          background-color: #F44336;
+          line-height: 172px;
+          text-align: center;
+          color: white;
+          transition: all 0.4s ease-in-out;
+        }
+        .list-item.onDelete .list-item-deletepanel {
+          right: -80px;
+        }
+
+        .list-item.shrink {
+          transform: scaleY(0);
+        }
     </style>
 
 </head>
@@ -58,9 +85,8 @@
                 </ons-toolbar>
                 <!-- ラベル -->
                 <div style="text-align:center;">
-                <span class="toolbar--transparent" ><br/>バーコードスキャナーで在庫コードを
-                <br/>スキャンして在庫を紐付けて下さい。</span>
-                                </div>
+                <span class="toolbar--transparent" >出庫対象をスキャンしてください</span>
+                </div>
 
                 <!-- VIRTUAL KEYBOARD -->
                 <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
@@ -73,25 +99,29 @@
 
                 <!--出庫の画面 FBYリスト表示 -->
                 <ul class="list" style="margin-top: 20px;">
-                    <li class="list-item list-item--tappable list-item--chevron" ng-repeat="barcodeMoveLine in barcodeMoveLines">
+                    <li ng-attr-id="listItem_{{$index}}" class="list-item list-item--tappable list-item--chevron" ng-repeat="barcodeMoveLine in barcodeMoveLines">
                           <div class="list-item__center">
-                            <div class="boss" style="display: flex; width: 100%; padding-bottom: 10px;">
-                                <div class="list-item__title list-item" style="flex: 9;">{{barcodeMoveLine.Name}}  @{{barcodeMoveLine.current_inventory__r.warehouse__r.Name}}</div>
-                                <button class="fa fa-times" style="flex: 1" aria-hidden="true" ng-click="deleteBarcodeMoveLine($index);"></button>
+                            <div class="list-touch-body" style="width:100%" ng-swipe-left="onTouchDelete({{$index}})" ng-click="onDeleteCancel($index)">
+                              <div class="boss" style="display: flex; width: 100%; padding-bottom: 10px;">
+                                  <div class="list-item__title list-item" style="flex: 9;">{{barcodeMoveLine.Name}}  @{{barcodeMoveLine.current_inventory__r.warehouse__r.Name}}</div>
+                              </div>
+                              <div class="list-item__subtitle">
+                                  <div class="test" style="padding-bottom: 10px;">
+                                      現在庫名: {{barcodeMoveLine.current_inventory__r.product_name__c}}
+                                  </div>
+                                  <div class="holder" style="display: flex;">
+                                      <div class="list-item-title" style="flex:3;">残数: {{barcodeMoveLine.remaining_quantity__c}} [個]</div>
+                                      <div class="list-item-title" style="flex:4;">賞味期限: <span class="{{ barcodeMoveLine.expiration_class }}">{{barcodeMoveLine.expiration_date__c}}</span></div>
+                                  </div>
+                              </div>
                             </div>
-                            <div class="list-item__subtitle">
-                                <div class="test" style="padding-bottom: 10px;">
-                                    現在庫名: {{barcodeMoveLine.current_inventory__r.product_name__c}}
-                                </div>
-                                <div class="holder" style="display: flex;">
-                                    <div class="list-item-title" style="flex:3;">残数: {{barcodeMoveLine.remaining_quantity__c}} [個]</div>
-                                    <div class="list-item-title" style="flex:4;">賞味期限: <span class="{{ barcodeMoveLine.expiration_class }}">{{barcodeMoveLine.expiration_date__c}}</span></div>
-                                </div>
-                                <div class="list-item-title" style="text-align:left; padding-top: 10px">出荷数:
-                                    <ons-range min="1" step="1" max="{{ barcodeMoveLine.remaining_quantity__c }}" ng-model="barcodeMoveLine.outboundQuantity" ng-change="checkInput({{ barcodeMoveLine.outboundQuantity }}, $index)"></ons-range>
-                                    <output >{{ barcodeMoveLine.outboundQuantity }}</output>
-                                </div>
+                            <div class="list-item-title" style="text-align:left; width:100%; padding-top: 10px">出荷数:
+                                <ons-range style="width: 90%" min="1" step="1" max="{{ barcodeMoveLine.remaining_quantity__c }}" ng-model="barcodeMoveLine.outboundQuantity" ng-change="checkInput({{ barcodeMoveLine.outboundQuantity }}, $index)"></ons-range>
+                                <output ng-attr-id="out_{{$index}}">{{ barcodeMoveLine.outboundQuantity }}</output>
                             </div>
+                        </div>
+                        <div class="list-item-deletepanel" ng-click="deleteBarcodeMoveLine($index);">
+                          DELETE
                         </div>
                     </li>
                 </ul>
@@ -152,7 +182,7 @@
     <script>
 
 
-        var module = angular.module('my-app', ['onsen']);
+        var module = angular.module('my-app', ['onsen', 'ngTouch']);
         module.controller('AppController', function($scope, $http,  $interval, $timeout) {
             $scope.scannerValue = "";
             $scope.ui = {};
@@ -189,14 +219,30 @@
                 }, 500)
             }
 
+            $scope.onTouchDelete = function(index){
+              console.log('touchstart event called');
+              var listItem = document.getElementById("listItem_"+index);
+              listItem.classList.add("onDelete");
+            }
+
+            $scope.onDeleteCancel = function(index){
+              console.log('deletecancel event called');
+              var listItem = document.getElementById("listItem_"+index);
+              listItem.classList.remove("onDelete");
+            }
+
+
 // 数値制限の方法を検討
 // 出荷数を取得しなければならない ★★★★★
 
             $scope.checkInput = function(shipped_quantity, index){
               var record = $scope.barcodeMoveLines[ index ];
-console.log("current_quantity = ", record.shipped_quantity__c);
-              record.shipped_quantity__c = shipped_quantity;
-console.log("next quantity = ", shipped_quantity,index);
+              window.setTimeout(function(){
+                (function(){
+                  var shippedNum = parseInt(document.getElementById("out_" + index).innerText);
+                  record.shipped_quantity__c = shippedNum;
+                })()
+              },100);
             }
 
             $scope.addBarcodeMoveLine = function(barcode){
@@ -218,7 +264,7 @@ console.log("next quantity = ", shipped_quantity,index);
                         value.outboundQuantity = 1;
                         value.shipped_quantity__c = 1;
                         $scope.barcodeMoveLines.push(value);
-console.log("checkInput_Initial = ", value.outboundQuantity);
+                        console.log("checkInput_Initial = ", value.outboundQuantity);
                         $scope.$apply();
                     }
                     else{
@@ -234,7 +280,16 @@ console.log("checkInput_Initial = ", value.outboundQuantity);
             }
 
             $scope.deleteBarcodeMoveLine = function(index){
-                $scope.barcodeMoveLines.splice(index, 1);
+              // console.log("start deletecancel")
+              // var listItem = document.getElementById("listItem_"+index);
+              // listItem.addEventListener("transitionend",function(){
+              //   console.log("dom delete")
+              //   $scope.barcodeMoveLines.splice(index, 1);
+              // }, false);
+              // listItem.classList.add("shrink");
+              // console.log("class added")
+
+              $scope.barcodeMoveLines.splice(index, 1);
             }
 
             $scope.newBarcodeMoveLine = function(){
@@ -263,7 +318,7 @@ console.log("checkInput_Initial = ", value.outboundQuantity);
                 OutboundController.saveOutboundBarcodeMove( JSON.stringify(data), function( value, event ){
                     if( event.statusCode == 200 ){
                         console.log("success = ", value);
-                        //$scope.navi.pushPage('page2.html');
+                        $scope.navi.pushPage('page2.html');
                         $scope.$apply();
                     }
                     else{
