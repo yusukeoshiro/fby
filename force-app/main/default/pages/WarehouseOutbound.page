@@ -88,7 +88,7 @@
                                     <div class="list-item-title" style="flex:4;">賞味期限: <span class="{{ barcodeMoveLine.expiration_class }}">{{barcodeMoveLine.expiration_date__c}}</span></div>
                                 </div>
                                 <div class="list-item-title" style="text-align:left; padding-top: 10px">出荷数:
-                                    <ons-range min="1" step="1" max="{{ barcodeMoveLine.remaining_quantity__c }}" ng-model="barcodeMoveLine.outboundQuantity" ng-change="checkInput({{barcodeMoveLine.outboundQuantity}}, $index)"></ons-range>
+                                    <ons-range min="1" step="1" max="{{ barcodeMoveLine.remaining_quantity__c }}" ng-model="barcodeMoveLine.outboundQuantity" ng-change="checkInput({{ barcodeMoveLine.outboundQuantity }}, $index)"></ons-range>
                                     <output >{{ barcodeMoveLine.outboundQuantity }}</output>
                                 </div>
                             </div>
@@ -193,9 +193,10 @@
 // 出荷数を取得しなければならない ★★★★★
 
             $scope.checkInput = function(shipped_quantity, index){
-console.log("checkInput = ", shipped_quantity,index);
               var record = $scope.barcodeMoveLines[ index ];
+console.log("current_quantity = ", record.shipped_quantity__c);
               record.shipped_quantity__c = shipped_quantity;
+console.log("next quantity = ", shipped_quantity,index);
             }
 
             $scope.addBarcodeMoveLine = function(barcode){
@@ -215,7 +216,9 @@ console.log("checkInput = ", shipped_quantity,index);
                         }
                         value.expiration_date__c = convertDate(parseFloat(value.expiration_date__c));
                         value.outboundQuantity = 1;
+                        value.shipped_quantity__c = 1;
                         $scope.barcodeMoveLines.push(value);
+console.log("checkInput_Initial = ", value.outboundQuantity);
                         $scope.$apply();
                     }
                     else{
