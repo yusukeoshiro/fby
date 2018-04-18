@@ -1,4 +1,4 @@
-<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" controller="OutboundController" lightningStylesheets="true">
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" controller="TransferController" lightningStylesheets="true">
 
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/css/onsenui.min.css" />
@@ -135,7 +135,7 @@
     <template id="page2.html">
       <ons-page>
         <ons-toolbar class="toolbar--transparent">
-          <div class="center">出庫</div>
+          <div class="center">在庫移動</div>
         </ons-toolbar>
 
         <div style="margin-top: 100px;text-align:center;color:#b5cc18">
@@ -147,7 +147,7 @@
 
           <p>
             <span style="font-size: 32px;">
-              出庫が完了しました!
+              在庫移動が完了しました!
             </span>
           </p>
 
@@ -225,7 +225,7 @@
     }
 
     $scope.addBarcodeMoveLine = function(barcode){
-      OutboundController.findBarcode( barcode, function( value, event ){
+      TransferController.findBarcode( barcode, function( value, event ){
         if( event.statusCode == 200 ){
           value.expiration_class = "";
 
@@ -292,7 +292,7 @@
         })($scope.barcodeMoveLines[i])
       }
 
-      OutboundController.saveOutboundBarcodeMove( JSON.stringify(data), function( value, event ){
+      TransferController.saveTransferBarcodeMove( JSON.stringify(data), function( value, event ){
         if( event.statusCode == 200 ){
           console.log("success = ", value);
           $scope.navi.pushPage('page2.html');

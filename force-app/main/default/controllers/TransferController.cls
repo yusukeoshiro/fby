@@ -1,5 +1,5 @@
-global with sharing class OutboundController {
-  global OutboundController() {
+global with sharing class TransferController {
+  global TransferController() {
 
   }
 
@@ -16,22 +16,19 @@ global with sharing class OutboundController {
   }
 
   @RemoteAction
-  global static Object saveOutboundBarcodeMove( String jsonStr ){
-    // 倉庫 Id、商品 ID の確認
-    // TODO fix this to be dynamic
+  global static Object saveTransferBarcodeMove( String jsonStr ){
+    // 倉庫 Idの確認
     //Map<String, Object> jsonObj = (Map<String, Object>) JSON.deserializeUntyped(jsonStr);
     List<Object> barcodeList = (List<Object>) JSON.deserializeUntyped(jsonStr);
     for(Object recordObj : barcodeList){
       Map<String, Object> record = (Map<String, Object>) recordObj;
-      InventoryMoveWrapper imw = InventoryManager.createInventoryMoveWrapper( InventoryMoveWrapper.OUTBOUND );
+      InventoryMoveWrapper imw = InventoryManager.createInventoryMoveWrapper( InventoryMoveWrapper.TRANSFER );
       imw.getRecord().transfer_from_warehouse__c = (Id)record.get('warehouseId');
-      InventoryMoveLineOutboundWrapper outboundLine = new InventoryMoveLineOutboundWrapper( new InventoryMoveLineOutbound__c() );
-      outboundLine.getRecord().barcode__c = (Id)record.get('Id');
-      outboundLine.getRecord().outbound_quantity__c = (decimal)record.get('shipped_quantity__c');
-      imw.addInventoryMoveLineOutboundWrapper( outboundLine );
+      InventoryMoveLineOutboundWrapper transferLine = new InventoryMoveLineOutboundWrapper( new InventoryMoveLineOutbound__c() );
+      transferLine.getRecord().barcode__c = (Id)record.get('Id');
+      imw.addInventoryMoveLineOutboundWrapper( transferLine );
       imw.confirmInventoryMove();
     }
-
     return true;
   }
 
