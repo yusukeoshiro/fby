@@ -33,13 +33,8 @@ global with sharing class TransferController {
   }
 
   @RemoteAction
-  global static List<FoodTypeLOne__c> getFoodTypeLOne(){
-    return [SELECT Id, Name FROM FoodTypeLOne__c];
-  }
-
-  @RemoteAction
-  global static List<FoodTypeLTwo__c> getFoodTypeLTwo( String foodTypeLOneId ){
-    return [SELECT Id, Name FROM FoodTypeLTwo__c WHERE food_type_lOne__c = :foodTypeLOneId];
+  global static List<Warehouse__c> getWarehouse(){
+    return [SELECT Id, Name FROM Warehouse__c];
   }
 
 }

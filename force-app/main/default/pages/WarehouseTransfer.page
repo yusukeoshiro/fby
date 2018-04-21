@@ -26,6 +26,10 @@
     height: 30px;
   }
 
+  .holder {
+    font-size: medium;
+  }
+
   .expired {
     color: red;
     font-weight: 500;
@@ -92,6 +96,16 @@
           <span class="barcode-read" >{{ ui.scannerValue2 || "待機中" }}</span>
         </div>
 
+        <div class="list-item-title" style="padding-left: 14px; background-color: white; position: relative; margin-top: 5px; text-align:left; padding-top: 10px; padding-bottom: 10px;">移動先 ▶︎
+          <ons-select class="select">
+            <select id="wselect" class="select-input" ng-model="WarehouseSelector" required="true" ng-change="warehouseSelect()" style="position: absolute; top: 3px; padding-left: 2%; width: 100px; border: solid; border-color: rgba(255, 193, 7, 0.08);">
+              <option ng-repeat="warehouse in warehouseS" value="{{warehouse.Id}}">
+                  {{warehouse.Name}}
+              </option>
+            </select>
+          </ons-select>
+        </div>
+
         <!--出庫の画面 FBYリスト表示 -->
         <ul class="list" style="margin-top: 20px;">
           <li ng-attr-id="listItem_{{$index}}" class="list-item list-item--tappable list-item--chevron" ng-repeat="barcodeMoveLine in barcodeMoveLines">
@@ -110,14 +124,15 @@
                   </div>
                 </div>
               </div>
-              <div class="list-item-title" style="text-align:left; width:100%; padding-top: 10px">移動先:
+              <!-- <div class="list-item-title" style="position: relative; margin-top: 5px; text-align:left; width:100%; padding-top: 10px">移動先:
                 <ons-select class="select">
-                  <select class="select-input">
-                    <option>Opt 1</option>
-                    <option>Opt 2</option>
+                  <select class="select-input" ng-model="WarehouseSelector" required="true" style="position: absolute; top: 0px; padding-left: 2%; width: 100px; border: solid; border-color: rgba(255, 193, 7, 0.08);">
+                    <option ng-repeat="warehouse in warehouseS" value="{{warehouse.Id}}">
+                        {{warehouse.Name}}
+                    </option>
                   </select>
                 </ons-select>
-              </div>
+              </div> -->
             </div>
             <div class="list-item-deletepanel" ng-click="deleteBarcodeMoveLine($index);">
               DELETE
@@ -177,8 +192,12 @@
     $scope.barcodeMoveLineIndex;
     $scope.onFocus = false;
     $scope.currentPage = {};
+    $scope.warehouseS = [];
+    $scope.wId = "";
+    $scope.wName = "";
 
     $scope.init = function(){
+      $scope.loadWarehouse();
       console.log("initialized...");
     }
 
@@ -215,6 +234,28 @@
       var listItem = document.getElementById("listItem_"+index);
       // console.log("Cancel index is = ", "listItem_"+index);
       listItem.classList.remove("onDelete");
+    }
+
+    // 倉庫のデータを取得
+    $scope.loadWarehouse = function(){
+        TransferController.getWarehouse( function( value, event ){
+            if( event.statusCode == 200 ){
+                $scope.warehouseS = value;
+                $scope.$apply();
+            }
+            else{
+                alert( event.message );
+            }
+        });
+    }
+
+    // 選択された倉庫を一時保管
+    $scope.warehouseSelect = function(){
+      var select = document.getElementById("wselect");
+      var warehouse = select.options[select.selectedIndex];
+      $scope.wId = warehouse.value;
+      $scope.wName = warehouse.innerText;
+      console.log("id = ", $scope.wId, "name = ", $scope.wName);
     }
 
     // ng-change で呼ばれるメソッド（Delay が必要）
@@ -286,19 +327,18 @@
       var data = [];
       for(var i=0; i < $scope.barcodeMoveLines.length; i++) {
         (function(moveline){
-          console.log("test="+$scope.barcodeMoveLines.length);
           data.push({
             Id: moveline.Id,
-            // ★★★★★★★★ Barcode__c に無いリレーション先の項目をセットしなければならない。。。
-            warehouseId: moveline.current_inventory__r.warehouse__r.Id,
-            shipped_quantity__c: moveline.shipped_quantity__c
+            warehouseId: $scope.wId
           })
         })($scope.barcodeMoveLines[i])
       }
 
+      console.log("data = ", data);
+
       TransferController.saveTransferBarcodeMove( JSON.stringify(data), function( value, event ){
         if( event.statusCode == 200 ){
-          console.log("success = ", value);
+          console.log("success = ", value, "event = ", event);
           $scope.navi.pushPage('page2.html');
           $scope.$apply();
         }

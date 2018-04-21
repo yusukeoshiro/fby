@@ -108,13 +108,19 @@
         <fields>inventory_move__c</fields>
         <relatedList>InventoryMoveLineOutbound__c.barcode__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>inventory_move__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>InventoryMoveLine__c.barcode__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hp0000000PZNM</masterLabel>
+        <masterLabel>00hO0000000esov</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
