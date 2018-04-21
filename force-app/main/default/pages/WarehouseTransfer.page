@@ -76,11 +76,11 @@
     <template id="page1.html">
       <ons-page>
         <ons-toolbar class="toolbar--transparent">
-          <div class="center">出庫</div>
+          <div class="center">在庫移動</div>
         </ons-toolbar>
         <!-- ラベル -->
         <div style="text-align:center;">
-          <span class="toolbar--transparent" >出庫対象をスキャンしてください</span>
+          <span class="toolbar--transparent" >移動対象の在庫をスキャン</span>
         </div>
 
         <!-- VIRTUAL KEYBOARD -->
@@ -110,9 +110,13 @@
                   </div>
                 </div>
               </div>
-              <div class="list-item-title" style="text-align:left; width:100%; padding-top: 10px">出荷数:
-                <ons-range style="width: 90%" min="1" step="1" max="{{ barcodeMoveLine.remaining_quantity__c }}" ng-model="barcodeMoveLine.outboundQuantity" ng-change="checkInput({{ barcodeMoveLine.outboundQuantity }}, $index)"></ons-range>
-                <output ng-attr-id="out_{{$index}}" style="font-size: 18px;">{{ barcodeMoveLine.outboundQuantity }}</output>
+              <div class="list-item-title" style="text-align:left; width:100%; padding-top: 10px">移動先:
+                <ons-select class="select">
+                  <select class="select-input">
+                    <option>Opt 1</option>
+                    <option>Opt 2</option>
+                  </select>
+                </ons-select>
               </div>
             </div>
             <div class="list-item-deletepanel" ng-click="deleteBarcodeMoveLine($index);">

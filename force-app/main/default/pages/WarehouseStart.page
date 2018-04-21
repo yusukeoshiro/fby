@@ -34,7 +34,7 @@
 
 
             $("#btn-transfer").on("click", function(){
-                alert("ページがありません");
+              sforce.one.navigateToURL("/apex/WarehouseTransfer");
             });
 
             $("#btn-dispose").on("click", function(){

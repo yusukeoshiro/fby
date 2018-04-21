@@ -80,7 +80,7 @@
         </ons-toolbar>
         <!-- ラベル -->
         <div style="text-align:center;">
-          <span class="toolbar--transparent" >出庫対象をスキャンしてください</span>
+          <span class="toolbar--transparent" >出庫対象の在庫をスキャン</span>
         </div>
 
         <!-- VIRTUAL KEYBOARD -->
