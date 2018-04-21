@@ -22,10 +22,11 @@ global with sharing class TransferController {
     List<Object> barcodeList = (List<Object>) JSON.deserializeUntyped(jsonStr);
     for(Object recordObj : barcodeList){
       Map<String, Object> record = (Map<String, Object>) recordObj;
-      InventoryMoveWrapper imw = InventoryManager.createInventoryMoveWrapper( InventoryMoveWrapper.TRANSFER );
-      imw.getRecord().transfer_from_warehouse__c = (Id)record.get('warehouseId');
+      InventoryMoveWrapper imw = InventoryManager.createInventoryMoveWrapper(InventoryMoveWrapper.TRANSFER);
+      imw.getRecord().transfer_from_warehouse__c  = (Id)record.get('fromWarehouseId'); // 移動元の倉庫のID
+      imw.getRecord().transfer_to_warehouse__c    = (Id)record.get('toWarehouseId'); // 移動先の倉庫のID
       InventoryMoveLineOutboundWrapper transferLine = new InventoryMoveLineOutboundWrapper( new InventoryMoveLineOutbound__c() );
-      transferLine.getRecord().barcode__c = (Id)record.get('Id');
+      transferLine.getRecord().barcode__c = (Id)record.get('Id'); // 移動させるバーコードのID
       imw.addInventoryMoveLineOutboundWrapper( transferLine );
       imw.confirmInventoryMove();
     }

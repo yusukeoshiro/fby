@@ -100,7 +100,7 @@
           <ons-select class="select">
             <select id="wselect" class="select-input" ng-model="WarehouseSelector" required="true" ng-change="warehouseSelect()" style="position: absolute; top: 3px; padding-left: 2%; width: 100px; border: solid; border-color: rgba(255, 193, 7, 0.08);">
               <option ng-repeat="warehouse in warehouseS" value="{{warehouse.Id}}">
-                  {{warehouse.Name}}
+                {{warehouse.Name}}
               </option>
             </select>
           </ons-select>
@@ -125,249 +125,250 @@
                 </div>
               </div>
               <!-- <div class="list-item-title" style="position: relative; margin-top: 5px; text-align:left; width:100%; padding-top: 10px">移動先:
-                <ons-select class="select">
-                  <select class="select-input" ng-model="WarehouseSelector" required="true" style="position: absolute; top: 0px; padding-left: 2%; width: 100px; border: solid; border-color: rgba(255, 193, 7, 0.08);">
-                    <option ng-repeat="warehouse in warehouseS" value="{{warehouse.Id}}">
-                        {{warehouse.Name}}
-                    </option>
-                  </select>
-                </ons-select>
-              </div> -->
-            </div>
-            <div class="list-item-deletepanel" ng-click="deleteBarcodeMoveLine($index);">
-              DELETE
-            </div>
-          </li>
-        </ul>
+              <ons-select class="select">
+              <select class="select-input" ng-model="WarehouseSelector" required="true" style="position: absolute; top: 0px; padding-left: 2%; width: 100px; border: solid; border-color: rgba(255, 193, 7, 0.08);">
+              <option ng-repeat="warehouse in warehouseS" value="{{warehouse.Id}}">
+              {{warehouse.Name}}
+            </option>
+          </select>
+        </ons-select>
+      </div> -->
+    </div>
+    <div class="list-item-deletepanel" ng-click="deleteBarcodeMoveLine($index);">
+      DELETE
+    </div>
+  </li>
+</ul>
 
-        <ons-bottom-toolbar>
-          <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveBarcodeMove();">
-            確定
-          </button>
-        </ons-bottom-toolbar>
-        <ons-fab position="top right" onclick="document.getElementById('scan_pad').focus();">
-          scan
-        </ons-fab>
-      </ons-page>
-    </template>
+<ons-bottom-toolbar>
+  <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveBarcodeMove();">
+    確定
+  </button>
+</ons-bottom-toolbar>
+<ons-fab position="top right" onclick="document.getElementById('scan_pad').focus();">
+  scan
+</ons-fab>
+</ons-page>
+</template>
 
-    <template id="page2.html">
-      <ons-page>
-        <ons-toolbar class="toolbar--transparent">
-          <div class="center">在庫移動</div>
-        </ons-toolbar>
+<template id="page2.html">
+  <ons-page>
+    <ons-toolbar class="toolbar--transparent">
+      <div class="center">在庫移動</div>
+    </ons-toolbar>
 
-        <div style="margin-top: 100px;text-align:center;color:#b5cc18">
-          <p>
-            <span style="font-size: 32px;">
-              Thank you!
-            </span>
-          </p>
+    <div style="margin-top: 100px;text-align:center;color:#b5cc18">
+      <p>
+        <span style="font-size: 32px;">
+          Thank you!
+        </span>
+      </p>
 
-          <p>
-            <span style="font-size: 32px;">
-              在庫移動が完了しました!
-            </span>
-          </p>
+      <p>
+        <span style="font-size: 32px;">
+          在庫移動が完了しました!
+        </span>
+      </p>
 
-          <span style="font-size: 128px;"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
+      <span style="font-size: 128px;"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
 
-          <p>
-            もとの画面に戻ってください。
-          </p>
-        </div>
-      </ons-page>
-    </template>
+      <p>
+        もとの画面に戻ってください。
+      </p>
+    </div>
+  </ons-page>
+</template>
 
-  </div>
+</div>
 
-  <script>
+<script>
 
-  var module = angular.module('my-app', ['onsen', 'ngTouch']);
-  module.controller('AppController', function($scope, $http,  $interval, $timeout) {
-    $scope.scannerValue = "";
-    $scope.ui = {};
-    $scope.barcodeMoveLines = [];
-    $scope.barcodeMoveLine = {};
-    $scope.barcodeMoveLineIndex;
-    $scope.onFocus = false;
-    $scope.currentPage = {};
-    $scope.warehouseS = [];
-    $scope.wId = "";
-    $scope.wName = "";
+var module = angular.module('my-app', ['onsen', 'ngTouch']);
+module.controller('AppController', function($scope, $http,  $interval, $timeout) {
+  $scope.scannerValue = "";
+  $scope.ui = {};
+  $scope.barcodeMoveLines = [];
+  $scope.barcodeMoveLine = {};
+  $scope.barcodeMoveLineIndex;
+  $scope.onFocus = false;
+  $scope.currentPage = {};
+  $scope.warehouseS = [];
+  $scope.wId = "";
+  $scope.wName = "";
 
-    $scope.init = function(){
-      $scope.loadWarehouse();
-      console.log("initialized...");
+  $scope.init = function(){
+    $scope.loadWarehouse();
+    console.log("initialized...");
+  }
+
+  $scope.isSaveDisabled = function(barcodeMoveLine){
+    barcodeMoveLine.shipped_quantity__c = 1;
+    if( barcodeMoveLine.barcodes === undefined ){
+      return true;
     }
-
-    $scope.isSaveDisabled = function(barcodeMoveLine){
-      barcodeMoveLine.shipped_quantity__c = 1;
-      if( barcodeMoveLine.barcodes === undefined ){
-        return true;
+    else{
+      if( inventoryMoveLine.barcodes.length > 0 ){
+        return false;
       }
       else{
-        if( inventoryMoveLine.barcodes.length > 0 ){
-          return false;
-        }
-        else{
-          return true;
-        }
+        return true;
       }
     }
+  }
 
-    // FBY コードに関する話
-    $scope.barcodeEntered = function(){
-      $timeout(function(){
-        $scope.addBarcodeMoveLine($scope.ui.scannerValue2);
-        $scope.ui.scannerValue = "";
-      }, 500)
-    }
+  // FBY コードに関する話
+  $scope.barcodeEntered = function(){
+    $timeout(function(){
+      $scope.addBarcodeMoveLine($scope.ui.scannerValue2);
+      $scope.ui.scannerValue = "";
+    }, 500)
+  }
 
-    $scope.onTouchDelete = function(index){
-      var listItem = document.getElementById("listItem_"+index);
-      // console.log("Delete index is = ", "listItem_"+index);
-      listItem.classList.add("onDelete");
-    }
+  $scope.onTouchDelete = function(index){
+    var listItem = document.getElementById("listItem_"+index);
+    // console.log("Delete index is = ", "listItem_"+index);
+    listItem.classList.add("onDelete");
+  }
 
-    $scope.onDeleteCancel = function(index){
-      var listItem = document.getElementById("listItem_"+index);
-      // console.log("Cancel index is = ", "listItem_"+index);
-      listItem.classList.remove("onDelete");
-    }
+  $scope.onDeleteCancel = function(index){
+    var listItem = document.getElementById("listItem_"+index);
+    // console.log("Cancel index is = ", "listItem_"+index);
+    listItem.classList.remove("onDelete");
+  }
 
-    // 倉庫のデータを取得
-    $scope.loadWarehouse = function(){
-        TransferController.getWarehouse( function( value, event ){
-            if( event.statusCode == 200 ){
-                $scope.warehouseS = value;
-                $scope.$apply();
-            }
-            else{
-                alert( event.message );
-            }
-        });
-    }
+  // 倉庫のデータを取得
+  $scope.loadWarehouse = function(){
+    TransferController.getWarehouse( function( value, event ){
+      if( event.statusCode == 200 ){
+        $scope.warehouseS = value;
+        $scope.$apply();
+      }
+      else{
+        alert( event.message );
+      }
+    });
+  }
 
-    // 選択された倉庫を一時保管
-    $scope.warehouseSelect = function(){
-      var select = document.getElementById("wselect");
-      var warehouse = select.options[select.selectedIndex];
-      $scope.wId = warehouse.value;
-      $scope.wName = warehouse.innerText;
-      console.log("id = ", $scope.wId, "name = ", $scope.wName);
-    }
+  // 選択された倉庫を一時保管
+  $scope.warehouseSelect = function(){
+    var select = document.getElementById("wselect");
+    var warehouse = select.options[select.selectedIndex];
+    $scope.wId = warehouse.value;
+    $scope.wName = warehouse.innerText;
+    console.log("id = ", $scope.wId, "name = ", $scope.wName);
+  }
 
-    // ng-change で呼ばれるメソッド（Delay が必要）
-    $scope.checkInput = function(shipped_quantity, index){
-      var record = $scope.barcodeMoveLines[ index ];
-      window.setTimeout(function(){
-        (function(){
-          var shippedNum = parseInt(document.getElementById("out_" + index).innerText);
-          record.shipped_quantity__c = shippedNum;
-        })()
-      },100);
-    }
+  // ng-change で呼ばれるメソッド（Delay が必要）
+  $scope.checkInput = function(shipped_quantity, index){
+    var record = $scope.barcodeMoveLines[ index ];
+    window.setTimeout(function(){
+      (function(){
+        var shippedNum = parseInt(document.getElementById("out_" + index).innerText);
+        record.shipped_quantity__c = shippedNum;
+      })()
+    },100);
+  }
 
-    $scope.addBarcodeMoveLine = function(barcode){
-      TransferController.findBarcode( barcode, function( value, event ){
-        if( event.statusCode == 200 ){
-          value.expiration_class = "";
+  $scope.addBarcodeMoveLine = function(barcode){
+    TransferController.findBarcode( barcode, function( value, event ){
+      if( event.statusCode == 200 ){
+        value.expiration_class = "";
 
-          //日付処理
-          var convertDate = function(date){
-            var dateObj = new Date(date);
-            var today = new Date();
-            today.setHours(0,0,0,0);
-            if(date < today.getTime()) {
-              value.expiration_class = "expired";
-            }
-            return dateObj.getFullYear() + "-" + (dateObj.getMonth()+1) + "-" + dateObj.getDate();
+        //日付処理
+        var convertDate = function(date){
+          var dateObj = new Date(date);
+          var today = new Date();
+          today.setHours(0,0,0,0);
+          if(date < today.getTime()) {
+            value.expiration_class = "expired";
           }
-          value.expiration_date__c = convertDate(parseFloat(value.expiration_date__c));
-          value.outboundQuantity = 1;
-          value.shipped_quantity__c = 1;
-          $scope.barcodeMoveLines.push(value);
-          console.log("checkInput_Initial = ", value.outboundQuantity);
-          $scope.$apply();
+          return dateObj.getFullYear() + "-" + (dateObj.getMonth()+1) + "-" + dateObj.getDate();
         }
-        else{
-          alert( event.message );
-        }
-      });
-    }
-
-    $scope.showBarcodeMoveLine = function( ivl, index ){
-      $scope.barcodeMoveLineIndex = index;
-      $scope.barcodeMoveLine = ivl;
-      $scope.navi.pushPage("page1.html");
-    }
-
-    $scope.deleteBarcodeMoveLine = function(index){
-      // console.log("start deletecancel")
-      // var listItem = document.getElementById("listItem_"+index);
-      // listItem.addEventListener("transitionend",function(){
-      //   console.log("dom delete")
-      //   $scope.barcodeMoveLines.splice(index, 1);
-      // }, false);
-      // listItem.classList.add("shrink");
-      // console.log("class added")
-
-      $scope.barcodeMoveLines.splice(index, 1);
-    }
-
-    $scope.newBarcodeMoveLine = function(){
-      $scope.barcodeMoveLine = {};
-      $scope.barcodeMoveLines.push($scope.barcodeMoveLine);
-      $scope.barcodeMoveLineIndex = $scope.barcodeMoveLines.length - 1;
-      $scope.navi.pushPage('page1.html');
-    }
-
-    $scope.saveBarcodeMove = function(){
-      var data = [];
-      for(var i=0; i < $scope.barcodeMoveLines.length; i++) {
-        (function(moveline){
-          data.push({
-            Id: moveline.Id,
-            warehouseId: $scope.wId
-          })
-        })($scope.barcodeMoveLines[i])
+        value.expiration_date__c = convertDate(parseFloat(value.expiration_date__c));
+        value.outboundQuantity = 1;
+        value.shipped_quantity__c = 1;
+        $scope.barcodeMoveLines.push(value);
+        console.log("checkInput_Initial = ", value.outboundQuantity);
+        $scope.$apply();
       }
+      else{
+        alert( event.message );
+      }
+    });
+  }
 
-      console.log("data = ", data);
+  $scope.showBarcodeMoveLine = function( ivl, index ){
+    $scope.barcodeMoveLineIndex = index;
+    $scope.barcodeMoveLine = ivl;
+    $scope.navi.pushPage("page1.html");
+  }
 
-      TransferController.saveTransferBarcodeMove( JSON.stringify(data), function( value, event ){
-        if( event.statusCode == 200 ){
-          console.log("success = ", value, "event = ", event);
-          $scope.navi.pushPage('page2.html');
-          $scope.$apply();
-        }
-        else{
-          alert( event.message );
-        }
-      });
+  $scope.deleteBarcodeMoveLine = function(index){
+    // console.log("start deletecancel")
+    // var listItem = document.getElementById("listItem_"+index);
+    // listItem.addEventListener("transitionend",function(){
+    //   console.log("dom delete")
+    //   $scope.barcodeMoveLines.splice(index, 1);
+    // }, false);
+    // listItem.classList.add("shrink");
+    // console.log("class added")
+
+    $scope.barcodeMoveLines.splice(index, 1);
+  }
+
+  $scope.newBarcodeMoveLine = function(){
+    $scope.barcodeMoveLine = {};
+    $scope.barcodeMoveLines.push($scope.barcodeMoveLine);
+    $scope.barcodeMoveLineIndex = $scope.barcodeMoveLines.length - 1;
+    $scope.navi.pushPage('page1.html');
+  }
+
+  $scope.saveBarcodeMove = function(){
+    var data = [];
+    for(var i=0; i < $scope.barcodeMoveLines.length; i++) {
+      (function(moveline){
+        data.push({
+          Id: moveline.Id,
+          fromWarehouseId: moveline.current_inventory__r.warehouse__r.Id,
+          toWarehouseId: $scope.wId
+        })
+      })($scope.barcodeMoveLines[i])
     }
 
-  }).directive("dlEnterKey",function(){
-    return function(scope, element, attrs) {
+    console.log("data = ", data);
 
-      element.bind("keydown keypress", function(event) {
-        var keyCode = event.which || event.keyCode;
+    TransferController.saveTransferBarcodeMove( JSON.stringify(data), function( value, event ){
+      if( event.statusCode == 200 ){
+        console.log("success = ", value, "event = ", event);
+        $scope.navi.pushPage('page2.html');
+        $scope.$apply();
+      }
+      else{
+        alert( event.message );
+      }
+    });
+  }
 
-        // If enter key is pressed
-        if (keyCode === 13) {
-          scope.$apply(function() {
-            // Evaluate the expression
-            scope.$eval(attrs.dlEnterKey);
-          });
+}).directive("dlEnterKey",function(){
+  return function(scope, element, attrs) {
 
-          event.preventDefault();
-        }
-      });
-    };
-  });
+    element.bind("keydown keypress", function(event) {
+      var keyCode = event.which || event.keyCode;
 
-  </script>
+      // If enter key is pressed
+      if (keyCode === 13) {
+        scope.$apply(function() {
+          // Evaluate the expression
+          scope.$eval(attrs.dlEnterKey);
+        });
+
+        event.preventDefault();
+      }
+    });
+  };
+});
+
+</script>
 </body>
 
 
