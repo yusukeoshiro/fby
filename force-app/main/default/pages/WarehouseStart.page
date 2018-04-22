@@ -38,7 +38,7 @@
             });
 
             $("#btn-dispose").on("click", function(){
-                alert("ページがありません");
+              sforce.one.navigateToURL("/apex/WarehouseDispose");
             });
 
 
