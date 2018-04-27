@@ -3,5 +3,5 @@
     <apiVersion>42.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>WarehouseOutbound</label>
+    <label>WarehouseInbound</label>
 </ApexPage>

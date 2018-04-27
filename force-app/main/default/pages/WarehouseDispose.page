@@ -1,4 +1,4 @@
-<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" controller="OutboundController" lightningStylesheets="true">
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyBodyTag="false" docType="html-5.0" controller="DisposeController" lightningStylesheets="true">
 
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/onsen/2.5.2/css/onsenui.min.css" />
@@ -76,11 +76,11 @@
     <template id="page1.html">
       <ons-page>
         <ons-toolbar class="toolbar--transparent">
-          <div class="center">出庫</div>
+          <div class="center">廃棄</div>
         </ons-toolbar>
         <!-- ラベル -->
         <div style="text-align:center;">
-          <span class="toolbar--transparent" >出庫対象の在庫をスキャン</span>
+          <span class="toolbar--transparent" >廃棄対象の在庫をスキャン</span>
         </div>
 
         <!-- VIRTUAL KEYBOARD -->
@@ -92,7 +92,7 @@
           <span class="barcode-read" >{{ ui.scannerValue2 || "待機中" }}</span>
         </div>
 
-        <!--出庫の画面 FBYリスト表示 -->
+        <!--廃棄の画面 FBYリスト表示 -->
         <ul class="list" style="margin-top: 20px;">
           <li ng-attr-id="listItem_{{$index}}" class="list-item list-item--tappable list-item--chevron" ng-repeat="barcodeMoveLine in barcodeMoveLines">
             <div class="list-item__center">
@@ -110,9 +110,9 @@
                   </div>
                 </div>
               </div>
-              <div class="list-item-title" style="text-align:left; width:100%; padding-top: 10px">出荷数:
-                <ons-range style="width: 90%" min="1" step="1" max="{{ barcodeMoveLine.remaining_quantity__c }}" ng-model="barcodeMoveLine.outboundQuantity" ng-change="checkInput({{ barcodeMoveLine.outboundQuantity }}, $index)"></ons-range>
-                <output ng-attr-id="out_{{$index}}" style="font-size: 18px;">{{ barcodeMoveLine.outboundQuantity }}</output>
+              <div class="list-item-title" style="text-align:left; width:100%; padding-top: 10px">廃棄数:
+                <ons-range style="width: 90%" min="1" step="1" max="{{ barcodeMoveLine.remaining_quantity__c }}" ng-model="barcodeMoveLine.disposeQuantity" ng-change="checkInput({{ barcodeMoveLine.disposeQuantity }}, $index)"></ons-range>
+                <output ng-attr-id="out_{{$index}}" style="font-size: 18px;">{{ barcodeMoveLine.disposeQuantity }}</output>
               </div>
             </div>
             <div class="list-item-deletepanel" ng-click="deleteBarcodeMoveLine($index);">
@@ -135,7 +135,7 @@
     <template id="page2.html">
       <ons-page>
         <ons-toolbar class="toolbar--transparent">
-          <div class="center">出庫</div>
+          <div class="center">廃棄</div>
         </ons-toolbar>
 
         <div style="margin-top: 100px;text-align:center;color:#b5cc18">
@@ -147,7 +147,7 @@
 
           <p>
             <span style="font-size: 32px;">
-              出庫が完了しました!
+              廃棄が完了しました!
             </span>
           </p>
 
@@ -225,7 +225,7 @@
     }
 
     $scope.addBarcodeMoveLine = function(barcode){
-      OutboundController.findBarcode( barcode, function( value, event ){
+      DisposeController.findBarcode( barcode, function( value, event ){
         if( event.statusCode == 200 ){
           value.expiration_class = "";
 
@@ -240,10 +240,10 @@
             return dateObj.getFullYear() + "-" + (dateObj.getMonth()+1) + "-" + dateObj.getDate();
           }
           value.expiration_date__c = convertDate(parseFloat(value.expiration_date__c));
-          value.outboundQuantity = 1;
+          value.disposeQuantity = 1;
           value.shipped_quantity__c = 1;
           $scope.barcodeMoveLines.push(value);
-          console.log("checkInput_Initial = ", value.outboundQuantity);
+          console.log("checkInput_Initial = ", value.disposeQuantity);
           $scope.$apply();
         }
         else{
@@ -292,7 +292,7 @@
         })($scope.barcodeMoveLines[i])
       }
 
-      OutboundController.saveOutboundBarcodeMove( JSON.stringify(data), function( value, event ){
+      DisposeController.saveDisposeBarcodeMove( JSON.stringify(data), function( value, event ){
         if( event.statusCode == 200 ){
           console.log("success = ", value);
           $scope.navi.pushPage('page2.html');

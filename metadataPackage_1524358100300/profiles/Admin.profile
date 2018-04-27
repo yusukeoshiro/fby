@@ -256,24 +256,10 @@
         <readable>false</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>Account-donating_from_parties_layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>BarcodeAssignment__c-BarcodeAssignment_Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Barcode__c-Barcode_layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Contact-donating_from_contact_layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Contact-donating_from_contact_layout</layout>
-        <recordType>Contact.person_in_a_company</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Contact-donating_to_contact_layout</layout>
-        <recordType>Contact.donation_subject</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CurrentInventory__c-CurrentInventoryLayout</layout>
@@ -416,32 +402,6 @@
         <apexPage>WarehouseStart</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
-    <pageAccesses>
-        <apexPage>accountInbound</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>accountOutbound</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>contactInbound</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>contactOutbound</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <recordTypeVisibilities>
-        <default>true</default>
-        <recordType>Contact.donation_subject</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Contact.person_in_a_company</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>InventoryMove__c.disposal</recordType>
