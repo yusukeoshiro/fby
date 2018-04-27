@@ -19,6 +19,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>BarcodePrintController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>InboundController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -44,6 +48,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>JanProduct</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OutboundController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <custom>true</custom>
@@ -248,10 +256,27 @@
         <readable>false</readable>
     </fieldPermissions>
     <layoutAssignments>
+        <layout>Account-donating_from_parties_layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>BarcodeAssignment__c-BarcodeAssignment_Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Barcode__c-Barcode_layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-donating_from_contact_layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-donating_from_contact_layout</layout>
+        <recordType>Contact.person_in_a_company</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-donating_to_contact_layout</layout>
+        <recordType>Contact.donation_subject</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CurrentInventory__c-CurrentInventoryLayout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>FoodTypeLOne__c-食品分類 %28L1%29 Layout</layout>
@@ -276,6 +301,10 @@
         <recordType>InventoryMove__c.inbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>InventoryMove__c-InboundLayout</layout>
+        <recordType>InventoryMove__c.transfer</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>InventoryMove__c-OutboundLayout</layout>
         <recordType>InventoryMove__c.disposal</recordType>
     </layoutAssignments>
@@ -283,8 +312,15 @@
         <layout>InventoryMove__c-OutboundLayout</layout>
         <recordType>InventoryMove__c.outbound</recordType>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>Warehouse__c-WarehouseLayout</layout>
+    </layoutAssignments>
     <pageAccesses>
         <apexPage>BarcodeBulkCreate</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>BarcodePrint</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -292,9 +328,39 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>WarehouseOutbound</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>WarehouseStart</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
+    <pageAccesses>
+        <apexPage>accountInbound</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>accountOutbound</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>contactInbound</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>contactOutbound</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>Contact.donation_subject</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Contact.person_in_a_company</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>InventoryMove__c.disposal</recordType>

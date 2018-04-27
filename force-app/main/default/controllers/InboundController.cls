@@ -1,6 +1,29 @@
 global with sharing class InboundController {
-    global InboundController() {
 
+    public Account fromAccount {get;set;}
+    public Contact fromContact {get;set;}
+    public String fromObject {get;set;}
+    public String fromRecordId {get;set;}
+
+    global InboundController() {
+        if ( ApexPages.currentPage().getParameters().get('id') != null ) {
+            String myId = ApexPages.currentPage().getParameters().get('id');
+
+            List<Account> accounts = [SELECT Id, Name FROM Account WHERE Id=: myId];
+            if ( accounts.size() > 0 ) {
+                fromAccount = accounts[0];
+                fromObject = 'Account';
+                fromRecordId = fromAccount.Id;
+            } else {
+                List<Contact> contacts = [SELECT Id, Name FROM Contact WHERE Id=:myId];
+                if ( contacts.size() > 0 ) {
+                    fromContact = contacts[0];
+                    fromObject = 'Contact';
+                    fromRecordId = fromContact.Id;
+                }
+            }
+
+        }
     }
 
     @RemoteAction
@@ -28,9 +51,25 @@ global with sharing class InboundController {
     }
 
     @RemoteAction
-    global static Object saveInboundInventoryMove( String jsonInput ){
+    global static Object saveInboundInventoryMove( String objectName, String recordId, String jsonInput ){
+
+
+
+        System.debug( objectName );
+        System.debug( recordId );
+
 
         InventoryMoveWrapper imw = InventoryManager.createInventoryMoveWrapper( InventoryMoveWrapper.INBOUND );
+
+        if ( objectName == 'Contact' ) {
+            imw.getRecord().donated_from_person__c = recordId;
+        }
+        if ( objectName == 'Account' ) {
+            imw.getRecord().donated_from_company__c = recordId;
+        }
+
+
+
 
         // TODO fix this to be dynamic
         imw.getRecord().transfer_to_warehouse__c = [SELECT Id FROM Warehouse__c LIMIT 1].Id;

@@ -32,7 +32,17 @@
         <template id="page1.html">
             <ons-page>
                 <ons-toolbar class="toolbar--transparent">
-                    <div class="center">入庫業務</div>
+                    <div class="center">
+                        入庫業務
+                        <apex:outputPanel rendered="{!fromAccount!=null}" layout="inline">
+                            ({!fromAccount.Name})
+                        </apex:outputPanel>
+
+                        <apex:outputPanel rendered="{!fromContact!=null}" layout="inline">
+                            ({!fromContact.Name})
+                        </apex:outputPanel>
+
+                    </div>
                 </ons-toolbar>
 
                 <!-- VIRTUAL KEYBOARD -->
@@ -316,6 +326,8 @@
         var module = angular.module('my-app', ['onsen']);
         module.controller('AppController', function($scope, $http,  $interval, $timeout) {
             $scope.scannerValue = "";
+            $scope.object = "{!fromObject}";
+            $scope.recordId = "{!fromRecordId}";
             $scope.ui = {};
             $scope.inventoryMoveLines = [];
             $scope.inventoryMoveLine = {};
@@ -338,6 +350,10 @@
                 for( var i = 0; i < 30; i++ ){
                     $scope.calendar.years.push( thisYear + i );
                 }
+
+
+                console.log( $scope.object );
+                console.log( $scope.recordId );
 
                 console.log("initialized...");
         	}
@@ -498,7 +514,8 @@
 
             $scope.saveInventoryMove = function(){
                 var json = JSON.stringify( $scope.inventoryMoveLines );
-                InboundController.saveInboundInventoryMove( json, function( value, event ){
+
+                InboundController.saveInboundInventoryMove( $scope.object, $scope.recordId, json, function( value, event ){
                     if( event.statusCode == 200 ){
                         $scope.navi.pushPage('page3.html');
                         $scope.$apply();
