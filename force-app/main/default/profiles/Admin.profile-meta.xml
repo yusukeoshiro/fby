@@ -23,6 +23,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>DisposeController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>InboundController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -52,6 +56,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OutboundController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TransferController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>
@@ -280,22 +288,22 @@
         <layout>InventoryMoveLine__c-InventoryMoveLine-Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-InboundLayout</layout>
+        <layout>InventoryMove__c-OutboundLayout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-InboundLayout</layout>
+        <layout>InventoryMove__c-OutboundLayout</layout>
         <recordType>InventoryMove__c.disposal</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-InboundLayout</layout>
+        <layout>InventoryMove__c-OutboundLayout</layout>
         <recordType>InventoryMove__c.inbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-InboundLayout</layout>
+        <layout>InventoryMove__c-OutboundLayout</layout>
         <recordType>InventoryMove__c.outbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-InboundLayout</layout>
+        <layout>InventoryMove__c-OutboundLayout</layout>
         <recordType>InventoryMove__c.transfer</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -391,6 +399,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>WarehouseDispose</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>WarehouseInbound</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -402,25 +414,46 @@
         <apexPage>WarehouseStart</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
+    <pageAccesses>
+        <apexPage>WarehouseTransfer</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>accountInbound</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>accountOutbound</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>contactInbound</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>contactOutbound</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>InventoryMove__c.disposal</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>InventoryMove__c.inbound</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>InventoryMove__c.outbound</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>InventoryMove__c.transfer</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <userLicense>Salesforce</userLicense>
     <userPermissions>
