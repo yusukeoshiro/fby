@@ -5,7 +5,32 @@ global with sharing class InboundController {
     public String fromObject {get;set;}
     public String fromRecordId {get;set;}
 
+    public List<Warehouse__c> warehouses {get;set;}
+    public String warehouses_s {get;set;}
+    public String selectedWarehouseId {get;set;}
+
     global InboundController() {
+
+        selectedWarehouseId = null;
+        // try to figure out the last warehouse he made deposit to
+        List<InventoryMove__c> inbounds = [
+            SELECT transfer_to_warehouse__c
+            FROM InventoryMove__c
+            WHERE
+                CreatedById =:UserInfo.getUserId() AND
+                recordTypeId =: InventoryMoveWrapper.getRecordTypeId(InventoryMoveWrapper.INBOUND) AND
+                transfer_to_warehouse__c != NULL
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ];
+
+        if ( inbounds.size() > 0 ) {
+            selectedWarehouseId = String.valueOf( inbounds[0].transfer_to_warehouse__c );
+        }
+
+        warehouses = [SELECT Id, Name FROM Warehouse__c];
+        warehouses_s = JSON.serialize( warehouses );
+
         if ( ApexPages.currentPage().getParameters().get('id') != null ) {
             String myId = ApexPages.currentPage().getParameters().get('id');
 
@@ -51,12 +76,13 @@ global with sharing class InboundController {
     }
 
     @RemoteAction
-    global static Object saveInboundInventoryMove( String objectName, String recordId, String jsonInput ){
+    global static Object saveInboundInventoryMove( String objectName, String recordId, String warehouseId, String jsonInput ){
 
 
 
         System.debug( objectName );
         System.debug( recordId );
+        System.debug( warehouseId );
 
 
         InventoryMoveWrapper imw = InventoryManager.createInventoryMoveWrapper( InventoryMoveWrapper.INBOUND );
@@ -68,11 +94,7 @@ global with sharing class InboundController {
             imw.getRecord().donated_from_company__c = recordId;
         }
 
-
-
-
-        // TODO fix this to be dynamic
-        imw.getRecord().transfer_to_warehouse__c = [SELECT Id FROM Warehouse__c LIMIT 1].Id;
+        imw.getRecord().transfer_to_warehouse__c = warehouseId;
 
         List<InventoryMoveLineWrapper> lines = (List<InventoryMoveLineWrapper>) JSON.deserialize(jsonInput, List<InventoryMoveLineWrapper>.class);
         imw.setLines( lines );

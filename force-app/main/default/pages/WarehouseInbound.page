@@ -26,7 +26,48 @@
 
 
 
-        <ons-navigator var="navi" page="page1.html"></ons-navigator>
+        <ons-navigator var="navi" page="warehouseSelect.html"></ons-navigator>
+
+
+        <template id="warehouseSelect.html">
+            <ons-page>
+                <ons-toolbar class="toolbar--transparent">
+                    <div class="center">
+                        入庫業務
+                        <apex:outputPanel rendered="{!fromAccount!=null}" layout="inline">
+                            ({!fromAccount.Name})
+                        </apex:outputPanel>
+
+                        <apex:outputPanel rendered="{!fromContact!=null}" layout="inline">
+                            ({!fromContact.Name})
+                        </apex:outputPanel>
+                    </div>
+                </ons-toolbar>
+
+
+                <div class="" style="text-align:center;">
+                    入庫先倉庫を選択してください。
+                    <div class="">
+                        <select class="select-input" ng-model="ui.selectedWarehouseId">
+                            <option ng-repeat="warehouse in warehouses" value="{{warehouse.Id}}">{{warehouse.Name}}</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <ons-bottom-toolbar>
+                    <button
+                        class="button--large--cta"
+                        style="width: 95%; margin: 0 auto;"
+                        ng-click="navi.pushPage('page1.html');"
+                        ng-disabled="!ui.selectedWarehouseId">
+                        次へ
+                    </button>
+                </ons-bottom-toolbar>
+
+
+            </ons-page>
+        </template>
 
 
         <template id="page1.html">
@@ -69,12 +110,6 @@
                         </div>
                     </li>
                 </ul>
-
-
-
-
-
-
 
                 <ons-bottom-toolbar>
                     <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveInventoryMove();">
@@ -328,7 +363,10 @@
             $scope.scannerValue = "";
             $scope.object = "{!fromObject}";
             $scope.recordId = "{!fromRecordId}";
+            $scope.warehouses = {!warehouses_s};
+
             $scope.ui = {};
+            $scope.ui.selectedWarehouseId = "{!selectedWarehouseId}";
             $scope.inventoryMoveLines = [];
             $scope.inventoryMoveLine = {};
             $scope.inventoryMoveLineIndex;
@@ -515,7 +553,7 @@
             $scope.saveInventoryMove = function(){
                 var json = JSON.stringify( $scope.inventoryMoveLines );
 
-                InboundController.saveInboundInventoryMove( $scope.object, $scope.recordId, json, function( value, event ){
+                InboundController.saveInboundInventoryMove( $scope.object, $scope.recordId, $scope.ui.selectedWarehouseId, json, function( value, event ){
                     if( event.statusCode == 200 ){
                         $scope.navi.pushPage('page3.html');
                         $scope.$apply();
