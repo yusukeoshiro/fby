@@ -412,18 +412,19 @@
                 }
             }
 
-
             $scope.validateDate = function( inventoryMoveLine ){
                 if( (inventoryMoveLine.selectedYear !== undefined) && (inventoryMoveLine.selectedMonth !== undefined) && (inventoryMoveLine.selectedDay !== undefined)  ){
-                    inventoryMoveLine.record.expiration_date__c = new Date(
-                        parseInt( inventoryMoveLine.selectedYear) ,
-                        parseInt( inventoryMoveLine.selectedMonth ) - 1,
-                        parseInt( inventoryMoveLine.selectedDay )
-                    );
-                    if( inventoryMoveLine.record.expiration_date__c.getDate() != parseInt( inventoryMoveLine.selectedDay ) ){
+                    var year = parseInt( inventoryMoveLine.selectedYear);
+                    var month = parseInt( inventoryMoveLine.selectedMonth ) - 1;
+                    var date = parseInt( inventoryMoveLine.selectedDay );
+                    var newDate = new Date(year, month, date);
+                    if ( newDate.getFullYear() === year &&  newDate.getMonth() === month && newDate.getDate() === date  ) {
+                        console.log( 'date is valid' );
+                        inventoryMoveLine.record.expiration_date__c = $scope.formatDate( newDate );
+                    } else {
+                        console.log( 'date is invalid' );
                         inventoryMoveLine.record.expiration_date__c = null;
                     }
-                    inventoryMoveLine.record.expiration_date__c = $scope.formatDate( inventoryMoveLine.record.expiration_date__c );
                 }
                 else{
                     inventoryMoveLine.record.expiration_date__c = null;
@@ -545,6 +546,11 @@
 
             $scope.newInventoryMoveLine = function(){
                 $scope.inventoryMoveLine = {};
+                $scope.inventoryMoveLine.record = {};
+                $scope.inventoryMoveLine.janProduct = {};
+                $scope.inventoryMoveLine.barcodes = new Array();
+
+
                 $scope.inventoryMoveLines.push($scope.inventoryMoveLine);
                 $scope.inventoryMoveLineIndex = $scope.inventoryMoveLines.length - 1;
                 $scope.navi.pushPage('page2.html');
