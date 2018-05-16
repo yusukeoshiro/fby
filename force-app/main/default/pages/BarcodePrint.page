@@ -28,7 +28,7 @@
     </div>
 
     <div class="container" style="margin-top: 40px; display:none;" id="link">
-        <form target="_blank" action="https://barcodely.herokuapp.com/pdf?page_padding=8.8mm+8.4mm&barcodes_per_page=44&cell_width=48.3mm&cell_height=22.4mm&cell_margin=4mm+2mm" method="post">
+        <form target="_blank" action="https://barcodely.herokuapp.com/pdf?page_padding=0mm+14mm&barcodes_per_page=44&cell_width=46mm&cell_height=24.8mm&cell_margin=2mm+4mm" method="post">
             <div style="display:none;">
                 <textarea name="barcodes" id="barcodes" cols="30" rows="10"></textarea>
             </div>
