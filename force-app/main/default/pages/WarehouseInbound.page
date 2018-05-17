@@ -11,12 +11,12 @@
 
 
     <style>
-        body{
-            font-family: "メイリオ", sans-serif;
-        }
-        .barcode-read{
-            font-size: 32px;
-        }
+    body{
+        font-family: "メイリオ", sans-serif;
+    }
+    .barcode-read{
+        font-size: 32px;
+    }
     </style>
 
 </head>
@@ -35,577 +35,673 @@
                     <div class="center">
                         入庫業務
                         <apex:outputPanel rendered="{!fromAccount!=null}" layout="inline">
-                            ({!fromAccount.Name})
-                        </apex:outputPanel>
+                        ({!fromAccount.Name})
+                    </apex:outputPanel>
 
-                        <apex:outputPanel rendered="{!fromContact!=null}" layout="inline">
-                            ({!fromContact.Name})
-                        </apex:outputPanel>
-                    </div>
-                </ons-toolbar>
-
-
-                <div class="" style="text-align:center;">
-                    入庫先倉庫を選択してください。
-                    <div class="">
-                        <select class="select-input" ng-model="ui.selectedWarehouseId">
-                            <option ng-repeat="warehouse in warehouses" value="{{warehouse.Id}}">{{warehouse.Name}}</option>
-                        </select>
-                    </div>
-
-                </div>
-
-                <ons-bottom-toolbar>
-                    <button
-                        class="button--large--cta"
-                        style="width: 95%; margin: 0 auto;"
-                        ng-click="navi.pushPage('page1.html');"
-                        ng-disabled="!ui.selectedWarehouseId">
-                        次へ
-                    </button>
-                </ons-bottom-toolbar>
+                    <apex:outputPanel rendered="{!fromContact!=null}" layout="inline">
+                    ({!fromContact.Name})
+                </apex:outputPanel>
+            </div>
+        </ons-toolbar>
 
 
-            </ons-page>
-        </template>
+        <div class="" style="text-align:center;">
+            入庫先倉庫を選択してください。
+            <div class="">
+                <select class="select-input" ng-model="ui.selectedWarehouseId">
+                    <option ng-repeat="warehouse in warehouses" value="{{warehouse.Id}}">{{warehouse.Name}}</option>
+                </select>
+            </div>
+
+        </div>
+
+        <ons-bottom-toolbar>
+            <button
+            class="button--large--cta"
+            style="width: 95%; margin: 0 auto;"
+            ng-click="navi.pushPage('page1.html');"
+            ng-disabled="!ui.selectedWarehouseId">
+            次へ
+        </button>
+    </ons-bottom-toolbar>
 
 
-        <template id="page1.html">
-            <ons-page>
-                <ons-toolbar class="toolbar--transparent">
-                    <div class="center">
-                        入庫業務
-                        <apex:outputPanel rendered="{!fromAccount!=null}" layout="inline">
-                            ({!fromAccount.Name})
-                        </apex:outputPanel>
-
-                        <apex:outputPanel rendered="{!fromContact!=null}" layout="inline">
-                            ({!fromContact.Name})
-                        </apex:outputPanel>
-
-                    </div>
-                </ons-toolbar>
-
-                <!-- VIRTUAL KEYBOARD -->
-                <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
-                    <input id="scan_pad" type="text" ng-model="ui.scannerValue"  dl-enter-key="enterPressed();"/>
-                </div>
-
-                <div style="text-align:center;">
-                    <span class="barcode-read" >{{ ui.scannerValue || "待機中" }}</span>
-                </div>
+</ons-page>
+</template>
 
 
-                <ul class="list" style="margin-top: 20px;">
-                    <li class="list-item list-item--tappable list-item--chevron" ng-repeat="inventoryMoveLine in inventoryMoveLines" ng-click="showInventoryMoveLine(inventoryMoveLine, $index);">
-                        <div class="list-item__left">
-                            <img class="list-item__thumbnail" ng-src="{{inventoryMoveLine.janProduct.imageUrl}}" alt="{{inventoryMoveLine.janProduct.name}}" />
-                        </div>
-                        <div class="list-item__center">
-                            <div class="list-item__title">{{inventoryMoveLine.janProduct.name || inventoryMoveLine.record.food_name__c}}</div>
-                            <div class="list-item__subtitle">
-                                JANコード: {{inventoryMoveLine.janProduct.janCode || inventoryMoveLine.record.jan_code__c}} メーカー: {{inventoryMoveLine.janProduct.maker || inventoryMoveLine.record.maker__c}} <br/>
-                                バーコード: {{inventoryMoveLine.barcodes.length || 0}}
-                            </div>
-                        </div>
+<template id="page1.html">
+    <ons-page>
+        <ons-toolbar class="toolbar--transparent">
+            <div class="center">
+                入庫業務
+                <apex:outputPanel rendered="{!fromAccount!=null}" layout="inline">
+                ({!fromAccount.Name})
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!fromContact!=null}" layout="inline">
+            ({!fromContact.Name})
+        </apex:outputPanel>
+
+    </div>
+</ons-toolbar>
+
+<!-- VIRTUAL KEYBOARD -->
+<div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
+    <input id="scan_pad" type="text" ng-model="ui.scannerValue"  dl-enter-key="enterPressed();"/>
+</div>
+
+<div style="text-align:center;">
+    <span class="barcode-read" >{{ ui.scannerValue || "待機中" }}</span>
+</div>
+
+
+<ul class="list" style="margin-top: 20px;">
+    <li class="list-item list-item--tappable list-item--chevron" ng-repeat="inventoryMoveLine in inventoryMoveLines" ng-click="showInventoryMoveLine(inventoryMoveLine, $index);">
+        <div class="list-item__left">
+            <img class="list-item__thumbnail" ng-src="{{inventoryMoveLine.janProduct.imageUrl}}" alt="{{inventoryMoveLine.janProduct.name}}" />
+        </div>
+        <div class="list-item__center">
+            <div class="list-item__title">{{inventoryMoveLine.janProduct.name || inventoryMoveLine.record.food_name__c}}</div>
+            <div class="list-item__subtitle">
+                JANコード: {{inventoryMoveLine.janProduct.janCode || inventoryMoveLine.record.jan_code__c}} メーカー: {{inventoryMoveLine.janProduct.maker || inventoryMoveLine.record.maker__c}} <br/>
+                バーコード: {{inventoryMoveLine.barcodes.length || 0}}
+            </div>
+        </div>
+    </li>
+</ul>
+
+<ons-bottom-toolbar>
+    <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveInventoryMove();">
+        確定
+    </button>
+</ons-bottom-toolbar>
+<ons-fab position="top right" onclick="document.getElementById('scan_pad').focus();">
+    scan
+</ons-fab>
+<ons-fab position="bottom right" ng-click="newInventoryMoveLine();">
+    <ons-icon icon="md-plus"></ons-icon>
+</ons-fab>
+
+</ons-page>
+</template>
+
+<template id="page2.html">
+    <ons-page>
+
+        <ons-toolbar class="toolbar--transparent">
+            <div class="center">{{inventoryMoveLine.record.food_name__c}}</div>
+        </ons-toolbar>
+
+        <ons-fab position="top right" onclick="document.getElementById('scan_pad_2').focus();">
+            scan
+        </ons-fab>
+
+        <!-- VIRTUAL KEYBOARD -->
+        <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
+            <input id="scan_pad_2" type="text" ng-model="ui.scannerValue2"  dl-enter-key="barcodeEntered();"/>
+        </div>
+
+
+
+        <div style="margin-bottom: 10px;">
+            <div style="text-align:center;">
+                <span class="barcode-read" >{{ ui.scannerValue2 || "待機中" }}</span>
+            </div>
+
+            <div ng-show="( inventoryMoveLine.barcodes.length == 0 ) || ( inventoryMoveLine.barcodes === undefined )">
+                <span style="color:red;">
+                    <i class="fa fa-times"></i> 入庫させるバーコードを入力してください。
+                </span>
+            </div>
+
+
+
+
+            <div ng-show="inventoryMoveLine.barcodes.length > 0">
+                <ul class="list list--inset">
+                    <li class="list-header">
+                        入庫するバーコード一覧 ({{inventoryMoveLine.barcodes.length}}件)
+                    </li>
+                    <li class="list-item list--inset__item" ng-repeat="barcode in inventoryMoveLine.barcodes">
+                        <div class="list-item__center">{{barcode.Name}}</div>
                     </li>
                 </ul>
 
-                <ons-bottom-toolbar>
-                    <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveInventoryMove();">
-                        確定
+            </div>
+        </div>
+
+
+        <ons-list class="list">
+
+
+            <ons-list-item>
+
+                <div class="list-item__title"><small>賞味期限</small></div>
+                <div class="list-item__subtitle">
+
+                    <input type="radio" id="expirationType1" name="expirationType" value="absolute" ng-model="ui.selectedExpirationType"/><label for="expirationType1">絶対</label>
+                    <input type="radio" id="expirationType2" name="expirationType" value="relative" ng-model="ui.selectedExpirationType"/><label for="expirationType2">相対</label>
+
+                    <div ng-show="ui.selectedExpirationType=='absolute'">
+                        <span style="margin-right: 10px;">
+                            <select class="select-input" ng-model="inventoryMoveLine.selectedYear" ng-change="validateDate( inventoryMoveLine, 'absolute' )">
+                                <option ng-repeat="year in calendar.years">{{year}}</option>
+                            </select>
+                        </span>
+
+                        <span style="margin-right: 10px;">
+                            <select class="select-input" ng-model="inventoryMoveLine.selectedMonth" ng-change="validateDate( inventoryMoveLine, 'absolute' )">
+                                <option ng-repeat="month in calendar.months">{{month}}</option>
+                            </select>
+                        </span>
+
+                        <span style="margin-right: 10px;">
+                            <select class="select-input" ng-model="inventoryMoveLine.selectedDay" ng-change="validateDate( inventoryMoveLine, 'absolute' )">
+                                <option ng-repeat="day in calendar.days">{{day}}</option>
+                            </select>
+                        </span>
+
+                        <span ng-show="inventoryMoveLine.record.expiration_date__c==null" style="color:red;">
+                            <i class="fa fa-times"></i>
+                        </span>
+                        <span ng-show="inventoryMoveLine.record.expiration_date__c!=null" style="color:green;">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                        </span>
+                    </div>
+
+                    <div ng-show="ui.selectedExpirationType=='relative'">
+
+                        <span style="margin-right: 10px;">
+                            <select class="select-input" ng-model="inventoryMoveLine.selectedYearRelative" ng-change="validateDate( inventoryMoveLine, 'relative' )">
+                                <option ng-repeat="year in calendar.years">{{year}}</option>
+                            </select>
+                        </span>
+
+                        <span style="margin-right: 10px;">
+                            <select class="select-input" ng-model="inventoryMoveLine.selectedMonthRelative" ng-change="validateDate( inventoryMoveLine, 'relative' )">
+                                <option ng-repeat="month in calendar.months">{{month}}</option>
+                            </select>
+
+                        </span>
+
+                        <span style="margin-right: 10px;">
+                            <select class="select-input" ng-model="inventoryMoveLine.selectedDayRelative" ng-change="validateDate( inventoryMoveLine, 'relative' )">
+                                <option ng-repeat="day in calendar.days">{{day}}</option>
+                            </select>
+                        </span>
+
+                        から
+
+
+                        <select class="select-input" ng-model="inventoryMoveLine.record.expiration_date_relative_days" ng-change="validateDate( inventoryMoveLine, 'relative' )">
+                            <option ng-repeat="day in relativeDays" value="{{day}}">{{day}}</option>
+                        </select>
+
+                        日後
+
+
+                        <span ng-show="inventoryMoveLine.record.expiration_date_relative__c==null" style="color:red;">
+                            <i class="fa fa-times"></i>
+                        </span>
+                        <span ng-show="inventoryMoveLine.record.expiration_date_relative__c!=null" style="color:green;">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                        </span>
+
+
+                    </div>
+                </div>
+            </ons-list-item>
+
+            <ons-list-item>
+                <div class="list-item__title"><small>食品分類 (L1)</small></div>
+                <div class="list-item__subtitle">
+                    <select class="select-input" ng-model="inventoryMoveLine.record.food_type_lOne__c" required="true">
+                        <option ng-repeat="l1 in foodTypeL1" value="{{l1.Id}}">
+                            {{l1.Name}}
+                        </option>
+                    </select>
+
+                    <span ng-show="(inventoryMoveLine.record.food_type_lOne__c === undefined) || (inventoryMoveLine.record.food_type_lOne__c == null)" style="color:red;">
+                        <i class="fa fa-times"></i>
+                    </span>
+                    <span ng-show="!((inventoryMoveLine.record.food_type_lOne__c === undefined) || (inventoryMoveLine.record.food_type_lOne__c == null))" style="color:green;">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </span>
+
+
+                </div>
+            </ons-list-item>
+
+            <ons-list-item>
+                <div class="list-item__title"><small>食品分類 (L2)</small></div>
+                <div class="list-item__subtitle">
+                    <select class="select-input" ng-model="inventoryMoveLine.record.food_type_lTwo__c" required="true">
+                        <option ng-repeat="l2 in loadFoodTypeL2( inventoryMoveLine.record.food_type_lOne__c )" value="{{l2.Id}}">
+                            {{l2.Name}}
+                        </option>
+                    </select>
+
+                    <span ng-show="(inventoryMoveLine.record.food_type_lTwo__c === undefined) || (inventoryMoveLine.record.food_type_lTwo__c == null)" style="color:red;">
+                        <i class="fa fa-times"></i>
+                    </span>
+                    <span ng-show="!((inventoryMoveLine.record.food_type_lTwo__c === undefined) || (inventoryMoveLine.record.food_type_lTwo__c == null))" style="color:green;">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </span>
+
+
+
+
+                </div>
+            </ons-list-item>
+
+
+            <ons-list-item>
+                <div class="list-item__title"><small>商品名</small></div>
+                <div class="list-item__subtitle">
+                    <input type="text" class="text-input" placeholder="商品名" ng-model="inventoryMoveLine.record.food_name__c"/>
+                </div>
+            </ons-list-item>
+
+            <ons-list-item>
+
+                <div class="list-item__title"><small>入数 (バーコードあたり何個入っていますか?)</small></div>
+                <div class="list-item__subtitle">
+                    <input type="text" class="text-input" ng-model="inventoryMoveLine.record.quantity_per_unit__c"/>
+                    <span ng-show="!(inventoryMoveLine.record.quantity_per_unit__c>0)" style="color:red;">
+                        <i class="fa fa-times"></i>
+                    </span>
+                    <span ng-show="inventoryMoveLine.record.quantity_per_unit__c>0" style="color:green;">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </span>
+
+                </div>
+                <ons-row>
+                    <ons-col width="40px" style="text-align: center; line-height: 31px;">
+                        0
+                    </ons-col>
+                    <ons-col>
+                        <ons-range style="width: 100%;" ng-model="inventoryMoveLine.record.quantity_per_unit__c"></ons-range>
+                    </ons-col>
+                    <ons-col width="40px" style="text-align: center; line-height: 31px;">
+                        100
+                    </ons-col>
+                </ons-row>
+            </ons-list-item>
+
+
+
+            <ons-list-item>
+                <div class="list-item__title"><small>JANコード</small></div>
+                <div class="list-item__subtitle">
+                    <input type="text" class="text-input" placeholder="123456789" ng-model="inventoryMoveLine.record.jan_code__c"/>
+                </div>
+
+            </ons-list-item>
+            <ons-list-item>
+                <div class="list-item__title"><small>メーカー</small></div>
+                <div class="list-item__subtitle">
+                    <input type="text" class="text-input" placeholder="メーカー" ng-model="inventoryMoveLine.record.maker__c"/>
+                </div>
+            </ons-list-item>
+
+            <ons-list-item>
+                <div class="list-item__title"><small>参考価格</small></div>
+                <div class="list-item__subtitle">
+                    <input type="text" class="text-input" placeholder="100" ng-model="inventoryMoveLine.record.price__c"/>
+                </div>
+            </ons-list-item>
+        </ons-list>
+
+        <ons-bottom-toolbar>
+            <ons-row>
+                <ons-col>
+                    <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="deleteInventoryMoveLine();navi.popPage();">
+                        削除
                     </button>
-                </ons-bottom-toolbar>
-                <ons-fab position="top right" onclick="document.getElementById('scan_pad').focus();">
-                    scan
-                </ons-fab>
-                <ons-fab position="bottom right" ng-click="newInventoryMoveLine();">
-                    <ons-icon icon="md-plus"></ons-icon>
-                </ons-fab>
+                </ons-col>
+                <ons-col>
+                    <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="myTest();navi.popPage();" ng-disabled="isSaveDisabled( inventoryMoveLine )">
+                        保存
+                    </button>
+                </ons-col>
+            </ons-row>
 
-            </ons-page>
-        </template>
-
-        <template id="page2.html">
-            <ons-page>
-
-                <ons-toolbar class="toolbar--transparent">
-                  <div class="center">{{inventoryMoveLine.record.food_name__c}}</div>
-                </ons-toolbar>
-
-                <ons-fab position="top right" onclick="document.getElementById('scan_pad_2').focus();">
-                    scan
-                </ons-fab>
-
-                <!-- VIRTUAL KEYBOARD -->
-                <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
-                    <input id="scan_pad_2" type="text" ng-model="ui.scannerValue2"  dl-enter-key="barcodeEntered();"/>
-                </div>
+        </ons-bottom-toolbar>
+    </ons-page>
+</template>
 
 
+<template id="page3.html">
+    <ons-page>
+        <ons-toolbar class="toolbar--transparent">
+            <div class="center">入庫業務</div>
+        </ons-toolbar>
 
-                <div style="margin-bottom: 10px;">
-                    <div style="text-align:center;">
-                        <span class="barcode-read" >{{ ui.scannerValue2 || "待機中" }}</span>
-                    </div>
+        <div style="margin-top: 100px;text-align:center;color:#b5cc18">
+            <p>
+                <span style="font-size: 32px;">
+                    Thank you!
+                </span>
+            </p>
 
-                    <div ng-show="( inventoryMoveLine.barcodes.length == 0 ) || ( inventoryMoveLine.barcodes === undefined )">
-                        <span style="color:red;">
-                            <i class="fa fa-times"></i> 入庫させるバーコードを入力してください。
-                        </span>
-                    </div>
+            <p>
+                <span style="font-size: 32px;">
+                    入庫が完了しました!
+                </span>
+            </p>
 
+            <span style="font-size: 128px;"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
+
+            <p>
+                もとの画面に戻ってください。
+            </p>
+        </div>
 
 
 
-                    <div ng-show="inventoryMoveLine.barcodes.length > 0">
-                        <ul class="list list--inset">
-                            <li class="list-header">
-                                入庫するバーコード一覧 ({{inventoryMoveLine.barcodes.length}}件)
-                            </li>
-                            <li class="list-item list--inset__item" ng-repeat="barcode in inventoryMoveLine.barcodes">
-                                <div class="list-item__center">{{barcode.Name}}</div>
-                            </li>
-                        </ul>
+    </ons-page>
+</template>
 
-                    </div>
-                </div>
-
-
-                <ons-list class="list">
-                    <ons-list-item>
-                        <div class="list-item__title"><small>賞味期限</small></div>
-                        <div class="list-item__subtitle">
-                            <span style="margin-right: 10px;">
-                                <select class="select-input" ng-model="inventoryMoveLine.selectedYear" ng-change="validateDate( inventoryMoveLine )">
-                                    <option ng-repeat="year in calendar.years">{{year}}</option>
-                                </select>
-                            </span>
-
-                            <span style="margin-right: 10px;">
-                                <select class="select-input" ng-model="inventoryMoveLine.selectedMonth" ng-change="validateDate( inventoryMoveLine )">
-                                    <option ng-repeat="month in calendar.months">{{month}}</option>
-                                </select>
-
-                            </span>
-
-                            <span style="margin-right: 10px;">
-                                <select class="select-input" ng-model="inventoryMoveLine.selectedDay" ng-change="validateDate( inventoryMoveLine )">
-                                    <option ng-repeat="day in calendar.days">{{day}}</option>
-                                </select>
-                            </span>
-
-                            <span ng-show="inventoryMoveLine.record.expiration_date__c==null" style="color:red;">
-                                <i class="fa fa-times"></i>
-                            </span>
-                            <span ng-show="inventoryMoveLine.record.expiration_date__c!=null" style="color:green;">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                            </span>
-                        </div>
-                    </ons-list-item>
-                    <ons-list-item>
-                        <div class="list-item__title"><small>食品分類 (L1)</small></div>
-                        <div class="list-item__subtitle">
-                        <select class="select-input" ng-model="inventoryMoveLine.record.food_type_lOne__c" required="true">
-                            <option ng-repeat="l1 in foodTypeL1" value="{{l1.Id}}">
-                                {{l1.Name}}
-                            </option>
-                        </select>
-
-                        <span ng-show="(inventoryMoveLine.record.food_type_lOne__c === undefined) || (inventoryMoveLine.record.food_type_lOne__c == null)" style="color:red;">
-                            <i class="fa fa-times"></i>
-                        </span>
-                        <span ng-show="!((inventoryMoveLine.record.food_type_lOne__c === undefined) || (inventoryMoveLine.record.food_type_lOne__c == null))" style="color:green;">
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                        </span>
-
-
-                        </div>
-                    </ons-list-item>
-
-                    <ons-list-item>
-                        <div class="list-item__title"><small>食品分類 (L2)</small></div>
-                        <div class="list-item__subtitle">
-                        <select class="select-input" ng-model="inventoryMoveLine.record.food_type_lTwo__c" required="true">
-                            <option ng-repeat="l2 in loadFoodTypeL2( inventoryMoveLine.record.food_type_lOne__c )" value="{{l2.Id}}">
-                                {{l2.Name}}
-                            </option>
-                        </select>
-
-                        <span ng-show="(inventoryMoveLine.record.food_type_lTwo__c === undefined) || (inventoryMoveLine.record.food_type_lTwo__c == null)" style="color:red;">
-                            <i class="fa fa-times"></i>
-                        </span>
-                        <span ng-show="!((inventoryMoveLine.record.food_type_lTwo__c === undefined) || (inventoryMoveLine.record.food_type_lTwo__c == null))" style="color:green;">
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                        </span>
+</div>
+<script>
 
 
 
+var module = angular.module('my-app', ['onsen']);
+module.controller('AppController', function($scope, $http,  $interval, $timeout) {
+    $scope.scannerValue = "";
+    $scope.object = "{!fromObject}";
+    $scope.recordId = "{!fromRecordId}";
+    $scope.warehouses = {!warehouses_s};
 
-                        </div>
-                    </ons-list-item>
-
-
-                    <ons-list-item>
-                        <div class="list-item__title"><small>商品名</small></div>
-                        <div class="list-item__subtitle">
-                            <input type="text" class="text-input" placeholder="商品名" ng-model="inventoryMoveLine.record.food_name__c"/>
-                        </div>
-                    </ons-list-item>
-
-                    <ons-list-item>
-
-                        <div class="list-item__title"><small>入数 (バーコードあたり何個入っていますか?)</small></div>
-                        <div class="list-item__subtitle">
-                            <input type="text" class="text-input" ng-model="inventoryMoveLine.record.quantity_per_unit__c"/>
-                            <span ng-show="!(inventoryMoveLine.record.quantity_per_unit__c>0)" style="color:red;">
-                                <i class="fa fa-times"></i>
-                            </span>
-                            <span ng-show="inventoryMoveLine.record.quantity_per_unit__c>0" style="color:green;">
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                            </span>
-
-                        </div>
-                        <ons-row>
-                            <ons-col width="40px" style="text-align: center; line-height: 31px;">
-                                0
-                            </ons-col>
-                            <ons-col>
-                                <ons-range style="width: 100%;" ng-model="inventoryMoveLine.record.quantity_per_unit__c"></ons-range>
-                            </ons-col>
-                            <ons-col width="40px" style="text-align: center; line-height: 31px;">
-                                100
-                            </ons-col>
-                        </ons-row>
-                    </ons-list-item>
+    $scope.ui = {};
+    $scope.ui.selectedWarehouseId = "{!selectedWarehouseId}";
+    $scope.ui.selectedExpirationType = "absolute"
+    $scope.inventoryMoveLines = [];
+    $scope.inventoryMoveLine = {};
+    $scope.inventoryMoveLineIndex;
+    $scope.onFocus = false;
+    $scope.currentPage = {};
+    $scope.foodTypeL1 = [];
+    $scope.foodTypeL2 = {};
+    $scope.calendar = {
+        years: [],
+        months: [1,2,3,4,5,6,7,8,9,10,11,12],
+        days: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
+    }
+    $scope.relativeDays = [
+        0, 30, 60, 90, 120, 150, 180, 210, 240, 270
+    ];
 
 
+    $scope.init = function(){
+        $scope.loadFoodTypeL1();
 
-                    <ons-list-item>
-                        <div class="list-item__title"><small>JANコード</small></div>
-                        <div class="list-item__subtitle">
-                            <input type="text" class="text-input" placeholder="123456789" ng-model="inventoryMoveLine.record.jan_code__c"/>
-                        </div>
-
-                    </ons-list-item>
-                    <ons-list-item>
-                        <div class="list-item__title"><small>メーカー</small></div>
-                        <div class="list-item__subtitle">
-                            <input type="text" class="text-input" placeholder="メーカー" ng-model="inventoryMoveLine.record.maker__c"/>
-                        </div>
-                    </ons-list-item>
-
-                    <ons-list-item>
-                        <div class="list-item__title"><small>参考価格</small></div>
-                        <div class="list-item__subtitle">
-                            <input type="text" class="text-input" placeholder="100" ng-model="inventoryMoveLine.record.price__c"/>
-                        </div>
-                    </ons-list-item>
-                </ons-list>
-
-                <ons-bottom-toolbar>
-                    <ons-row>
-                        <ons-col>
-                            <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="deleteInventoryMoveLine();navi.popPage();">
-                                削除
-                            </button>
-                        </ons-col>
-                        <ons-col>
-                            <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="myTest();navi.popPage();" ng-disabled="isSaveDisabled( inventoryMoveLine )">
-                                保存
-                            </button>
-                        </ons-col>
-                    </ons-row>
-
-                </ons-bottom-toolbar>
-            </ons-page>
-        </template>
+        var thisYear = (new Date()).getFullYear();
+        for( var i = 0; i < 30; i++ ){
+            $scope.calendar.years.push( thisYear + i );
+        }
 
 
-        <template id="page3.html">
-            <ons-page>
-                <ons-toolbar class="toolbar--transparent">
-                    <div class="center">入庫業務</div>
-                </ons-toolbar>
+        console.log( $scope.object );
+        console.log( $scope.recordId );
 
-                <div style="margin-top: 100px;text-align:center;color:#b5cc18">
-                    <p>
-                        <span style="font-size: 32px;">
-                            Thank you!
-                        </span>
-                    </p>
-
-                    <p>
-                        <span style="font-size: 32px;">
-                            入庫が完了しました!
-                        </span>
-                    </p>
-
-                    <span style="font-size: 128px;"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
-
-                    <p>
-                        もとの画面に戻ってください。
-                    </p>
-                </div>
+        console.log("initialized...");
+    }
 
 
+    $scope.isSaveDisabled = function(inventoryMoveLine){
 
-            </ons-page>
-        </template>
-
-    </div>
-    <script>
-
-
-
-        var module = angular.module('my-app', ['onsen']);
-        module.controller('AppController', function($scope, $http,  $interval, $timeout) {
-            $scope.scannerValue = "";
-            $scope.object = "{!fromObject}";
-            $scope.recordId = "{!fromRecordId}";
-            $scope.warehouses = {!warehouses_s};
-
-            $scope.ui = {};
-            $scope.ui.selectedWarehouseId = "{!selectedWarehouseId}";
-            $scope.inventoryMoveLines = [];
-            $scope.inventoryMoveLine = {};
-            $scope.inventoryMoveLineIndex;
-            $scope.onFocus = false;
-            $scope.currentPage = {};
-            $scope.foodTypeL1 = [];
-            $scope.foodTypeL2 = {};
-            $scope.calendar = {
-                years: [],
-                months: [1,2,3,4,5,6,7,8,9,10,11,12],
-                days: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
+        if( inventoryMoveLine.barcodes === undefined ){
+            return true;
+        }
+        else{
+            if( ( inventoryMoveLine.record.expiration_date__c != null ) && (inventoryMoveLine.barcodes.length > 0) && inventoryMoveLine.record.food_type_lOne__c &&  inventoryMoveLine.record.food_type_lTwo__c && (parseInt( inventoryMoveLine.record.quantity_per_unit__c ) > 0) ){
+                return false;
             }
-
-
-            $scope.init = function(){
-                $scope.loadFoodTypeL1();
-
-                var thisYear = (new Date()).getFullYear();
-                for( var i = 0; i < 30; i++ ){
-                    $scope.calendar.years.push( thisYear + i );
-                }
-
-
-                console.log( $scope.object );
-                console.log( $scope.recordId );
-
-                console.log("initialized...");
-        	}
-
-
-            $scope.isSaveDisabled = function(inventoryMoveLine){
-
-                if( inventoryMoveLine.barcodes === undefined ){
-                    return true;
-                }
-                else{
-                    if( ( inventoryMoveLine.record.expiration_date__c != null ) && (inventoryMoveLine.barcodes.length > 0) && inventoryMoveLine.record.food_type_lOne__c &&  inventoryMoveLine.record.food_type_lTwo__c && (parseInt( inventoryMoveLine.record.quantity_per_unit__c ) > 0) ){
-                        return false;
-                    }
-                    else{
-                        return true;
-                    }
-                }
+            else{
+                return true;
             }
+        }
+    }
 
-            $scope.validateDate = function( inventoryMoveLine ){
-                if( (inventoryMoveLine.selectedYear !== undefined) && (inventoryMoveLine.selectedMonth !== undefined) && (inventoryMoveLine.selectedDay !== undefined)  ){
-                    var year = parseInt( inventoryMoveLine.selectedYear);
-                    var month = parseInt( inventoryMoveLine.selectedMonth ) - 1;
-                    var date = parseInt( inventoryMoveLine.selectedDay );
-                    var newDate = new Date(year, month, date);
-                    if ( newDate.getFullYear() === year &&  newDate.getMonth() === month && newDate.getDate() === date  ) {
-                        console.log( 'date is valid' );
-                        inventoryMoveLine.record.expiration_date__c = $scope.formatDate( newDate );
-                    } else {
-                        console.log( 'date is invalid' );
-                        inventoryMoveLine.record.expiration_date__c = null;
+    $scope.validateDate = function( inventoryMoveLine, type ){
+        var newDate = undefined;
+
+
+        if ( type === 'absolute' ) {
+            if( (inventoryMoveLine.selectedYear !== undefined) &&
+                (inventoryMoveLine.selectedMonth !== undefined) &&
+                (inventoryMoveLine.selectedDay !== undefined)  ){
+
+                var year = parseInt( inventoryMoveLine.selectedYear);
+                var month = parseInt( inventoryMoveLine.selectedMonth ) - 1;
+                var date = parseInt( inventoryMoveLine.selectedDay );
+                newDate = new Date(year, month, date);
+            }
+        } else if ( type === 'relative' ) {
+            if( (inventoryMoveLine.selectedYearRelative !== undefined) &&
+                (inventoryMoveLine.selectedMonthRelative !== undefined) &&
+                (inventoryMoveLine.selectedDayRelative !== undefined)  ){
+
+                    var year = parseInt( inventoryMoveLine.selectedYearRelative);
+                    var month = parseInt( inventoryMoveLine.selectedMonthRelative ) - 1;
+                    var date = parseInt( inventoryMoveLine.selectedDayRelative );
+                    newDate = new Date(year, month, date);
+            }
+        }
+
+        if ( newDate === undefined ) {
+            inventoryMoveLine.record.expiration_date__c = null;
+            inventoryMoveLine.record.expiration_date_relative__c = null;
+            return
+        }
+
+
+        if ( newDate.getFullYear() === year &&  newDate.getMonth() === month && newDate.getDate() === date  ) {
+            console.log( 'date is valid' );
+            if ( type === 'absolute' ) {
+                inventoryMoveLine.record.expiration_date__c = $scope.formatDate( newDate );
+                inventoryMoveLine.record.expiration_date_relative__c = null;
+            } else if ( type === 'relative' ) {
+                if ( inventoryMoveLine.record.expiration_date_relative_days ) {
+                    Date.prototype.addDays = function(days) {
+                        var dat = new Date(this.valueOf());
+                        dat.setDate(dat.getDate() + days);
+                        return dat;
                     }
-                }
-                else{
+                    inventoryMoveLine.record.expiration_date_relative__c = $scope.formatDate( newDate );
+                    inventoryMoveLine.record.expiration_date_relative_days__c = parseInt( inventoryMoveLine.record.expiration_date_relative_days );
+                    inventoryMoveLine.record.expiration_date__c = $scope.formatDate( newDate.addDays( inventoryMoveLine.record.expiration_date_relative_days__c ) );
+                    return;
+                } else {
                     inventoryMoveLine.record.expiration_date__c = null;
+                    inventoryMoveLine.record.expiration_date_relative__c = null;
+                    return
                 }
             }
+        } else {
+            inventoryMoveLine.record.expiration_date__c = null;
+            inventoryMoveLine.record.expiration_date_relative__c = null;
+        }
+    }
 
-            $scope.expirationInputComplete = function(inventoryMoveLine){
-                return (inventoryMoveLine.selectedYear !== undefined) && (inventoryMoveLine.selectedMonth !== undefined) && (inventoryMoveLine.selectedDay !== undefined);
+    $scope.expirationInputComplete = function(inventoryMoveLine){
+        return (inventoryMoveLine.selectedYear !== undefined) && (inventoryMoveLine.selectedMonth !== undefined) && (inventoryMoveLine.selectedDay !== undefined);
+    }
+
+
+    $scope.enterPressed = function(){
+
+        $timeout(function(){
+            $scope.addInventoryMoveLine($scope.ui.scannerValue);
+            $scope.ui.scannerValue = "";
+        }, 500)
+    }
+
+    $scope.loadFoodTypeL1 = function(){
+        InboundController.getFoodTypeLOne( function( value, event ){
+            if( event.statusCode == 200 ){
+                $scope.foodTypeL1 = value;
+                $scope.$apply();
             }
-
-
-            $scope.enterPressed = function(){
-
-                $timeout(function(){
-                    $scope.addInventoryMoveLine($scope.ui.scannerValue);
-                    $scope.ui.scannerValue = "";
-                }, 500)
+            else{
+                alert( event.message );
             }
+        });
+    }
 
-            $scope.loadFoodTypeL1 = function(){
-                InboundController.getFoodTypeLOne( function( value, event ){
+    $scope.loadFoodTypeL2 = function( l1Id ){
+        if( $scope.foodTypeL2[ l1Id ] !== undefined ){
+            return $scope.foodTypeL2[ l1Id ];
+        }
+        else{
+            if( l1Id !== undefined && l1Id != null ){
+                InboundController.getFoodTypeLTwo( l1Id, function( value, event ){
                     if( event.statusCode == 200 ){
-                        $scope.foodTypeL1 = value;
+                        $scope.foodTypeL2[ l1Id ] = value;
                         $scope.$apply();
+                        return value;
                     }
                     else{
                         alert( event.message );
                     }
                 });
             }
+        }
+    }
 
-            $scope.loadFoodTypeL2 = function( l1Id ){
-                if( $scope.foodTypeL2[ l1Id ] !== undefined ){
-                    return $scope.foodTypeL2[ l1Id ];
+
+    $scope.barcodeEntered = function(){
+        $timeout(function(){
+            $scope.addBarcode($scope.ui.scannerValue2);
+            $scope.ui.scannerValue2 = "";
+        }, 500)
+    }
+
+    $scope.addInventoryMoveLine = function(janCode){
+        janCode = janCode || "";
+        InboundController.getJanCode( janCode, function( value, event ){
+            if( event.statusCode == 200 ){
+                $scope.inventoryMoveLines.push( value );
+                $scope.$apply();
+            }
+            else{
+                alert( event.message );
+            }
+        });
+    }
+
+    $scope.addBarcode = function(barcode){
+        InboundController.findBarcode( barcode, function( value, event ){
+            if( value != null ){
+                if($scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes == null){
+                    $scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes = [value]
                 }
                 else{
-                    if( l1Id !== undefined && l1Id != null ){
-                        InboundController.getFoodTypeLTwo( l1Id, function( value, event ){
-                            if( event.statusCode == 200 ){
-                                $scope.foodTypeL2[ l1Id ] = value;
-                                $scope.$apply();
-                                return value;
-                            }
-                            else{
-                                alert( event.message );
-                            }
-                        });
-                    }
-                }
-            }
+                    if($scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes.length > 0){
 
+                        // check if barcode is new
+                        var add = true;
+                        for( b of $scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes ){
+                            if( b.Id == value.Id ){
+                                add = false;
+                                alert( "「" + barcode + "」はすでにスキャンされています。" );
 
-            $scope.barcodeEntered = function(){
-                $timeout(function(){
-                    $scope.addBarcode($scope.ui.scannerValue2);
-                    $scope.ui.scannerValue2 = "";
-                }, 500)
-            }
-
-            $scope.addInventoryMoveLine = function(janCode){
-                janCode = janCode || "";
-                InboundController.getJanCode( janCode, function( value, event ){
-                    if( event.statusCode == 200 ){
-                        $scope.inventoryMoveLines.push( value );
-                        $scope.$apply();
-                    }
-                    else{
-                        alert( event.message );
-                    }
-                });
-            }
-
-            $scope.addBarcode = function(barcode){
-                InboundController.findBarcode( barcode, function( value, event ){
-                    if( value != null ){
-                        if($scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes == null){
-                            $scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes = [value]
-                        }
-                        else{
-                            if($scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes.length > 0){
-
-                                // check if barcode is new
-                                var add = true;
-                                for( b of $scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes ){
-                                    if( b.Id == value.Id ){
-                                        add = false;
-                                        alert( "「" + barcode + "」はすでにスキャンされています。" );
-
-                                    }
-                                }
-                                if( add ){
-                                    $scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes.push( value );
-                                }
-                            }
-                            else{
-                                $scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes = [value]
                             }
                         }
-                        $scope.$apply();
-
+                        if( add ){
+                            $scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes.push( value );
+                        }
                     }
                     else{
-                        alert( "「" + barcode + "」で登録されているバーコードはありません。" );
+                        $scope.inventoryMoveLines[$scope.inventoryMoveLineIndex].barcodes = [value]
                     }
-                });
-            }
-
-            $scope.showInventoryMoveLine = function( ivl, index ){
-                $scope.inventoryMoveLineIndex = index;
-                $scope.inventoryMoveLine = ivl;
-                $scope.navi.pushPage("page2.html");
-            }
-
-            $scope.deleteInventoryMoveLine = function(){
-                if( $scope.inventoryMoveLineIndex >= 0 ){
-                    $scope.inventoryMoveLines.splice($scope.inventoryMoveLineIndex, 1);
                 }
+                $scope.$apply();
+
             }
-
-            $scope.newInventoryMoveLine = function(){
-                $scope.inventoryMoveLine = {};
-                $scope.inventoryMoveLine.record = {};
-                $scope.inventoryMoveLine.janProduct = {};
-                $scope.inventoryMoveLine.barcodes = new Array();
-
-
-                $scope.inventoryMoveLines.push($scope.inventoryMoveLine);
-                $scope.inventoryMoveLineIndex = $scope.inventoryMoveLines.length - 1;
-                $scope.navi.pushPage('page2.html');
+            else{
+                alert( "「" + barcode + "」で登録されているバーコードはありません。" );
             }
-
-            $scope.saveInventoryMove = function(){
-                var json = JSON.stringify( $scope.inventoryMoveLines );
-
-                InboundController.saveInboundInventoryMove( $scope.object, $scope.recordId, $scope.ui.selectedWarehouseId, json, function( value, event ){
-                    if( event.statusCode == 200 ){
-                        $scope.navi.pushPage('page3.html');
-                        $scope.$apply();
-                    }
-                    else{
-                        alert( event.message );
-                    }
-                });
-            }
-
-            $scope.formatDate  = function(date) {
-                var d = new Date(date),
-                    month = '' + (d.getMonth() + 1),
-                    day = '' + d.getDate(),
-                    year = d.getFullYear();
-
-                if (month.length < 2) month = '0' + month;
-                if (day.length < 2) day = '0' + day;
-
-                return [year, month, day].join('-');
-            }
-
-
-
-        }).directive("dlEnterKey",function(){
-            return function(scope, element, attrs) {
-
-                element.bind("keydown keypress", function(event) {
-                    var keyCode = event.which || event.keyCode;
-
-                    // If enter key is pressed
-                    if (keyCode === 13) {
-                        scope.$apply(function() {
-                                // Evaluate the expression
-                            scope.$eval(attrs.dlEnterKey);
-                        });
-
-                        event.preventDefault();
-                    }
-                });
-            };
         });
+    }
+
+    $scope.showInventoryMoveLine = function( ivl, index ){
+        $scope.inventoryMoveLineIndex = index;
+        $scope.inventoryMoveLine = ivl;
+        $scope.navi.pushPage("page2.html");
+    }
+
+    $scope.deleteInventoryMoveLine = function(){
+        if( $scope.inventoryMoveLineIndex >= 0 ){
+            $scope.inventoryMoveLines.splice($scope.inventoryMoveLineIndex, 1);
+        }
+    }
+
+    $scope.newInventoryMoveLine = function(){
+        $scope.inventoryMoveLine = {};
+        $scope.inventoryMoveLine.record = {};
+        $scope.inventoryMoveLine.janProduct = {};
+        $scope.inventoryMoveLine.barcodes = new Array();
+
+
+        $scope.inventoryMoveLines.push($scope.inventoryMoveLine);
+        $scope.inventoryMoveLineIndex = $scope.inventoryMoveLines.length - 1;
+        $scope.navi.pushPage('page2.html');
+    }
+
+    $scope.saveInventoryMove = function(){
+        var json = JSON.stringify( $scope.inventoryMoveLines );
+
+        InboundController.saveInboundInventoryMove( $scope.object, $scope.recordId, $scope.ui.selectedWarehouseId, json, function( value, event ){
+            if( event.statusCode == 200 ){
+                $scope.navi.pushPage('page3.html');
+                $scope.$apply();
+            }
+            else{
+                alert( event.message );
+            }
+        });
+    }
+
+    $scope.formatDate  = function(date) {
+        var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
 
 
 
-    </script>
+}).directive("dlEnterKey",function(){
+    return function(scope, element, attrs) {
+
+        element.bind("keydown keypress", function(event) {
+            var keyCode = event.which || event.keyCode;
+
+            // If enter key is pressed
+            if (keyCode === 13) {
+                scope.$apply(function() {
+                    // Evaluate the expression
+                    scope.$eval(attrs.dlEnterKey);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
+
+
+
+</script>
 </body>
 
 
