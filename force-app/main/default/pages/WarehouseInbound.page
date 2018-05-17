@@ -176,81 +176,92 @@
 
 
             <ons-list-item>
+                <div class="center">
+                    <div class="list-item__title"><small>賞味期限</small></div>
+                    <div class="list-item__subtitle">
 
-                <div class="list-item__title"><small>賞味期限</small></div>
-                <div class="list-item__subtitle">
+                        <input type="radio" id="expirationType1" name="expirationType" value="absolute" ng-model="ui.selectedExpirationType" ng-disabled="inventoryMoveLine.doesNotExpire"/><label for="expirationType1">絶対</label>
+                        <input type="radio" id="expirationType2" name="expirationType" value="relative" ng-model="ui.selectedExpirationType" ng-disabled="inventoryMoveLine.doesNotExpire"/><label for="expirationType2">相対</label>
 
-                    <input type="radio" id="expirationType1" name="expirationType" value="absolute" ng-model="ui.selectedExpirationType"/><label for="expirationType1">絶対</label>
-                    <input type="radio" id="expirationType2" name="expirationType" value="relative" ng-model="ui.selectedExpirationType"/><label for="expirationType2">相対</label>
+                        <div ng-show="ui.selectedExpirationType=='absolute'">
+                                <span style="margin-right: 10px;">
+                                    <select class="select-input" ng-model="inventoryMoveLine.selectedYear" ng-change="validateDate( inventoryMoveLine, 'absolute' )"  ng-disabled="inventoryMoveLine.doesNotExpire">
+                                        <option ng-repeat="year in calendar.years">{{year}}</option>
+                                    </select>
+                                </span>
 
-                    <div ng-show="ui.selectedExpirationType=='absolute'">
-                        <span style="margin-right: 10px;">
-                            <select class="select-input" ng-model="inventoryMoveLine.selectedYear" ng-change="validateDate( inventoryMoveLine, 'absolute' )">
-                                <option ng-repeat="year in calendar.years">{{year}}</option>
+                                <span style="margin-right: 10px;">
+                                    <select class="select-input" ng-model="inventoryMoveLine.selectedMonth" ng-change="validateDate( inventoryMoveLine, 'absolute' )"  ng-disabled="inventoryMoveLine.doesNotExpire">
+                                        <option ng-repeat="month in calendar.months">{{month}}</option>
+                                    </select>
+                                </span>
+
+                                <span style="margin-right: 10px;">
+                                    <select class="select-input" ng-model="inventoryMoveLine.selectedDay" ng-change="validateDate( inventoryMoveLine, 'absolute' )" ng-disabled="inventoryMoveLine.doesNotExpire">
+                                        <option ng-repeat="day in calendar.days">{{day}}</option>
+                                    </select>
+                                </span>
+
+                                <span ng-show="inventoryMoveLine.record.expiration_date__c==null" style="color:red;">
+                                    <i class="fa fa-times"></i>
+                                </span>
+                                <span ng-show="inventoryMoveLine.record.expiration_date__c!=null" style="color:green;">
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </span>
+
+
+                        </div>
+
+                        <div ng-show="ui.selectedExpirationType=='relative'">
+
+                            <span style="margin-right: 10px;">
+                                <select class="select-input" ng-model="inventoryMoveLine.selectedYearRelative" ng-change="validateDate( inventoryMoveLine, 'relative' )"  ng-disabled="inventoryMoveLine.doesNotExpire">
+                                    <option ng-repeat="year in calendar.years">{{year}}</option>
+                                </select>
+                            </span>
+
+                            <span style="margin-right: 10px;">
+                                <select class="select-input" ng-model="inventoryMoveLine.selectedMonthRelative" ng-change="validateDate( inventoryMoveLine, 'relative' )"  ng-disabled="inventoryMoveLine.doesNotExpire">
+                                    <option ng-repeat="month in calendar.months">{{month}}</option>
+                                </select>
+
+                            </span>
+
+                            <span style="margin-right: 10px;">
+                                <select class="select-input" ng-model="inventoryMoveLine.selectedDayRelative" ng-change="validateDate( inventoryMoveLine, 'relative' )"  ng-disabled="inventoryMoveLine.doesNotExpire">
+                                    <option ng-repeat="day in calendar.days">{{day}}</option>
+                                </select>
+                            </span>
+
+                            から
+
+
+                            <select class="select-input" ng-model="inventoryMoveLine.record.expiration_date_relative_days" ng-change="validateDate( inventoryMoveLine, 'relative' )"  ng-disabled="inventoryMoveLine.doesNotExpire">
+                                <option ng-repeat="day in relativeDays" value="{{day}}">{{day}}</option>
                             </select>
-                        </span>
 
-                        <span style="margin-right: 10px;">
-                            <select class="select-input" ng-model="inventoryMoveLine.selectedMonth" ng-change="validateDate( inventoryMoveLine, 'absolute' )">
-                                <option ng-repeat="month in calendar.months">{{month}}</option>
-                            </select>
-                        </span>
+                            日後
 
-                        <span style="margin-right: 10px;">
-                            <select class="select-input" ng-model="inventoryMoveLine.selectedDay" ng-change="validateDate( inventoryMoveLine, 'absolute' )">
-                                <option ng-repeat="day in calendar.days">{{day}}</option>
-                            </select>
-                        </span>
 
-                        <span ng-show="inventoryMoveLine.record.expiration_date__c==null" style="color:red;">
-                            <i class="fa fa-times"></i>
-                        </span>
-                        <span ng-show="inventoryMoveLine.record.expiration_date__c!=null" style="color:green;">
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                        </span>
+                            <span ng-show="inventoryMoveLine.record.expiration_date_relative__c==null" style="color:red;">
+                                <i class="fa fa-times"></i>
+                            </span>
+                            <span ng-show="inventoryMoveLine.record.expiration_date_relative__c!=null" style="color:green;">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </span>
+
+
+                        </div>
                     </div>
 
-                    <div ng-show="ui.selectedExpirationType=='relative'">
-
-                        <span style="margin-right: 10px;">
-                            <select class="select-input" ng-model="inventoryMoveLine.selectedYearRelative" ng-change="validateDate( inventoryMoveLine, 'relative' )">
-                                <option ng-repeat="year in calendar.years">{{year}}</option>
-                            </select>
-                        </span>
-
-                        <span style="margin-right: 10px;">
-                            <select class="select-input" ng-model="inventoryMoveLine.selectedMonthRelative" ng-change="validateDate( inventoryMoveLine, 'relative' )">
-                                <option ng-repeat="month in calendar.months">{{month}}</option>
-                            </select>
-
-                        </span>
-
-                        <span style="margin-right: 10px;">
-                            <select class="select-input" ng-model="inventoryMoveLine.selectedDayRelative" ng-change="validateDate( inventoryMoveLine, 'relative' )">
-                                <option ng-repeat="day in calendar.days">{{day}}</option>
-                            </select>
-                        </span>
-
-                        から
-
-
-                        <select class="select-input" ng-model="inventoryMoveLine.record.expiration_date_relative_days" ng-change="validateDate( inventoryMoveLine, 'relative' )">
-                            <option ng-repeat="day in relativeDays" value="{{day}}">{{day}}</option>
-                        </select>
-
-                        日後
-
-
-                        <span ng-show="inventoryMoveLine.record.expiration_date_relative__c==null" style="color:red;">
-                            <i class="fa fa-times"></i>
-                        </span>
-                        <span ng-show="inventoryMoveLine.record.expiration_date_relative__c!=null" style="color:green;">
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                        </span>
-
-
+                </div>
+                <div class="right">
+                    <div style="text-align: center;">
+                        無期限 <br/>
+                        <ons-switch ng-model="inventoryMoveLine.doesNotExpire" ng-change="doesNotExpire( inventoryMoveLine );"></ons-switch>
                     </div>
                 </div>
+
             </ons-list-item>
 
             <ons-list-item>
@@ -425,6 +436,7 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
     $scope.currentPage = {};
     $scope.foodTypeL1 = [];
     $scope.foodTypeL2 = {};
+    $scope.complete = false;
     $scope.calendar = {
         years: [],
         months: [1,2,3,4,5,6,7,8,9,10,11,12],
@@ -442,6 +454,23 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
         for( var i = 0; i < 30; i++ ){
             $scope.calendar.years.push( thisYear + i );
         }
+
+        $interval(function(){
+            if (!$scope.complete) {
+                window.localStorage.setItem("inboundCache", JSON.stringify( $scope.inventoryMoveLines ));
+            }            
+        }, 1000);
+
+
+        var cache = window.localStorage.getItem("inboundCache");
+        if ( cache ) {
+            if ( confirm('途中保存されたデータがあります、復元しますか?') ) {
+                $scope.inventoryMoveLines = JSON.parse( cache );
+            } else {
+                window.localStorage.removeItem('inboundCache');
+            }
+        }
+
 
 
         console.log( $scope.object );
@@ -464,6 +493,13 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
                 return true;
             }
         }
+    }
+
+
+    $scope.doesNotExpire = function ( inventoryMoveLine ) {
+        inventoryMoveLine.record.expiration_date_relative__c = null;
+        inventoryMoveLine.record.expiration_date_relative_days__c = null;
+        inventoryMoveLine.record.expiration_date__c = $scope.formatDate( new Date( 2999,1,1 ) );
     }
 
     $scope.validateDate = function( inventoryMoveLine, type ){
@@ -658,6 +694,8 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
         InboundController.saveInboundInventoryMove( $scope.object, $scope.recordId, $scope.ui.selectedWarehouseId, json, function( value, event ){
             if( event.statusCode == 200 ){
                 $scope.navi.pushPage('page3.html');
+                window.localStorage.removeItem('inboundCache');
+                $scope.complete = true;
                 $scope.$apply();
             }
             else{
