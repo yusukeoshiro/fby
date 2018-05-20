@@ -363,7 +363,7 @@ public with sharing class InventoryMoveWrapper {
     }
 
 
-    private static String getRecordTypeId( Integer moveType ){
+    public static String getRecordTypeId( Integer moveType ){
         String tmpRecordTypeId = null;
         if( moveType == InventoryMoveWrapper.INBOUND ){
             tmpRecordTypeId = Schema.SObjectType.InventoryMove__c.getRecordTypeInfosByName().get('入庫').getRecordTypeId();
