@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>寄贈先企業</label>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>在庫移動 (寄贈先企業)</relationshipLabel>
+    <relationshipLabel>渡した寄贈一覧</relationshipLabel>
     <relationshipName>inventory_moves_donated_to</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
