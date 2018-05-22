@@ -165,12 +165,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>InventoryMove__c.completion_time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>InventoryMove__c.donated_from_company__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>InventoryMove__c.donated_from_person__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>InventoryMove__c.donated_to_company__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>InventoryMove__c.donated_to_person__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
