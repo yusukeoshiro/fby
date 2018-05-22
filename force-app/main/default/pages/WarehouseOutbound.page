@@ -176,6 +176,7 @@
 
     $scope.init = function(){
       console.log("initialized...");
+      var warehouse_id = 0;
     }
 
     $scope.isSaveDisabled = function(barcodeMoveLine){
@@ -224,6 +225,8 @@
       },100);
     }
 
+// ★★★★★★ バーコードを加える処理。初期のバーコードの倉庫名と違う倉庫を選ぶとエラーにする！
+
     $scope.addBarcodeMoveLine = function(barcode){
       OutboundController.findBarcode( barcode, function( value, event ){
         if( event.statusCode == 200 ){
@@ -242,9 +245,27 @@
           value.expiration_date__c = convertDate(parseFloat(value.expiration_date__c));
           value.outboundQuantity = 1;
           value.shipped_quantity__c = 1;
-          $scope.barcodeMoveLines.push(value);
-          console.log("checkInput_Initial = ", value.outboundQuantity);
-          $scope.$apply();
+          if($scope.barcodeMoveLines.length >= 1){
+            console.log("warehouse_id = ", warehouse_id);
+            console.log("value.current_inventory__r.warehouse__r.Id = ", value.current_inventory__r.warehouse__r.Id);
+            if(warehouse_id == value.current_inventory__r.warehouse__r.Id){
+              $scope.barcodeMoveLines.push(value);
+              $scope.$apply();
+            }else{
+              alert("出荷元の「倉庫」が1行目と同じである必要があります。");
+            }
+          }else{
+            warehouse_id = value.current_inventory__r.warehouse__r.Id;
+            console.log("warehouse_id = ", warehouse_id);
+            console.log("value.current_inventory__r.warehouse__r.Id = ", value.current_inventory__r.warehouse__r.Id);
+            $scope.barcodeMoveLines.push(value);
+            $scope.$apply();
+          }
+          // $scope.barcodeMoveLines.push(value);
+          // console.log("checkInput_Initial = ", value.outboundQuantity);
+          // console.log("barcodeMoveLines = ", $scope.barcodeMoveLines);
+          // console.log("value = ", value);
+          // $scope.$apply();
         }
         else{
           alert( event.message );
@@ -267,7 +288,11 @@
       // }, false);
       // listItem.classList.add("shrink");
       // console.log("class added")
-
+      if(index == 0 && $scope.barcodeMoveLines.length >=2){
+        warehouse_id = $scope.barcodeMoveLines[1].current_inventory__r.warehouse__r.Id;
+      }else if(index == 0 && $scope.barcodeMoveLines.length < 2){
+        warehouse_id = 0;
+      }
       $scope.barcodeMoveLines.splice(index, 1);
     }
 
