@@ -72,15 +72,47 @@
 
 <body>
   <div ng-app="my-app" ng-controller="AppController as app" ng-init="init();">
-    <ons-navigator var="navi" page="page1.html"></ons-navigator>
-    <template id="page1.html">
+    <ons-navigator var="navi" page="warehouseSelect.html"></ons-navigator>
+    <template id="warehouseSelect.html">
       <ons-page>
+        <ons-toolbar class="toolbar--transparent">
+          <div class="center">
+            出庫
+          </div>
+        </ons-toolbar>
+
+        <div class="" style="text-align:center;">
+          出庫元の倉庫を選択してください。
+          <div class="">
+            <ons-select class="select">
+              <select class="select-input" ng-model="ui.selectedWarehouseId" required="true" >
+                <option ng-repeat="warehouse in warehouses1" value="{{warehouse.Id}}">
+                  {{warehouse.Name}}
+                </option>
+              </select>
+            </ons-select>
+          </div>
+        </div>
+
+        <ons-bottom-toolbar>
+          <button
+          class="button--large--cta"
+          style="width: 95%; margin: 0 auto;"
+          ng-click="navi.pushPage('page1.html');"
+          ng-disabled="!ui.selectedWarehouseId">
+          次へ
+        </button>
+      </ons-bottom-toolbar>
+    </ons-page>
+  </template>
+  <template id="page1.html">
+    <ons-page>
         <ons-toolbar class="toolbar--transparent">
           <div class="center">出庫</div>
         </ons-toolbar>
         <!-- ラベル -->
         <div style="text-align:center;">
-          <span class="toolbar--transparent" >出庫対象の在庫をスキャン</span>
+          <span class="toolbar--transparent" >出庫対象在庫の「FBYコード」をスキャン</span>
         </div>
 
         <!-- VIRTUAL KEYBOARD -->
@@ -122,7 +154,7 @@
         </ul>
 
         <ons-bottom-toolbar>
-          <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveBarcodeMove();">
+          <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveBarcodeMove();" ng-disabled="!isReadyToSave()">
             確定
           </button>
         </ons-bottom-toolbar>
@@ -167,12 +199,16 @@
   var module = angular.module('my-app', ['onsen', 'ngTouch']);
   module.controller('AppController', function($scope, $http,  $interval, $timeout) {
     $scope.scannerValue = "";
+    $scope.warehouses1 = {!warehouses_s};
     $scope.ui = {};
+    $scope.ui.selectedWarehouseId = "{!selectedWarehouseId}";
+    $scope.ui.selectedExpirationType = "absolute"
     $scope.barcodeMoveLines = [];
     $scope.barcodeMoveLine = {};
     $scope.barcodeMoveLineIndex;
     $scope.onFocus = false;
     $scope.currentPage = {};
+    $scope.warehouseS = [];
 
     $scope.init = function(){
       console.log("initialized...");
@@ -202,6 +238,10 @@
       }, 500)
     }
 
+    $scope.isReadyToSave = function() {
+        return $scope.barcodeMoveLines.length > 0;
+    }
+
     $scope.onTouchDelete = function(index){
       var listItem = document.getElementById("listItem_"+index);
       // console.log("Delete index is = ", "listItem_"+index);
@@ -225,13 +265,10 @@
       },100);
     }
 
-// ★★★★★★ バーコードを加える処理。初期のバーコードの倉庫名と違う倉庫を選ぶとエラーにする！
-
     $scope.addBarcodeMoveLine = function(barcode){
       OutboundController.findBarcode( barcode, function( value, event ){
         if( event.statusCode == 200 ){
           value.expiration_class = "";
-
           //日付処理
           var convertDate = function(date){
             var dateObj = new Date(date);
@@ -245,27 +282,15 @@
           value.expiration_date__c = convertDate(parseFloat(value.expiration_date__c));
           value.outboundQuantity = 1;
           value.shipped_quantity__c = 1;
-          if($scope.barcodeMoveLines.length >= 1){
-            console.log("warehouse_id = ", warehouse_id);
-            console.log("value.current_inventory__r.warehouse__r.Id = ", value.current_inventory__r.warehouse__r.Id);
-            if(warehouse_id == value.current_inventory__r.warehouse__r.Id){
+
+          if(!value.current_inventory__c){
+            alert("このバーコードは在庫登録されていません。");
+          }else if($scope.ui.selectedWarehouseId !== value.current_inventory__r.warehouse__c){
+            alert("「出庫元倉庫の在庫を選択してください。");
+          }else{
               $scope.barcodeMoveLines.push(value);
               $scope.$apply();
-            }else{
-              alert("出荷元の「倉庫」が1行目と同じである必要があります。");
             }
-          }else{
-            warehouse_id = value.current_inventory__r.warehouse__r.Id;
-            console.log("warehouse_id = ", warehouse_id);
-            console.log("value.current_inventory__r.warehouse__r.Id = ", value.current_inventory__r.warehouse__r.Id);
-            $scope.barcodeMoveLines.push(value);
-            $scope.$apply();
-          }
-          // $scope.barcodeMoveLines.push(value);
-          // console.log("checkInput_Initial = ", value.outboundQuantity);
-          // console.log("barcodeMoveLines = ", $scope.barcodeMoveLines);
-          // console.log("value = ", value);
-          // $scope.$apply();
         }
         else{
           alert( event.message );

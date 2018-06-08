@@ -117,7 +117,7 @@
       </ons-toolbar>
       <!-- ラベル -->
       <div style="text-align:center;">
-        <span class="toolbar--transparent" >移動対象の在庫をスキャン</span>
+        <span class="toolbar--transparent" >移動対象在庫の「FBYコード」をスキャン</span>
       </div>
 
       <!-- VIRTUAL KEYBOARD -->
@@ -174,7 +174,7 @@
 </ul>
 
 <ons-bottom-toolbar>
-  <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveBarcodeMove();">
+  <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveBarcodeMove();" ng-disabled="!isReadyToSave()">
     確定
   </button>
 </ons-bottom-toolbar>
@@ -229,8 +229,6 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
   $scope.onFocus = false;
   $scope.currentPage = {};
   $scope.warehouseS = [];
-  $scope.wId = "";
-  $scope.wName = "";
 
   $scope.init = function(){
     $scope.loadWarehouse();
@@ -259,6 +257,10 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
       $scope.addBarcodeMoveLine($scope.ui.scannerValue2);
       $scope.ui.scannerValue = "";
     }, 500)
+  }
+
+  $scope.isReadyToSave = function() {
+      return $scope.barcodeMoveLines.length > 0;
   }
 
   $scope.onTouchDelete = function(index){
@@ -323,12 +325,26 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
         value.expiration_date__c = convertDate(parseFloat(value.expiration_date__c));
         value.outboundQuantity = 1;
         value.shipped_quantity__c = 1;
-        console.log("warehouse_id = ", $scope.ui.selectedWarehouseId);
-        console.log("value.current_inventory__r.warehouse__r.Id = ", value.current_inventory__r.warehouse__r.Id);
-        if($scope.ui.selectedWarehouseId == value.current_inventory__r.warehouse__r.Id){
+        //console.log("移動先の倉庫ID = ", $scope.ui.selectedWarehouseId);
+        //console.log("スキャン在庫の倉庫ID = ", value.current_inventory__r.warehouse__c);
+        //console.log("スキャン在庫ID = ", value.current_inventory__c);
+        //        console.log("value.current_inventory__r.warehouse__r.Id = ", value.current_inventory__r.warehouse__r.Id);
+        if(!value.current_inventory__c){
+          alert("このバーコードは在庫登録されていません。");
+        }else if($scope.ui.selectedWarehouseId == value.current_inventory__r.warehouse__c){
           alert("「移動先」と同じ倉庫の在庫は選択できません。");
+        }else if($scope.barcodeMoveLines.length >= 1){
+          if(value.current_inventory__r.warehouse__c !== $scope.barcodeMoveLines[0].current_inventory__r.warehouse__c){
+            //console.log("1行目 = ", $scope.barcodeMoveLines[0]);
+            alert("出荷元の「倉庫」が1行目と同じである必要があります。");
+          }else{
+            $scope.barcodeMoveLines.push(value);
+            console.log("value=",value);
+            $scope.$apply();
+          }
         }else{
           $scope.barcodeMoveLines.push(value);
+          console.log("value=",value);
           $scope.$apply();
         }
       }
@@ -371,7 +387,7 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
         data.push({
           Id: moveline.Id,
           fromWarehouseId: moveline.current_inventory__r.warehouse__r.Id,
-          toWarehouseId: $scope.wId
+          toWarehouseId: $scope.ui.selectedWarehouseId
         })
       })($scope.barcodeMoveLines[i])
     }

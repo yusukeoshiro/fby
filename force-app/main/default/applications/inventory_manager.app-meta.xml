@@ -9,6 +9,7 @@
     <formFactors>Large</formFactors>
     <label>在庫管理</label>
     <navType>Standard</navType>
+    <tabs>standard-Campaign</tabs>
     <tabs>standard-Account</tabs>
     <tabs>standard-Contact</tabs>
     <tabs>inventory_manager</tabs>

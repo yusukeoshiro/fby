@@ -1,5 +1,30 @@
 global with sharing class OutboundController {
+
+  public List<Warehouse__c> warehouses1 {get;set;}
+  public String warehouses_s {get;set;}
+  public String selectedWarehouseId {get;set;}
+
   global OutboundController() {
+
+          selectedWarehouseId = null;
+          // try to figure out the last warehouse he made deposit to
+          List<InventoryMove__c> outbounds = [
+              SELECT transfer_to_warehouse__c
+              FROM InventoryMove__c
+              WHERE
+                  CreatedById =:UserInfo.getUserId() AND
+                  recordTypeId =: InventoryMoveWrapper.getRecordTypeId(InventoryMoveWrapper.OUTBOUND) AND
+                  transfer_to_warehouse__c != NULL
+              ORDER BY CreatedDate DESC
+              LIMIT 1
+          ];
+
+          if ( outbounds.size() > 0 ) {
+              selectedWarehouseId = String.valueOf( outbounds[0].transfer_to_warehouse__c );
+          }
+
+          warehouses1 = [SELECT Id, Name FROM Warehouse__c];
+          warehouses_s = JSON.serialize( warehouses1 );
 
   }
 
