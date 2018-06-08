@@ -4,7 +4,6 @@ global with sharing class InboundController {
     public Contact fromContact {get;set;}
     public String fromObject {get;set;}
     public String fromRecordId {get;set;}
-
     public List<Warehouse__c> warehouses {get;set;}
     public String warehouses_s {get;set;}
     public String selectedWarehouseId {get;set;}
