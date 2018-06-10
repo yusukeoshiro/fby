@@ -1,5 +1,9 @@
 global with sharing class OutboundController {
 
+  public Account toAccount {get;set;}
+  public Contact toContact {get;set;}
+  public String toObject {get;set;}
+  public String toRecordId {get;set;}
   public List<Warehouse__c> warehouses1 {get;set;}
   public String warehouses_s {get;set;}
   public String selectedWarehouseId {get;set;}
@@ -26,6 +30,25 @@ global with sharing class OutboundController {
           warehouses1 = [SELECT Id, Name FROM Warehouse__c];
           warehouses_s = JSON.serialize( warehouses1 );
 
+          if ( ApexPages.currentPage().getParameters().get('id') != null ) {
+              String myId = ApexPages.currentPage().getParameters().get('id');
+
+              List<Account> accounts = [SELECT Id, Name FROM Account WHERE Id=: myId];
+              if ( accounts.size() > 0 ) {
+                  toAccount = accounts[0];
+                  toObject = 'Account';
+                  toRecordId = toAccount.Id;
+              } else {
+                  List<Contact> contacts = [SELECT Id, Name FROM Contact WHERE Id=:myId];
+                  if ( contacts.size() > 0 ) {
+                      toContact = contacts[0];
+                      toObject = 'Contact';
+                      toRecordId = toContact.Id;
+                  }
+              }
+
+          }
+
   }
 
   @RemoteAction
@@ -41,7 +64,12 @@ global with sharing class OutboundController {
   }
 
   @RemoteAction
-  global static Object saveOutboundBarcodeMove( String jsonStr ){
+  global static Object saveOutboundBarcodeMove( String objectName, String recordId, String warehouseId,  String jsonStr ){
+
+    System.debug( objectName );
+    System.debug( recordId );
+    System.debug( warehouseId );
+
     // 倉庫 Id、商品 ID の確認
     // TODO fix this to be dynamic
     //Map<String, Object> jsonObj = (Map<String, Object>) JSON.deserializeUntyped(jsonStr);
@@ -53,6 +81,14 @@ global with sharing class OutboundController {
       InventoryMoveLineOutboundWrapper outboundLine = new InventoryMoveLineOutboundWrapper( new InventoryMoveLineOutbound__c() );
       outboundLine.getRecord().barcode__c = (Id)record.get('Id');
       outboundLine.getRecord().outbound_quantity__c = (decimal)record.get('shipped_quantity__c');
+
+      if ( objectName == 'Contact' ) {
+          imw.getRecord().donated_to_person__c = recordId;
+      }
+      if ( objectName == 'Account' ) {
+          imw.getRecord().donated_to_company__c = recordId;
+      }
+
       imw.addInventoryMoveLineOutboundWrapper( outboundLine );
       imw.confirmInventoryMove();
     }

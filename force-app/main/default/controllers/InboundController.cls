@@ -78,7 +78,6 @@ global with sharing class InboundController {
     global static Object saveInboundInventoryMove( String objectName, String recordId, String warehouseId, String jsonInput ){
 
 
-
         System.debug( objectName );
         System.debug( recordId );
         System.debug( warehouseId );

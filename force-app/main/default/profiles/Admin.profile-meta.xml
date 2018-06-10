@@ -332,6 +332,14 @@
         <layout>InventoryMoveLine__c-InventoryMoveLine-Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>InventoryMove__c-InboundLayout</layout>
+        <recordType>InventoryMove__c.inbound</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>InventoryMove__c-InboundLayout</layout>
+        <recordType>InventoryMove__c.transfer</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>InventoryMove__c-OutboundLayout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -340,15 +348,7 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>InventoryMove__c-OutboundLayout</layout>
-        <recordType>InventoryMove__c.inbound</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>InventoryMove__c-OutboundLayout</layout>
         <recordType>InventoryMove__c.outbound</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>InventoryMove__c-OutboundLayout</layout>
-        <recordType>InventoryMove__c.transfer</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Warehouse__c-WarehouseLayout</layout>
@@ -961,6 +961,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>ModifyMetadata</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>NewReportBuilder</name>
     </userPermissions>
     <userPermissions>
@@ -1010,6 +1014,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>SubmitMacrosAllowed</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>SubscribeDashboardToOtherUsers</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

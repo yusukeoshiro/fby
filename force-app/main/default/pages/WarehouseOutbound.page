@@ -78,53 +78,59 @@
         <ons-toolbar class="toolbar--transparent">
           <div class="center">
             出庫
-          </div>
-        </ons-toolbar>
+            <apex:outputPanel rendered="{!toAccount!=null}" layout="inline">
+            ({!toAccount.Name})
+          </apex:outputPanel>
+          <apex:outputPanel rendered="{!toContact!=null}" layout="inline">
+          ({!toContact.Name})
+        </apex:outputPanel>
+      </div>
+    </ons-toolbar>
 
-        <div class="" style="text-align:center;">
-          出庫元の倉庫を選択してください。
-          <div class="">
-            <ons-select class="select">
-              <select class="select-input" ng-model="ui.selectedWarehouseId" required="true" >
-                <option ng-repeat="warehouse in warehouses1" value="{{warehouse.Id}}">
-                  {{warehouse.Name}}
-                </option>
-              </select>
-            </ons-select>
-          </div>
-        </div>
+    <div class="" style="text-align:center;">
+      出庫元の倉庫を選択してください。
+      <div class="">
+        <ons-select class="select">
+          <select class="select-input" ng-model="ui.selectedWarehouseId" required="true" >
+            <option ng-repeat="warehouse in warehouses1" value="{{warehouse.Id}}">
+              {{warehouse.Name}}
+            </option>
+          </select>
+        </ons-select>
+      </div>
+    </div>
 
-        <ons-bottom-toolbar>
-          <button
-          class="button--large--cta"
-          style="width: 95%; margin: 0 auto;"
-          ng-click="navi.pushPage('page1.html');"
-          ng-disabled="!ui.selectedWarehouseId">
-          次へ
-        </button>
-      </ons-bottom-toolbar>
-    </ons-page>
-  </template>
-  <template id="page1.html">
-    <ons-page>
-        <ons-toolbar class="toolbar--transparent">
-          <div class="center">出庫</div>
-        </ons-toolbar>
-        <!-- ラベル -->
-        <div style="text-align:center;">
-          <span class="toolbar--transparent" >出庫対象在庫の「FBYコード」をスキャン</span>
-        </div>
+    <ons-bottom-toolbar>
+      <button
+      class="button--large--cta"
+      style="width: 95%; margin: 0 auto;"
+      ng-click="navi.pushPage('page1.html');"
+      ng-disabled="!ui.selectedWarehouseId">
+      次へ
+    </button>
+  </ons-bottom-toolbar>
+</ons-page>
+</template>
+<template id="page1.html">
+  <ons-page>
+    <ons-toolbar class="toolbar--transparent">
+      <div class="center">出庫</div>
+    </ons-toolbar>
+    <!-- ラベル -->
+    <div style="text-align:center;">
+      <span class="toolbar--transparent" >出庫対象在庫の「FBYコード」をスキャン</span>
+    </div>
 
-        <!-- VIRTUAL KEYBOARD -->
-        <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
-          <input id="scan_pad" type="text" ng-model="ui.scannerValue2"  dl-enter-key="barcodeEntered();"/>
-        </div>
+    <!-- VIRTUAL KEYBOARD -->
+    <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
+      <input id="scan_pad" type="text" ng-model="ui.scannerValue2"  dl-enter-key="barcodeEntered();"/>
+    </div>
 
-        <div style="text-align:center;">
-          <span class="barcode-read" >{{ ui.scannerValue2 || "待機中" }}</span>
-        </div>
+    <div style="text-align:center;">
+      <span class="barcode-read" >{{ ui.scannerValue2 || "待機中" }}</span>
+    </div>
 
-        <!--出庫の画面 FBYリスト表示 -->
+    <!--出庫の画面 FBYリスト表示 -->
         <ul class="list" style="margin-top: 20px;">
           <li ng-attr-id="listItem_{{$index}}" class="list-item list-item--tappable list-item--chevron" ng-repeat="barcodeMoveLine in barcodeMoveLines">
             <div class="list-item__center">
@@ -199,6 +205,8 @@
   var module = angular.module('my-app', ['onsen', 'ngTouch']);
   module.controller('AppController', function($scope, $http,  $interval, $timeout) {
     $scope.scannerValue = "";
+    $scope.object = "{!toObject}";
+    $scope.recordId = "{!toRecordId}";
     $scope.warehouses1 = {!warehouses_s};
     $scope.ui = {};
     $scope.ui.selectedWarehouseId = "{!selectedWarehouseId}";
@@ -342,7 +350,7 @@
         })($scope.barcodeMoveLines[i])
       }
 
-      OutboundController.saveOutboundBarcodeMove( JSON.stringify(data), function( value, event ){
+      OutboundController.saveOutboundBarcodeMove( $scope.object, $scope.recordId, $scope.ui.selectedWarehouseId, JSON.stringify(data), function( value, event ){
         if( event.statusCode == 200 ){
           console.log("success = ", value);
           $scope.navi.pushPage('page2.html');
