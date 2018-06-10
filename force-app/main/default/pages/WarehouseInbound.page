@@ -15,7 +15,7 @@
         font-family: "メイリオ", sans-serif;
     }
     .barcode-read{
-        font-size: 32px;
+        font-size: 28px;
     }
     </style>
 
@@ -92,7 +92,7 @@
 </div>
 
 <div style="text-align:center;">
-    <span class="barcode-read" >{{ ui.scannerValue || "待機中" }}</span>
+    <span class="barcode-read" >{{ ui.scannerValue || "JANコードをスキャン" }}</span>
 </div>
 
 
@@ -112,7 +112,7 @@
 </ul>
 
 <ons-bottom-toolbar>
-    <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveInventoryMove();">
+    <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveInventoryMove();" ng-disabled="!isReadyToSave();">
         確定
     </button>
 </ons-bottom-toolbar>
@@ -146,7 +146,7 @@
 
         <div style="margin-bottom: 10px;">
             <div style="text-align:center;">
-                <span class="barcode-read" >{{ ui.scannerValue2 || "待機中" }}</span>
+                <span class="barcode-read" >{{ ui.scannerValue2 || "FBYコードをスキャン" }}</span>
             </div>
 
             <div ng-show="( inventoryMoveLine.barcodes.length == 0 ) || ( inventoryMoveLine.barcodes === undefined )">
@@ -310,7 +310,7 @@
             <ons-list-item>
                 <div class="list-item__title"><small>商品名</small></div>
                 <div class="list-item__subtitle">
-                    <input type="text" class="text-input" placeholder="商品名" ng-model="inventoryMoveLine.record.food_name__c"/>
+                    <textarea class="textarea textarea--transparent" rows="3" placeholder="商品名"  ng-model="inventoryMoveLine.record.food_name__c" style="width: 100%;"></textarea>
                 </div>
             </ons-list-item>
 
@@ -688,20 +688,29 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
         $scope.navi.pushPage('page2.html');
     }
 
+    $scope.isReadyToSave = function() {
+        return $scope.inventoryMoveLines.length > 0;
+    }
+
     $scope.saveInventoryMove = function(){
         var json = JSON.stringify( $scope.inventoryMoveLines );
 
-        InboundController.saveInboundInventoryMove( $scope.object, $scope.recordId, $scope.ui.selectedWarehouseId, json, function( value, event ){
-            if( event.statusCode == 200 ){
-                $scope.navi.pushPage('page3.html');
-                window.localStorage.removeItem('inboundCache');
-                $scope.complete = true;
-                $scope.$apply();
-            }
-            else{
-                alert( event.message );
-            }
-        });
+        if ( json.length > 0 ) {
+            InboundController.saveInboundInventoryMove( $scope.object, $scope.recordId, $scope.ui.selectedWarehouseId, json, function( value, event ){
+                if( event.statusCode == 200 ){
+                    $scope.navi.pushPage('page3.html');
+                    window.localStorage.removeItem('inboundCache');
+                    $scope.complete = true;
+                    $scope.$apply();
+                }
+                else{
+                    alert( event.message );
+                }
+            });
+        } else {
+            alert( '内容が空です。' );
+        }
+
     }
 
     $scope.formatDate  = function(date) {

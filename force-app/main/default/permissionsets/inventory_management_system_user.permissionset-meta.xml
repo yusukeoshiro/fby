@@ -283,6 +283,10 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <recordType>Account.others</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>InventoryMove__c.disposal</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
