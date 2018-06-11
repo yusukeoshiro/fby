@@ -1,6 +1,53 @@
 global with sharing class InboundController {
+
+    public Account fromAccount {get;set;}
+    public Contact fromContact {get;set;}
+    public String fromObject {get;set;}
+    public String fromRecordId {get;set;}
+    public List<Warehouse__c> warehouses {get;set;}
+    public String warehouses_s {get;set;}
+    public String selectedWarehouseId {get;set;}
+
     global InboundController() {
 
+        selectedWarehouseId = null;
+        // try to figure out the last warehouse he made deposit to
+        List<InventoryMove__c> inbounds = [
+            SELECT transfer_to_warehouse__c
+            FROM InventoryMove__c
+            WHERE
+                CreatedById =:UserInfo.getUserId() AND
+                recordTypeId =: InventoryMoveWrapper.getRecordTypeId(InventoryMoveWrapper.INBOUND) AND
+                transfer_to_warehouse__c != NULL
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ];
+
+        if ( inbounds.size() > 0 ) {
+            selectedWarehouseId = String.valueOf( inbounds[0].transfer_to_warehouse__c );
+        }
+
+        warehouses = [SELECT Id, Name FROM Warehouse__c];
+        warehouses_s = JSON.serialize( warehouses );
+
+        if ( ApexPages.currentPage().getParameters().get('id') != null ) {
+            String myId = ApexPages.currentPage().getParameters().get('id');
+
+            List<Account> accounts = [SELECT Id, Name FROM Account WHERE Id=: myId];
+            if ( accounts.size() > 0 ) {
+                fromAccount = accounts[0];
+                fromObject = 'Account';
+                fromRecordId = fromAccount.Id;
+            } else {
+                List<Contact> contacts = [SELECT Id, Name FROM Contact WHERE Id=:myId];
+                if ( contacts.size() > 0 ) {
+                    fromContact = contacts[0];
+                    fromObject = 'Contact';
+                    fromRecordId = fromContact.Id;
+                }
+            }
+
+        }
     }
 
     @RemoteAction
@@ -28,12 +75,24 @@ global with sharing class InboundController {
     }
 
     @RemoteAction
-    global static Object saveInboundInventoryMove( String jsonInput ){
+    global static Object saveInboundInventoryMove( String objectName, String recordId, String warehouseId, String jsonInput ){
+
+
+        System.debug( objectName );
+        System.debug( recordId );
+        System.debug( warehouseId );
+
 
         InventoryMoveWrapper imw = InventoryManager.createInventoryMoveWrapper( InventoryMoveWrapper.INBOUND );
 
-        // TODO fix this to be dynamic
-        imw.getRecord().transfer_to_warehouse__c = [SELECT Id FROM Warehouse__c LIMIT 1].Id;
+        if ( objectName == 'Contact' ) {
+            imw.getRecord().donated_from_person__c = recordId;
+        }
+        if ( objectName == 'Account' ) {
+            imw.getRecord().donated_from_company__c = recordId;
+        }
+
+        imw.getRecord().transfer_to_warehouse__c = warehouseId;
 
         List<InventoryMoveLineWrapper> lines = (List<InventoryMoveLineWrapper>) JSON.deserialize(jsonInput, List<InventoryMoveLineWrapper>.class);
         imw.setLines( lines );

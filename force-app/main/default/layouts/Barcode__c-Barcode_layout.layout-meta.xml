@@ -15,6 +15,10 @@
                 <behavior>Edit</behavior>
                 <field>current_inventory__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>souko_name__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -41,6 +45,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>donated_date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>campaign_name__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -108,13 +116,19 @@
         <fields>inventory_move__c</fields>
         <relatedList>InventoryMoveLineOutbound__c.barcode__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>inventory_move__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>InventoryMoveLine__c.barcode__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hp0000000PZNM</masterLabel>
+        <masterLabel>00h0l000000VKn1</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

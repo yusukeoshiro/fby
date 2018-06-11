@@ -10,35 +10,30 @@
     <div class="container">
 
         <h2>在庫管理メニュー</h2>
-        <p>
-            あなたは今  山口倉庫 にいます。
-        </p>
-        <button  id="btn-inbound"  class="btn btn-primary btn-lg btn-block">入庫業務</button>
-        <button  id="btn-outbound" class="btn btn-success btn-lg btn-block">出庫</button>
-        <button  id="btn-transfer" class="btn btn-info btn-lg btn-block">在庫移動</button>
-        <button  id="btn-dispose"  class="btn btn-danger btn-lg btn-block">破棄</button>
+        <button  id="btn-inbound"  class="btn btn-primary btn-lg btn-block" disabled="disabled">入庫 <small>(取引先 / 取引先責任者から操作)</small></button>
+        <button  id="btn-outbound" class="btn btn-primary btn-lg btn-block" disabled="disabled">出庫 <small>(取引先 / 取引先責任者から操作)</small></button>
+        <button  id="btn-transfer" class="btn btn-primary btn-lg btn-block">在庫移動</button>
+        <button  id="btn-dispose"  class="btn btn-primary btn-lg btn-block">破棄</button>
     </div>
-
-
 
     <script>
 
         $(function(){
-            $("#btn-inbound").on("click", function(){
-                sforce.one.navigateToURL("/apex/WarehouseInbound");
-            });
-
-            $("#btn-outbound").on("click", function(){
-                sforce.one.navigateToURL("/apex/WarehouseOutbound");
-            });
+            // $("#btn-inbound").on("click", function(){
+            //     sforce.one.navigateToURL("/apex/WarehouseInbound");
+            // });
+            //
+            // $("#btn-outbound").on("click", function(){
+            //     sforce.one.navigateToURL("/apex/WarehouseOutbound");
+            // });
 
 
             $("#btn-transfer").on("click", function(){
-                alert("ページがありません");
+              sforce.one.navigateToURL("/apex/WarehouseTransfer");
             });
 
             $("#btn-dispose").on("click", function(){
-                alert("ページがありません");
+              sforce.one.navigateToURL("/apex/WarehouseDispose");
             });
 
 

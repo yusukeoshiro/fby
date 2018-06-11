@@ -2,3 +2,4 @@
 mdapi/
 .DS_Store
 server.key
+force-app/main/default/profiles/

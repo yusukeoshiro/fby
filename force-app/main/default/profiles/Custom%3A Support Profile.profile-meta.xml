@@ -19,6 +19,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>BarcodePrintController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>DisposeController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>InboundController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -44,6 +52,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>JanProduct</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OutboundController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TransferController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <custom>true</custom>
@@ -254,6 +270,9 @@
         <layout>Barcode__c-Barcode_layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>CurrentInventory__c-CurrentInventoryLayout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>FoodTypeLOne__c-食品分類 %28L1%29 Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -283,8 +302,23 @@
         <layout>InventoryMove__c-OutboundLayout</layout>
         <recordType>InventoryMove__c.outbound</recordType>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>InventoryMove__c-OutboundLayout</layout>
+        <recordType>InventoryMove__c.transfer</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Warehouse__c-WarehouseLayout</layout>
+    </layoutAssignments>
     <pageAccesses>
         <apexPage>BarcodeBulkCreate</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>BarcodePrint</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>WarehouseDispose</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -292,7 +326,31 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>WarehouseOutbound</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>WarehouseStart</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>WarehouseTransfer</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>accountInbound</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>accountOutbound</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>contactInbound</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>contactOutbound</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <recordTypeVisibilities>
