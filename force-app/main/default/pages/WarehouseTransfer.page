@@ -76,72 +76,105 @@
 
 <body>
   <div ng-app="my-app" ng-controller="AppController as app" ng-init="init();">
-    <ons-navigator var="navi" page="page1.html"></ons-navigator>
-    <template id="page1.html">
+    <ons-navigator var="navi" page="warehouseSelect.html"></ons-navigator>
+    <template id="warehouseSelect.html">
       <ons-page>
         <ons-toolbar class="toolbar--transparent">
-          <div class="center">在庫移動</div>
+          <div class="center">
+            倉庫移動
+          </div>
         </ons-toolbar>
-        <!-- ラベル -->
-        <div style="text-align:center;">
-          <span class="toolbar--transparent" >移動対象の在庫をスキャン</span>
+
+        <div class="" style="text-align:center;">
+          移動先倉庫を選択してください。
+          <div class="">
+            <ons-select class="select">
+              <select class="select-input" ng-model="ui.selectedWarehouseId" required="true" >
+                <option ng-repeat="warehouse in warehouses1" value="{{warehouse.Id}}">
+                  {{warehouse.Name}}
+                </option>
+              </select>
+            </ons-select>
+          </div>
         </div>
 
-        <!-- VIRTUAL KEYBOARD -->
-        <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
-          <input id="scan_pad" type="text" ng-model="ui.scannerValue2"  dl-enter-key="barcodeEntered();"/>
-        </div>
+        <ons-bottom-toolbar>
+          <button
+          class="button--large--cta"
+          style="width: 95%; margin: 0 auto;"
+          ng-click="navi.pushPage('page1.html');"
+          ng-disabled="!ui.selectedWarehouseId">
+          次へ
+        </button>
+      </ons-bottom-toolbar>
+    </ons-page>
+  </template>
 
-        <div style="text-align:center;">
-          <span class="barcode-read" >{{ ui.scannerValue2 || "待機中" }}</span>
-        </div>
+  <template id="page1.html">
+    <ons-page>
+      <ons-toolbar class="toolbar--transparent">
+        <div class="center">在庫移動</div>
+      </ons-toolbar>
+      <!-- ラベル -->
+      <div style="text-align:center;">
+        <span class="toolbar--transparent" >移動対象在庫の「FBYコード」をスキャン</span>
+      </div>
 
-        <div class="list-item-title" style="padding-left: 14px; background-color: white; position: relative; margin-top: 5px; text-align:left; padding-top: 10px; padding-bottom: 10px;">移動先 ▶︎
-          <ons-select class="select">
-            <select id="wselect" class="select-input" ng-model="WarehouseSelector" required="true" ng-change="warehouseSelect()" style="position: absolute; top: 3px; padding-left: 2%; width: 100px; border: solid; border-color: rgba(255, 193, 7, 0.08);">
-              <option ng-repeat="warehouse in warehouseS" value="{{warehouse.Id}}">
-                {{warehouse.Name}}
-              </option>
-            </select>
-          </ons-select>
-        </div>
+      <!-- VIRTUAL KEYBOARD -->
+      <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
+        <input id="scan_pad" type="text" ng-model="ui.scannerValue2"  dl-enter-key="barcodeEntered();"/>
+      </div>
 
-        <!--出庫の画面 FBYリスト表示 -->
-        <ul class="list" style="margin-top: 20px;">
-          <li ng-attr-id="listItem_{{$index}}" class="list-item list-item--tappable list-item--chevron" ng-repeat="barcodeMoveLine in barcodeMoveLines">
-            <div class="list-item__center">
-              <div class="list-touch-body" style="width:100%" ng-swipe-left="onTouchDelete($index)" ng-click="onDeleteCancel($index)">
-                <div class="boss" style="display: flex; width: 100%; padding-bottom: 10px;">
-                  <div class="list-item__title list-item" style="flex: 9;">{{barcodeMoveLine.Name}}  @{{barcodeMoveLine.current_inventory__r.warehouse__r.Name}}</div>
-                </div>
-                <div class="list-item__subtitle">
-                  <div class="test" style="padding-bottom: 10px; font-size: 110%; color: #ff0066; font-weight: 600;">
-                    現在庫名: {{barcodeMoveLine.current_inventory__r.product_name__c}}
-                  </div>
-                  <div class="holder" style="display: flex;">
-                    <div class="list-item-title" style="flex:3;">残数: {{barcodeMoveLine.remaining_quantity__c}} [個]</div>
-                    <div class="list-item-title" style="flex:4;">賞味期限: <span class="{{ barcodeMoveLine.expiration_class }}">{{barcodeMoveLine.expiration_date__c}}</span></div>
-                  </div>
-                </div>
-              </div>
-              <!-- <div class="list-item-title" style="position: relative; margin-top: 5px; text-align:left; width:100%; padding-top: 10px">移動先:
-              <ons-select class="select">
-              <select class="select-input" ng-model="WarehouseSelector" required="true" style="position: absolute; top: 0px; padding-left: 2%; width: 100px; border: solid; border-color: rgba(255, 193, 7, 0.08);">
-              <option ng-repeat="warehouse in warehouseS" value="{{warehouse.Id}}">
+      <div style="text-align:center;">
+        <span class="barcode-read" >{{ ui.scannerValue2 || "待機中" }}</span>
+      </div>
+
+      <!-- <div class="list-item-title" style="padding-left: 14px; background-color: white; position: relative; margin-top: 5px; text-align:left; padding-top: 10px; padding-bottom: 10px;">移動先 ▶︎
+        <ons-select class="select">
+          <select id="wselect" class="select-input" ng-model="WarehouseSelector" required="true" ng-change="warehouseSelect()" style="position: absolute; top: 3px; padding-left: 2%; width: 100px; border: solid; border-color: rgba(255, 193, 7, 0.08);">
+            <option ng-repeat="warehouse in warehouseS" value="{{warehouse.Id}}">
               {{warehouse.Name}}
             </option>
           </select>
         </ons-select>
       </div> -->
-    </div>
-    <div class="list-item-deletepanel" ng-click="deleteBarcodeMoveLine($index);">
-      DELETE
-    </div>
-  </li>
+
+      <!--出庫の画面 FBYリスト表示 -->
+      <ul class="list" style="margin-top: 20px;">
+        <li ng-attr-id="listItem_{{$index}}" class="list-item list-item--tappable list-item--chevron" ng-repeat="barcodeMoveLine in barcodeMoveLines">
+          <div class="list-item__center">
+            <div class="list-touch-body" style="width:100%" ng-swipe-left="onTouchDelete($index)" ng-click="onDeleteCancel($index)">
+              <div class="boss" style="display: flex; width: 100%; padding-bottom: 10px;">
+                <div class="list-item__title list-item" style="flex: 9;">{{barcodeMoveLine.Name}}  @{{barcodeMoveLine.current_inventory__r.warehouse__r.Name}}</div>
+              </div>
+              <div class="list-item__subtitle">
+                <div class="test" style="padding-bottom: 10px; font-size: 110%; color: #ff0066; font-weight: 600;">
+                  現在庫名: {{barcodeMoveLine.current_inventory__r.product_name__c}}
+                </div>
+                <div class="holder" style="display: flex;">
+                  <div class="list-item-title" style="flex:3;">残数: {{barcodeMoveLine.remaining_quantity__c}} [個]</div>
+                  <div class="list-item-title" style="flex:4;">賞味期限: <span class="{{ barcodeMoveLine.expiration_class }}">{{barcodeMoveLine.expiration_date__c}}</span></div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="list-item-title" style="position: relative; margin-top: 5px; text-align:left; width:100%; padding-top: 10px">移動先:
+            <ons-select class="select">
+            <select class="select-input" ng-model="WarehouseSelector" required="true" style="position: absolute; top: 0px; padding-left: 2%; width: 100px; border: solid; border-color: rgba(255, 193, 7, 0.08);">
+            <option ng-repeat="warehouse in warehouseS" value="{{warehouse.Id}}">
+            {{warehouse.Name}}
+          </option>
+        </select>
+      </ons-select>
+    </div> -->
+  </div>
+  <div class="list-item-deletepanel" ng-click="deleteBarcodeMoveLine($index);">
+    DELETE
+  </div>
+</li>
 </ul>
 
 <ons-bottom-toolbar>
-  <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveBarcodeMove();">
+  <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveBarcodeMove();" ng-disabled="!isReadyToSave()">
     確定
   </button>
 </ons-bottom-toolbar>
@@ -186,19 +219,21 @@
 var module = angular.module('my-app', ['onsen', 'ngTouch']);
 module.controller('AppController', function($scope, $http,  $interval, $timeout) {
   $scope.scannerValue = "";
+  $scope.warehouses1 = {!warehouses_s};
   $scope.ui = {};
+  $scope.ui.selectedWarehouseId = "{!selectedWarehouseId}";
+  $scope.ui.selectedExpirationType = "absolute"
   $scope.barcodeMoveLines = [];
   $scope.barcodeMoveLine = {};
   $scope.barcodeMoveLineIndex;
   $scope.onFocus = false;
   $scope.currentPage = {};
   $scope.warehouseS = [];
-  $scope.wId = "";
-  $scope.wName = "";
 
   $scope.init = function(){
     $scope.loadWarehouse();
     console.log("initialized...");
+    console.log("warehouseId = ", $scope.ui.selectedWarehouseId);
   }
 
   $scope.isSaveDisabled = function(barcodeMoveLine){
@@ -222,6 +257,10 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
       $scope.addBarcodeMoveLine($scope.ui.scannerValue2);
       $scope.ui.scannerValue = "";
     }, 500)
+  }
+
+  $scope.isReadyToSave = function() {
+      return $scope.barcodeMoveLines.length > 0;
   }
 
   $scope.onTouchDelete = function(index){
@@ -250,13 +289,13 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
   }
 
   // 選択された倉庫を一時保管
-  $scope.warehouseSelect = function(){
-    var select = document.getElementById("wselect");
-    var warehouse = select.options[select.selectedIndex];
-    $scope.wId = warehouse.value;
-    $scope.wName = warehouse.innerText;
-    console.log("id = ", $scope.wId, "name = ", $scope.wName);
-  }
+  // $scope.warehouseSelect = function(){
+  //   var select = document.getElementById("wselect");
+  //   var warehouse = select.options[select.selectedIndex];
+  //   $scope.wId = warehouse.value;
+  //   $scope.wName = warehouse.innerText;
+  //   console.log("id = ", $scope.wId, "name = ", $scope.wName);
+  // }
 
   // ng-change で呼ばれるメソッド（Delay が必要）
   $scope.checkInput = function(shipped_quantity, index){
@@ -273,7 +312,6 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
     TransferController.findBarcode( barcode, function( value, event ){
       if( event.statusCode == 200 ){
         value.expiration_class = "";
-
         //日付処理
         var convertDate = function(date){
           var dateObj = new Date(date);
@@ -287,9 +325,28 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
         value.expiration_date__c = convertDate(parseFloat(value.expiration_date__c));
         value.outboundQuantity = 1;
         value.shipped_quantity__c = 1;
-        $scope.barcodeMoveLines.push(value);
-        console.log("checkInput_Initial = ", value.outboundQuantity);
-        $scope.$apply();
+        //console.log("移動先の倉庫ID = ", $scope.ui.selectedWarehouseId);
+        //console.log("スキャン在庫の倉庫ID = ", value.current_inventory__r.warehouse__c);
+        //console.log("スキャン在庫ID = ", value.current_inventory__c);
+        //        console.log("value.current_inventory__r.warehouse__r.Id = ", value.current_inventory__r.warehouse__r.Id);
+        if(!value.current_inventory__c){
+          alert("このバーコードは在庫登録されていません。");
+        }else if($scope.ui.selectedWarehouseId == value.current_inventory__r.warehouse__c){
+          alert("「移動先」と同じ倉庫の在庫は選択できません。");
+        }else if($scope.barcodeMoveLines.length >= 1){
+          if(value.current_inventory__r.warehouse__c !== $scope.barcodeMoveLines[0].current_inventory__r.warehouse__c){
+            //console.log("1行目 = ", $scope.barcodeMoveLines[0]);
+            alert("出荷元の「倉庫」が1行目と同じである必要があります。");
+          }else{
+            $scope.barcodeMoveLines.push(value);
+            console.log("value=",value);
+            $scope.$apply();
+          }
+        }else{
+          $scope.barcodeMoveLines.push(value);
+          console.log("value=",value);
+          $scope.$apply();
+        }
       }
       else{
         alert( event.message );
@@ -330,7 +387,7 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
         data.push({
           Id: moveline.Id,
           fromWarehouseId: moveline.current_inventory__r.warehouse__r.Id,
-          toWarehouseId: $scope.wId
+          toWarehouseId: $scope.ui.selectedWarehouseId
         })
       })($scope.barcodeMoveLines[i])
     }

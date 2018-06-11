@@ -74,6 +74,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Barcode__c.campaign_name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Barcode__c.current_inventory__c</field>
         <readable>false</readable>
@@ -112,6 +117,11 @@
         <editable>false</editable>
         <field>Barcode__c.shipped_quantity__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Barcode__c.souko_name__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -171,6 +181,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>InventoryMoveLine__c.expiration_date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>InventoryMoveLine__c.expiration_date_relative__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>InventoryMoveLine__c.expiration_date_relative_days__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -263,11 +283,35 @@
         <field>Warehouse__c.address__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>camAccCon__c.acc_name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>camAccCon__c.cam_name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>camAccCon__c.con_name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <layoutAssignments>
+        <layout>Account-Account Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>BarcodeAssignment__c-BarcodeAssignment_Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Barcode__c-Barcode_layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Campaign-Campaign Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-Contact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CurrentInventory__c-CurrentInventoryLayout</layout>
@@ -288,6 +332,14 @@
         <layout>InventoryMoveLine__c-InventoryMoveLine-Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>InventoryMove__c-InboundLayout</layout>
+        <recordType>InventoryMove__c.inbound</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>InventoryMove__c-InboundLayout</layout>
+        <recordType>InventoryMove__c.transfer</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>InventoryMove__c-OutboundLayout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -296,18 +348,13 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>InventoryMove__c-OutboundLayout</layout>
-        <recordType>InventoryMove__c.inbound</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>InventoryMove__c-OutboundLayout</layout>
         <recordType>InventoryMove__c.outbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>InventoryMove__c-OutboundLayout</layout>
-        <recordType>InventoryMove__c.transfer</recordType>
+        <layout>Warehouse__c-WarehouseLayout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Warehouse__c-WarehouseLayout</layout>
+        <layout>camAccCon__c-キャンペーン取引先連結レイアウト</layout>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -390,6 +437,15 @@
         <object>Warehouse__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>camAccCon__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
     <pageAccesses>
         <apexPage>BarcodeBulkCreate</apexPage>
         <enabled>true</enabled>
@@ -436,7 +492,6 @@
     </pageAccesses>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>InventoryMove__c.disposal</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -906,6 +961,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>ModifyMetadata</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>NewReportBuilder</name>
     </userPermissions>
     <userPermissions>
@@ -955,6 +1014,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>SubmitMacrosAllowed</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>SubscribeDashboardToOtherUsers</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

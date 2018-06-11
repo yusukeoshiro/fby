@@ -4,7 +4,6 @@ global with sharing class InboundController {
     public Contact fromContact {get;set;}
     public String fromObject {get;set;}
     public String fromRecordId {get;set;}
-
     public List<Warehouse__c> warehouses {get;set;}
     public String warehouses_s {get;set;}
     public String selectedWarehouseId {get;set;}
@@ -77,7 +76,6 @@ global with sharing class InboundController {
 
     @RemoteAction
     global static Object saveInboundInventoryMove( String objectName, String recordId, String warehouseId, String jsonInput ){
-
 
 
         System.debug( objectName );

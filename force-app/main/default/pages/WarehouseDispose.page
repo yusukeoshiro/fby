@@ -72,9 +72,41 @@
 
 <body>
   <div ng-app="my-app" ng-controller="AppController as app" ng-init="init();">
-    <ons-navigator var="navi" page="page1.html"></ons-navigator>
-    <template id="page1.html">
+    <ons-navigator var="navi" page="warehouseSelect.html"></ons-navigator>
+    <template id="warehouseSelect.html">
       <ons-page>
+        <ons-toolbar class="toolbar--transparent">
+          <div class="center">
+            廃棄
+          </div>
+        </ons-toolbar>
+
+        <div class="" style="text-align:center;">
+          廃棄元の倉庫を選択してください。
+          <div class="">
+            <ons-select class="select">
+              <select class="select-input" ng-model="ui.selectedWarehouseId" required="true" >
+                <option ng-repeat="warehouse in warehouses1" value="{{warehouse.Id}}">
+                  {{warehouse.Name}}
+                </option>
+              </select>
+            </ons-select>
+          </div>
+        </div>
+
+        <ons-bottom-toolbar>
+          <button
+          class="button--large--cta"
+          style="width: 95%; margin: 0 auto;"
+          ng-click="navi.pushPage('page1.html');"
+          ng-disabled="!ui.selectedWarehouseId">
+          次へ
+        </button>
+      </ons-bottom-toolbar>
+    </ons-page>
+  </template>
+  <template id="page1.html">
+    <ons-page>
         <ons-toolbar class="toolbar--transparent">
           <div class="center">廃棄</div>
         </ons-toolbar>
@@ -122,7 +154,7 @@
         </ul>
 
         <ons-bottom-toolbar>
-          <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveBarcodeMove();">
+          <button class="button--large--cta" style="width: 95%; margin: 0 auto;" ng-click="saveBarcodeMove();" ng-disabled="!isReadyToSave()">
             確定
           </button>
         </ons-bottom-toolbar>
@@ -167,7 +199,10 @@
   var module = angular.module('my-app', ['onsen', 'ngTouch']);
   module.controller('AppController', function($scope, $http,  $interval, $timeout) {
     $scope.scannerValue = "";
+    $scope.warehouses1 = {!warehouses_s};
     $scope.ui = {};
+    $scope.ui.selectedWarehouseId = "{!selectedWarehouseId}";
+    $scope.ui.selectedExpirationType = "absolute"
     $scope.barcodeMoveLines = [];
     $scope.barcodeMoveLine = {};
     $scope.barcodeMoveLineIndex;
@@ -201,6 +236,10 @@
       }, 500)
     }
 
+    $scope.isReadyToSave = function() {
+        return $scope.barcodeMoveLines.length > 0;
+    }
+
     $scope.onTouchDelete = function(index){
       var listItem = document.getElementById("listItem_"+index);
       // console.log("Delete index is = ", "listItem_"+index);
@@ -228,7 +267,6 @@
       DisposeController.findBarcode( barcode, function( value, event ){
         if( event.statusCode == 200 ){
           value.expiration_class = "";
-
           //日付処理
           var convertDate = function(date){
             var dateObj = new Date(date);
@@ -242,9 +280,15 @@
           value.expiration_date__c = convertDate(parseFloat(value.expiration_date__c));
           value.disposeQuantity = 1;
           value.shipped_quantity__c = 1;
-          $scope.barcodeMoveLines.push(value);
-          console.log("checkInput_Initial = ", value.disposeQuantity);
-          $scope.$apply();
+
+          if(!value.current_inventory__c){
+            alert("このバーコードは在庫登録されていません。");
+          }else if($scope.ui.selectedWarehouseId !== value.current_inventory__r.warehouse__c){
+            alert("「廃棄元倉庫の在庫を選択してください。");
+          }else{
+              $scope.barcodeMoveLines.push(value);
+              $scope.$apply();
+            }
         }
         else{
           alert( event.message );
