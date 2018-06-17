@@ -528,7 +528,9 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
             return true;
         }
         else{
-            if( ( inventoryMoveLine.record.expiration_date__c != null ) && (inventoryMoveLine.barcodes.length > 0) && inventoryMoveLine.record.food_type_lOne__c &&  inventoryMoveLine.record.food_type_lTwo__c && (parseInt( inventoryMoveLine.record.quantity_per_unit__c ) > 0) ){
+            if( ( inventoryMoveLine.record.expiration_date__c != null ) && (inventoryMoveLine.barcodes.length > 0) &&
+                inventoryMoveLine.record.food_type_lOne__c &&  inventoryMoveLine.record.food_type_lTwo__c &&
+                (parseInt( inventoryMoveLine.record.quantity_per_unit__c ) > 0) && (parseInt( inventoryMoveLine.record.net_weight_per_unit__c ) > 0) ){
                 return false;
             }
             else{
