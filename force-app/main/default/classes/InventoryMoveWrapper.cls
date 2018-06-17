@@ -145,12 +145,19 @@ public with sharing class InventoryMoveWrapper {
                 String uniqueKey = line.getInventoryUniqueKey(this);
                 for( Barcode__c barcode:line.barcodes ){
                     barcode.donated_date__c = Date.today();
-                    // barcode.donated_company__c =  TODO add this
-                    // barcode.donated_person__c =   TODO add this
+                    if ( this.getRecord().donated_from_company__c != null ) {
+                        barcode.donated_company__c = this.getRecord().donated_from_company__c;
+                    }
+
+                    if ( this.getRecord().donated_from_person__c != null ) {
+                        barcode.donated_person__c = this.getRecord().donated_from_person__c;
+                    }
+
                     barcode.current_inventory__c = mapCurrentInventory.get( uniqueKey ).Id;
                     barcode.shipped_quantity__c = 0;
                     barcode.expiration_date__c = line.getRecord().expiration_date__c;
                     barcode.original_quantity__c = line.getRecord().quantity_per_unit__c;
+                    barcode.net_weight_per_unit__c = line.getRecord().net_weight_per_unit__c / line.getRecord().quantity_per_unit__c;
 
                     barcodes.add(barcode);
                     mapCurrentInventory.get( uniqueKey ).physical_quantity__c += line.getRecord().quantity_per_unit__c; // update inventory quantity

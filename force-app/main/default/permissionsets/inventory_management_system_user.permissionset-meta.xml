@@ -100,11 +100,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InventoryMoveLine__c.calory_in_kcal_per_unit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>InventoryMoveLine__c.expiration_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -150,17 +145,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>InventoryMoveLine__c.quantity__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>InventoryMoveLine__c.quantity_per_unit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>InventoryMoveLine__c.weight_in_gram_per_unit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>calory_in_kcal_per_unit__c</fullName>
+    <fullName>net_weight_per_unit__c</fullName>
     <externalId>false</externalId>
-    <label>1つあたりのカロリー (kcal)</label>
+    <label>単位正味重量 (g)</label>
     <precision>18</precision>
     <required>false</required>
-    <scale>2</scale>
-    <trackFeedHistory>false</trackFeedHistory>
+    <scale>0</scale>
     <trackTrending>false</trackTrending>
     <type>Number</type>
     <unique>false</unique>

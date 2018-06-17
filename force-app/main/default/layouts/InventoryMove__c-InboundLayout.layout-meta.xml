@@ -82,9 +82,6 @@
         <fields>barcode__c</fields>
         <fields>jan_code__c</fields>
         <fields>expiration_date__c</fields>
-        <fields>quantity__c</fields>
-        <fields>weight_in_gram_per_unit__c</fields>
-        <fields>calory_in_kcal_per_unit__c</fields>
         <fields>LAST_UPDATE</fields>
         <relatedList>InventoryMoveLine__c.inventory_move__c</relatedList>
         <sortField>LAST_UPDATE</sortField>

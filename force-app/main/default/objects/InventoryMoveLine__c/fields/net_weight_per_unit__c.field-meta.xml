@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>quantity__c</fullName>
+    <fullName>net_weight_per_unit__c</fullName>
     <externalId>false</externalId>
-    <label>数量</label>
+    <label>正味重量 (g)</label>
     <precision>18</precision>
-    <required>false</required>
+    <required>true</required>
     <scale>0</scale>
     <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>

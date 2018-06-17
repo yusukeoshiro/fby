@@ -24,14 +24,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>calory_in_kcal_per_unit__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>weight_in_gram_per_unit__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>barcode__c</field>
             </layoutItems>
             <layoutItems>
@@ -48,10 +40,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>quantity__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>quantity_per_unit__c</field>
             </layoutItems>
             <layoutItems>
@@ -61,6 +49,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>expiration_date_relative_days__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>net_weight_per_unit__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
