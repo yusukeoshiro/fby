@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>5 - とても良い</fullName>
+        <default>false</default>
+        <label>5 - とても良い</label>
+    </customValue>
+    <customValue>
+        <fullName>4 - 良い</fullName>
+        <default>false</default>
+        <label>4 - 良い</label>
+    </customValue>
+    <customValue>
+        <fullName>3 - 普通</fullName>
+        <default>true</default>
+        <label>3 - 普通</label>
+    </customValue>
+    <customValue>
+        <fullName>2 - 悪い</fullName>
+        <default>false</default>
+        <label>2 - 悪い</label>
+    </customValue>
+    <customValue>
+        <fullName>1 - とても悪い</fullName>
+        <default>false</default>
+        <label>1 - とても悪い</label>
+    </customValue>
+    <masterLabel>保管状態</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
