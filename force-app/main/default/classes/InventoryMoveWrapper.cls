@@ -159,6 +159,12 @@ public with sharing class InventoryMoveWrapper {
                     barcode.original_quantity__c = line.getRecord().quantity_per_unit__c;
                     barcode.net_weight_per_unit__c = line.getRecord().net_weight_per_unit__c / line.getRecord().quantity_per_unit__c;
 
+                    barcode.product_kind__c = line.getRecord().product_kind__c;
+                    barcode.product_condition__c = line.getRecord().product_condition__c;
+                    barcode.produced_in__c = line.getRecord().produced_in__c;
+                    barcode.production_date__c = line.getRecord().production_date__c;
+                    barcode.producer__c = line.getRecord().producer__c;
+
                     barcodes.add(barcode);
                     mapCurrentInventory.get( uniqueKey ).physical_quantity__c += line.getRecord().quantity_per_unit__c; // update inventory quantity
 

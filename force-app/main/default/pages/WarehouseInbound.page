@@ -404,6 +404,71 @@
                     <input type="text" class="text-input" placeholder="100" ng-model="inventoryMoveLine.record.price__c"/>
                 </div>
             </ons-list-item>
+
+            <ons-list-item>
+                <div class="list-item__title"><small>生産日</small></div>
+                <div class="list-item__subtitle">
+                    <div>
+                        <span style="margin-right: 10px;">
+                            <select class="select-input" ng-model="inventoryMoveLine.selectedYearProduction" ng-change="validateProductionDate( inventoryMoveLine )">
+                                <option ng-repeat="year in calendar.years">{{year}}</option>
+                            </select>
+                        </span>
+
+                        <span style="margin-right: 10px;">
+                            <select class="select-input" ng-model="inventoryMoveLine.selectedMonthProduction" ng-change="validateProductionDate( inventoryMoveLine )">
+                                <option ng-repeat="month in calendar.months">{{month}}</option>
+                            </select>
+
+                        </span>
+
+                        <span style="margin-right: 10px;">
+                            <select class="select-input" ng-model="inventoryMoveLine.selectedDayProduction" ng-change="validateProductionDate( inventoryMoveLine )">
+                                <option ng-repeat="day in calendar.days">{{day}}</option>
+                            </select>
+                        </span>
+
+                        <span ng-show="inventoryMoveLine.record.production_date__c==null && inventoryMoveLine.selectedDayProduction" style="color:red;">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+
+
+                </div>
+            </ons-list-item>
+
+            <ons-list-item>
+                <div class="list-item__title"><small>生産者</small></div>
+                <div class="list-item__subtitle">
+                    <input type="text" class="text-input" placeholder="生産者" ng-model="inventoryMoveLine.record.producer__c"/>
+                </div>
+            </ons-list-item>
+
+            <ons-list-item>
+                <div class="list-item__title"><small>生産地</small></div>
+                <div class="list-item__subtitle">
+                    <input type="text" class="text-input" placeholder="生産地" ng-model="inventoryMoveLine.record.produced_in__c"/>
+                </div>
+            </ons-list-item>
+
+            <ons-list-item>
+                <div class="list-item__title"><small>保管状態</small></div>
+                <div class="list-item__subtitle">
+                    <select class="select-input" ng-model="inventoryMoveLine.record.product_condition__c">
+                        <apex:repeat value="{!productionConditionKey}" var="key">
+                            <option value="{!key}">{!key}</option>
+                        </apex:repeat>
+                    </select>
+                </div>
+            </ons-list-item>
+
+            <ons-list-item>
+                <div class="list-item__title"><small>品種</small></div>
+                <div class="list-item__subtitle">
+                    <input type="text" class="text-input" placeholder="品種" ng-model="inventoryMoveLine.record.product_kind__c"/>
+                </div>
+            </ons-list-item>
+
         </ons-list>
 
         <ons-bottom-toolbar>
@@ -531,7 +596,11 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
             if( ( inventoryMoveLine.record.expiration_date__c != null ) && (inventoryMoveLine.barcodes.length > 0) &&
                 inventoryMoveLine.record.food_type_lOne__c &&  inventoryMoveLine.record.food_type_lTwo__c &&
                 (parseInt( inventoryMoveLine.record.quantity_per_unit__c ) > 0) && (parseInt( inventoryMoveLine.record.net_weight_per_unit__c ) > 0) ){
-                return false;
+                    if ( inventoryMoveLine.record.production_date__c == null && inventoryMoveLine.selectedDayProduction ) {
+                        return true;
+                    } else {
+                        return false;
+                    }
             }
             else{
                 return true;
@@ -545,6 +614,40 @@ module.controller('AppController', function($scope, $http,  $interval, $timeout)
         inventoryMoveLine.record.expiration_date_relative_days__c = null;
         inventoryMoveLine.record.expiration_date__c = $scope.formatDate( new Date( 2999,1,1 ) );
     }
+
+    $scope.validateProductionDate = function ( inventoryMoveLine ) {
+
+                // validate production date
+                var newDate = undefined;
+                console.log(newDate);
+                if( (inventoryMoveLine.selectedYearProduction !== undefined) &&
+                    (inventoryMoveLine.selectedMonthProduction !== undefined) &&
+                    (inventoryMoveLine.selectedDayProduction !== undefined)  ){
+
+                    var year = parseInt( inventoryMoveLine.selectedYearProduction);
+                    var month = parseInt( inventoryMoveLine.selectedMonthProduction ) - 1;
+                    var date = parseInt( inventoryMoveLine.selectedDayProduction );
+                    newDate = new Date(year, month, date);
+                }
+                console.log(newDate);
+
+                if ( newDate === undefined ) {
+                    inventoryMoveLine.record.production_date__c = null;
+                    return;
+                }
+                console.log(newDate);
+
+
+                if ( newDate.getFullYear() === year &&  newDate.getMonth() === month && newDate.getDate() === date  ) {
+                    console.log( 'date is valid' );
+                    inventoryMoveLine.record.production_date__c = $scope.formatDate( newDate );
+                } else {
+                    inventoryMoveLine.record.production_date__c = null;
+                }
+
+
+    }
+
 
     $scope.validateDate = function( inventoryMoveLine, type ){
         var newDate = undefined;

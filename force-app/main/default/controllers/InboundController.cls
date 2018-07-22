@@ -7,8 +7,20 @@ global with sharing class InboundController {
     public List<Warehouse__c> warehouses {get;set;}
     public String warehouses_s {get;set;}
     public String selectedWarehouseId {get;set;}
+    public Map<String,String> productConditionPickList {get;set;}
+    public Set<String> productionConditionKey {get;set;}
 
     global InboundController() {
+
+
+        productConditionPickList = new Map<String,String>();
+        productionConditionKey = new Set<String>();
+        Schema.DescribeFieldResult fieldResult = InventoryMoveLine__c.product_condition__c.getDescribe();
+        List<Schema.PicklistEntry> values = fieldResult.getPicklistValues();
+        for( Schema.PicklistEntry v : values) {
+            productConditionPickList.put(v.getValue(),v.getLabel());
+            productionConditionKey.add( v.getValue() );
+        }
 
         selectedWarehouseId = null;
         // try to figure out the last warehouse he made deposit to
