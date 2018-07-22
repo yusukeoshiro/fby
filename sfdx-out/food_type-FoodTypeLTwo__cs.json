@@ -5,7 +5,7 @@
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef1"
             },
-            "Name": "その他",
+            "Name": "菓子",
             "food_type_lOne__c": "@FoodTypeLOne__cRef1"
         },
         {
@@ -13,55 +13,55 @@
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef2"
             },
-            "Name": "コメ・精米",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef1"
-        },
-        {
-            "attributes": {
-                "type": "FoodTypeLTwo__c",
-                "referenceId": "FoodTypeLTwo__cRef3"
-            },
-            "Name": "コメ・玄米",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef1"
-        },
-        {
-            "attributes": {
-                "type": "FoodTypeLTwo__c",
-                "referenceId": "FoodTypeLTwo__cRef4"
-            },
             "Name": "その他",
             "food_type_lOne__c": "@FoodTypeLOne__cRef2"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef3"
+            },
+            "Name": "缶・ペットボトル飲料",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef2"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef4"
+            },
+            "Name": "農水産物加工品",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef3"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef5"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef3"
+            "Name": "乳幼児食品",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef4"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef6"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef4"
+            "Name": "災害備蓄品",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef5"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef7"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef5"
+            "Name": "パン",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef6"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef8"
             },
-            "Name": "その他",
+            "Name": "麺類",
             "food_type_lOne__c": "@FoodTypeLOne__cRef6"
         },
         {
@@ -69,72 +69,72 @@
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef9"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef7"
+            "Name": "餅",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef6"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef10"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef8"
+            "Name": "粉類",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef7"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef11"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef9"
+            "Name": "農産物",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef8"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef12"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef10"
+            "Name": "調味料",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef9"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef13"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef11"
+            "Name": "調理品の素",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef9"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef14"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef12"
+            "Name": "食用油",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef10"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef15"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef13"
+            "Name": "精米・もち米(精米)",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef11"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef16"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef14"
+            "Name": "玄米・もち米(玄米)",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef11"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef17"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef15"
+            "Name": "缶詰",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef12"
         },
         {
             "attributes": {
@@ -142,7 +142,7 @@
                 "referenceId": "FoodTypeLTwo__cRef18"
             },
             "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef16"
+            "food_type_lOne__c": "@FoodTypeLOne__cRef12"
         },
         {
             "attributes": {
@@ -150,23 +150,23 @@
                 "referenceId": "FoodTypeLTwo__cRef19"
             },
             "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef17"
+            "food_type_lOne__c": "@FoodTypeLOne__cRef12"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef20"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef18"
+            "Name": "雑炊・赤飯",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef13"
         },
         {
             "attributes": {
                 "type": "FoodTypeLTwo__c",
                 "referenceId": "FoodTypeLTwo__cRef21"
             },
-            "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef19"
+            "Name": "カップ麺",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef13"
         },
         {
             "attributes": {
@@ -174,7 +174,23 @@
                 "referenceId": "FoodTypeLTwo__cRef22"
             },
             "Name": "その他",
-            "food_type_lOne__c": "@FoodTypeLOne__cRef20"
+            "food_type_lOne__c": "@FoodTypeLOne__cRef13"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef23"
+            },
+            "Name": "インスタント袋麺",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef13"
+        },
+        {
+            "attributes": {
+                "type": "FoodTypeLTwo__c",
+                "referenceId": "FoodTypeLTwo__cRef24"
+            },
+            "Name": "その他",
+            "food_type_lOne__c": "@FoodTypeLOne__cRef14"
         }
     ]
 }
