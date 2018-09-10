@@ -17,6 +17,11 @@
     .barcode-read{
         font-size: 28px;
     }
+    .scan-pad{
+        width: calc(100% - 40px);
+        max-width: 500px;
+    }
+
     </style>
 
 </head>
@@ -86,13 +91,10 @@
                      </div>
                 </ons-toolbar>
 
-                <!-- VIRTUAL KEYBOARD -->
-                <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
-                    <input id="scan_pad" type="text" ng-model="ui.scannerValue"  dl-enter-key="enterPressed();"/>
-                </div>
 
                 <div style="text-align:center;">
-                    <span class="barcode-read" >{{ ui.scannerValue || "JANコードをスキャン" }}</span>
+                        <input class="scan-pad" type="text"
+                            ng-model="ui.scannerValue" dl-enter-key="enterPressed();" placeholder="JANコードをスキャン"/>
                 </div>
 
 
@@ -117,9 +119,6 @@
                     </button>
                 </ons-bottom-toolbar>
 
-                <ons-fab position="top right" onclick="document.getElementById('scan_pad').focus();">
-                    scan
-                </ons-fab>
                 <ons-fab position="bottom right" ng-click="newInventoryMoveLine();">
                     <ons-icon icon="md-plus"></ons-icon>
                 </ons-fab>
@@ -134,20 +133,11 @@
                     <div class="center">{{inventoryMoveLine.record.food_name__c}}</div>
                 </ons-toolbar>
 
-                <ons-fab position="top right" onclick="document.getElementById('scan_pad_2').focus();">
-                    scan
-                </ons-fab>
-
-                <!-- VIRTUAL KEYBOARD -->
-                <div style="overflow: hidden; position: relative; width: 1px; height: 1px; left: -500px">
-                    <input id="scan_pad_2" type="text" ng-model="ui.scannerValue2"  dl-enter-key="barcodeEntered();"/>
-                </div>
-
-
 
                 <div style="margin-bottom: 10px;">
-                    <div style="text-align:center;">
-                        <span class="barcode-read" >{{ ui.scannerValue2 || "FBYコードをスキャン" }}</span>
+                    <div style="text-align:center;margin-bottom: 10px;">
+                        <input class="scan-pad" type="text"
+                            ng-model="ui.scannerValue2" dl-enter-key="barcodeEntered();" placeholder="FBYコードをスキャン"/>
                     </div>
 
                     <div ng-show="( inventoryMoveLine.barcodes.length == 0 ) || ( inventoryMoveLine.barcodes === undefined )">
