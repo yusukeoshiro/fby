@@ -1,6 +1,13 @@
 global with sharing class BarcodePrintController {
-    public BarcodePrintController() {
+    public String barcodelyUrl {get;set;}
 
+    public BarcodePrintController() {
+        BarcodelyUrl__c url = BarcodelyUrl__c.getOrgDefaults();
+        if ( url.url__c == null ) {
+            this.barcodelyUrl = 'https://barcodely.herokuapp.com/pdf?page_padding=0mm+14mm&barcodes_per_page=44&cell_width=46mm&cell_height=24.8mm&cell_margin=2mm+4mm';
+        } else {
+            this.barcodelyUrl = url.url__c;
+        }
     }
 
 
